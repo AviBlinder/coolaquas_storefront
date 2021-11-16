@@ -1,0 +1,38 @@
+MVP:
+CART + Checkout
+Search (API Queries/Algolia)
+Filter & Sort (API?)
+User Authentication
+Add 'general settings' component (currency, currency_sign, shipping...)
+---> Build New clean storefront (based on TS + Componsition APIs)
+---> Add Jest/Cypress tests
+---> Add Github Actions
+
+Bugs:
+- Checkout button from 'cart' page not working
+- Cart is not responsive  --> Fix when creating clean frontstore
+
+Checkout Feature:
+- Add checkout page + Paypal button
+- Add 'quick checkout' on each product
+
+
+- Make all pages reactive
+
+- Sort (view Ninja TS sample) & Filter 
+- Account: Login/Signin/Logout
+
+Enhancements:
+- Create new project (github backed) with 
+  - clean components only
+  - TS + Composition APIs
+  - JEST tests
+  - Github Actions
+- Sub-categories
+- Hero image ?
+
+
+paypal setup:
+1. Copy component
+2. Set credentials
+3 npm install --save-dev vue-plugin-load-script

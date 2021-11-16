@@ -1,9 +1,13 @@
 <template>
-  <div class="">
-    <div>
+  <div>
+<div>
+    <!-- <p> {{collection.content.Description}}</p> -->
+    <!-- <p>({{collection.uuid}})</p> -->
+    <br>
+    
       <component
-        :blok="story.content"
-        :is="story.content.component"
+        :blok="collection"
+        :is="collection.content.component"
       ></component>
     </div>
   </div>
@@ -11,13 +15,27 @@
 
 <script>
   import StoryblokClient from 'storyblok-js-client';
+
   let storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });
 
   export default {
+        watch: {
+      $route() {
+        this.loadCollection()
+      },
+    },
+
     created() {
-      const slug = 'landing_page';
+        this.loadCollection()
+    },
+    components: {},
+    computed: {
+    },
+    methods: {
+      loadCollection(){
+      const slug = `collections/${this.$route.params.collection}`
       window.storyblok.init({
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
       });
@@ -31,27 +49,24 @@
           this.getStory(slug, 'published');
         }
       });
-    },
-
-    components: {},
-    computed: {},
-    methods: {
+      },
       getStory(slug, version) {
-        storyapi
-          .get('cdn/stories/' + slug, {
+         storyapi
+          .get(`cdn/stories/${slug}`, {
             version: version,
           })
           .then((response) => {
-            this.story = response.data.story;
+            this.collection = response.data.story;
           })
           .catch((error) => {
             console.log(error);
           });
       },
     },
+
     data() {
       return {
-        story: {
+        collection: {
           content: {
             body: [],
           },

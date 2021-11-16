@@ -1,0 +1,68 @@
+<template>
+  <div>
+    <!-- <p>Product view: {{$route.params.product}}</p> -->
+    <div class="p-2 m-2">      
+    <component :blok="story.content" :is="story.content.component"></component>
+  </div>
+  </div>
+</template>
+
+<script>
+import StoryblokClient from 'storyblok-js-client';
+
+let storyapi = new StoryblokClient({
+    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW
+  });
+
+export default {
+    created() {
+      const slug = `products/${this.$route.params.product}`
+      window.storyblok.init({
+        accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW
+      });
+      window.storyblok.on('change', () => {
+        this.getStory(slug, 'draft');
+      });
+      window.storyblok.pingEditor(() => {
+        if (window.storyblok.isInEditor()) {
+          this.getStory(slug, 'draft');
+        } else {
+          this.getStory(slug, 'published');
+        }
+      });
+    },
+
+    components: {
+    },
+    computed: {
+    },
+    methods: {
+      getStory(slug, version) {
+        storyapi
+          .get(`cdn/stories/${slug}` , {
+            version: version,
+          })
+          .then((response) => {
+            this.story = response.data.story 
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+    },
+    data(){
+      return {
+        story : {
+          content : {
+            body: []
+          }
+        }
+      }
+    }
+  };
+</script>
+
+
+<style>
+
+</style>

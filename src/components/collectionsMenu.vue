@@ -1,11 +1,13 @@
 <template>
-  <div class="">
-    <div>
-      <component
-        :blok="story.content"
-        :is="story.content.component"
-      ></component>
-    </div>
+  <div class="flex justify-center ">
+      <div
+       v-for="collection in collections.stories" :key="collection.uuid">
+        <button 
+        class="p-2 m-2 bg-secondary-600 rounded"
+        @click="$router.push({name:'collection',params:{collection: collection.slug}})">
+        {{collection.name}}
+        </button>
+      </div>
   </div>
 </template>
 
@@ -14,35 +16,34 @@
   let storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });
-
   export default {
     created() {
-      const slug = 'landing_page';
       window.storyblok.init({
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
       });
       window.storyblok.on('change', () => {
-        this.getStory(slug, 'draft');
+        this.getCollections(this.slug, 'draft');
       });
       window.storyblok.pingEditor(() => {
         if (window.storyblok.isInEditor()) {
-          this.getStory(slug, 'draft');
+          this.getCollections(this.slug, 'draft');
         } else {
-          this.getStory(slug, 'published');
+          this.getCollections(this.slug, 'published');
         }
       });
     },
-
     components: {},
     computed: {},
     methods: {
-      getStory(slug, version) {
+
+      getCollections(slug,version) {
         storyapi
-          .get('cdn/stories/' + slug, {
-            version: version,
+          .get(`cdn/stories/`, {
+            version,
+            starts_with: slug,
           })
           .then((response) => {
-            this.story = response.data.story;
+            this.collections = response.data;
           })
           .catch((error) => {
             console.log(error);
@@ -51,7 +52,8 @@
     },
     data() {
       return {
-        story: {
+        slug: 'collections/',
+        collections: {
           content: {
             body: [],
           },
