@@ -3,6 +3,8 @@ CART + Checkout
 Search (API Queries/Algolia)
 Filter & Sort (API?)
 User Authentication
+
+Add "value proposition" blok
 Add 'general settings' component (currency, currency_sign, shipping...)
 ---> Build New clean storefront (based on TS + Componsition APIs)
 ---> Add Jest/Cypress tests

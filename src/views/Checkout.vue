@@ -102,8 +102,9 @@
                 </div>
               </div>
 
-              <div v-if="!billingAsShipping">
-                <p>Different billing</p>
+              <!-- <div v-if="!billingAsShipping"> -->
+              <div>
+                <billing-address :sameAsShipping="billingAsShipping"></billing-address>
               </div>
             </div>
 
@@ -128,11 +129,13 @@ import {ref, computed} from 'vue';
 import paypalButton from '../components/PaypalButton/PaypalButton.vue'
 import shippingMethod from '../components/checkout/shippingMethod.vue'
 import shippingAddress from '../components/checkout/shippingAddress.vue'
+import billingAddress from '../components/checkout/billingAddress.vue'
 export default {
   components: {
     paypalButton,
     shippingMethod,
-    shippingAddress
+    shippingAddress,
+    billingAddress
     },
   setup() {
       const store = useStore()
