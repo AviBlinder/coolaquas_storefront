@@ -24,7 +24,7 @@ Checkout Feature:
 - Sort (view Ninja TS sample) & Filter 
 - Account: Login/Signin/Logout
 
-Enhancements:
+Enhancements (next epics):
 - Create new project (github backed) with 
   - clean components only
   - TS + Composition APIs
@@ -38,3 +38,10 @@ paypal setup:
 1. Copy component
 2. Set credentials
 3 npm install --save-dev vue-plugin-load-script
+
+
+@input vs @change:
+The difference is that the **oninput** event occurs immediately after the value of an element has changed,
+ while **onchange** occurs when the element loses focus, after the content has been changed.
+
+ onfocus <> onblur (element loses focus)

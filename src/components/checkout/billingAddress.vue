@@ -1,4 +1,6 @@
 <template>
+<div v-show="!sameAsShipping"> 
+
 <!-- border-t border-gray-200 pt-10 -->
           <div class="mt-10 ">
             <p>sameAsShipping:{{sameAsShipping}}</p>
@@ -111,6 +113,8 @@
               </div>
             </div>
           </div>
+</div>
+
 </template>
 
 <script>
@@ -130,7 +134,6 @@ export default {
     const selected = ref("Israel")
 
 watch(() => props.sameAsShipping, (currentValue) => {
-  console.log("watching sameAsShipping ", currentValue)
   if(currentValue === false ){
      BillingDetails.firstName = '',
      BillingDetails.lastName = '',

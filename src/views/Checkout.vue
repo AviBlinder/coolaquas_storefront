@@ -64,10 +64,13 @@
             <div>
               <h3 id="contact-info-heading" class="text-lg font-medium text-gray-900">Contact information</h3>
 
+              <p>mailInvalid: {{mailInvalid}}</p>
               <div class="mt-6">
-                <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+                <label for="email-address" class="block text-sm font-medium text-gray-700"></label>
                 <div class="mt-1">
                   <input
+                  required
+                  placeholder="Email address"
                   v-model="email"
                   @change="updateEmail"
                    type="email" id="email-address" name="email-address" autocomplete="email"
@@ -141,6 +144,7 @@ export default {
       const store = useStore()
 
       const email = ref('')
+      const mailInvalid = ref(false)
       const billingAsShipping = ref(true)
 
       const currencySign = store.getters['general/getCurrencySign']
@@ -177,7 +181,8 @@ export default {
       taxCost,
       finalCost,
       currencySign,
-      email
+      email,
+      mailInvalid
     }
   }
 } 

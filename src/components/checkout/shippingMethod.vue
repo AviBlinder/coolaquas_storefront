@@ -1,8 +1,5 @@
 <template>
   <div>
-                Delivery method 
-                {{selectedDeliveryMethod.id}}
-
     <!-- border-t border-gray-200 pt-10 -->
           <div class="mt-2 ">
             <RadioGroup v-model="selectedDeliveryMethod">
