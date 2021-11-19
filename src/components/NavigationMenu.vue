@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white flex">
     <!-- Mobile menu -->
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="fixed inset-0 flex z-40 lg:hidden" @close="open = false">
@@ -58,7 +58,8 @@
             </router-link>
 
             <!-- Flyout menus -->
-            <div class="hidden lg:flex-1 lg:block lg:self-stretch z-40 lg:ml-4">
+            <!-- <div class="hidden lg:flex-1 lg:block lg:self-stretch z-40 lg:ml-4"> -->
+            <div class="hidden lg:block lg:flex-1 ">
 
               <div class="h-full flex space-x-8 items-center text-sm">
                 <div v-for="category in collections.stories" :key="category.uuid" 
@@ -75,10 +76,10 @@
 
    
                 </div>
-
               </div>
+              <!-- Search -->
             </div>
-
+                <search class=""></search>               
 
             <div id="pages-link" class="flex-1 flex items-center justify-end">
                 <router-link v-for="page in navigation.pages" 
@@ -88,15 +89,13 @@
                  {{ page.description }}
                 </router-link>
 
-
-              <!-- Search -->
-
               <!-- Account -->
               <!-- <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
                 <span class="sr-only">Account</span>
                 <UserIcon class="w-6 h-6" aria-hidden="true" />
               </a> -->
 
+  
               <!-- Cart -->
               <div class="ml-4 flow-root lg:ml-6">
                 <div class="group -m-2 p-2 flex items-center">
@@ -108,6 +107,7 @@
                 </div>
 
               </div>
+           
             </div>
           </div>
         </div>
@@ -119,6 +119,7 @@
 <script>
 import { ref } from 'vue'
 import { mapGetters } from 'vuex'
+import search from '../components/fields/search.vue'
 import {
   Dialog,
   DialogOverlay,
@@ -148,6 +149,7 @@ export default {
     TransitionRoot,
     MenuIcon,
     XIcon,
+    search
   },
   computed: {
     ...mapGetters(['cartQuantity'])
