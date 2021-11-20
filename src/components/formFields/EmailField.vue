@@ -10,13 +10,13 @@
           id="email-address"
           name="email-address"
           autocomplete="email"
-          placeholder="Email"
+          placeholder="Email"                  
+          class="block w-full border-gray-300 rounded-md shadow-sm 
+          focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
           v-model="input"
           @keyup="validateInput"
           @blur="validateInput"
           @input="$emit('update:modelValue', $event.target.value)"
-          class="block w-full border-gray-300 rounded-md shadow-sm 
-          focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
           :class="{ fieldErrorBorder: fieldError }"
         />
       </div>

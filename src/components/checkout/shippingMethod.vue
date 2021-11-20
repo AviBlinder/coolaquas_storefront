@@ -2,6 +2,7 @@
   <div>
     <!-- border-t border-gray-200 pt-10 -->
           <div class="mt-2 ">
+            
             <RadioGroup v-model="selectedDeliveryMethod">
               <RadioGroupLabel class="text-lg font-medium text-gray-900">
               </RadioGroupLabel>
@@ -30,8 +31,12 @@
                         </RadioGroupDescription>
                       </div>
                     </div>
-                    <CheckCircleIcon v-if="checked" class="h-5 w-5 text-secondary-600" aria-hidden="true" />
-                    <div :class="[active ? 'border' : 'border-2', checked ? 'border-secondary-500' : 'border-transparent', 'absolute -inset-px rounded-lg pointer-events-none']" aria-hidden="true" />
+                    <CheckCircleIcon v-if="checked" class="h-5 w-5 text-secondary-600" 
+                    aria-hidden="true" />
+                    <div :class="[active ? 'border' : 'border-2',
+                     checked ? 'border-secondary-500' : 'border-transparent', 
+                     'absolute -inset-px rounded-lg pointer-events-none']" 
+                     aria-hidden="true" />
                   </div>
                 </RadioGroupOption>
               </div>
@@ -58,7 +63,8 @@ export default {
   setup() {
     const store = useStore()
 
-    const selectedDeliveryMethod = ref(0)
+    const deliveryMethods =  computed(() => store.getters['general/getDeliveryMethods'])
+    const selectedDeliveryMethod = ref(deliveryMethods.value[1])
 
     watch(selectedDeliveryMethod,(currentValue) => {
       store.dispatch('cart/setShippingCost',parseInt(currentValue.price))
@@ -68,7 +74,7 @@ export default {
 
     return {
       selectedDeliveryMethod,
-      deliveryMethods : computed(() => store.getters['general/getDeliveryMethods']),
+      deliveryMethods,
     }
   },
 

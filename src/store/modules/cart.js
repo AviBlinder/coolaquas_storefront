@@ -15,6 +15,7 @@ const state = {
     shippingDetails: {
       firstName: '',
       lastName: '',
+      company: '',
       country: '',
       city: '',
       address: '',
@@ -23,6 +24,7 @@ const state = {
     billingDetails: {
       firstName: '',
       lastName: '',
+      company: '',
       country: '',
       city: '',
       address: '',

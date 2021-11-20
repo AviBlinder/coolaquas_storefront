@@ -3,86 +3,54 @@
           <div class="mt-10 ">
             <h2 class="text-lg font-medium text-gray-900">Shipping information</h2>
             <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-              <div>
-                <label for="first-name" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input 
-                  v-model="firstName"
-                  @change='updateOrderShippingDetails'
-                  placeholder="First name"
-                  type="text" id="first-name" name="first-name" autocomplete="given-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
-              </div>
+              <!-- First Name -->
+              <FirstName
+              @change='updateOrderShippingDetails'             
+               v-model="firstName"/>
 
-              <div>
-                <label for="last-name" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input 
-                  v-model="lastName"
-                  @change='updateOrderShippingDetails'
-                  placeholder="Last name"
-                  type="text" id="last-name" name="last-name" autocomplete="family-name" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
-              </div>
+              <!-- Last Name -->
+              <LastName 
+              @change='updateOrderShippingDetails'             
+               v-model="lastName"/>
 
+            <!-- Company details -->
               <div class="sm:col-span-2">
-                <label for="company" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input 
-                  v-model="company"
-                  @change='updateOrderShippingDetails'
-                  placeholder="Company (optional)"
-                  type="text" name="company" id="company" class="
-                  placeholder-opacity-75 placeholder-gray-500	
-                  block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
+                <CompanyName
+                @change="updateOrderShippingDetails"
+                v-model="company" />
               </div>
-
+              <!-- Main address -->
               <div class="sm:col-span-2">
-                <label for="address" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input 
-                  v-model="address"
-                  @change='updateOrderShippingDetails'
-                  placeholder="Address"
-                  type="text" name="address" id="address" autocomplete="street-address" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
-              </div>
-
+            <Address 
+            v-model="address"
+              @change="updateOrderShippingDetails"
+            />
+           </div>
+              <!-- Additional Address details (optional) -->
               <div class="sm:col-span-2">
-                <label for="apartment" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input 
-                  placeholder="Apartment, suite, etc."
-                  v-model="address2"
-                  @change='updateOrderShippingDetails'
-                  type="text" name="apartment" id="apartment" class="
-                  placeholder-opacity-75 placeholder-gray-500	                 
-                  block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
+                <AdditionalAddress
+                v-model="address2"
+                @change="updateOrderShippingDetails"
+                />
               </div>
 
+              <!-- City -->
               <div>
-                <label for="city" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input
+                <City
                   v-model="city"
                   @change='updateOrderShippingDetails'
-                  placeholder="City"
-                   type="text" name="city" id="city" autocomplete="address-level2" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
-              </div>
-              <div>
-                <label for="postal-code" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input
-                  v-model="postalCode"
-                  @change='updateOrderShippingDetails'
-                  placeholder="Postal code"
-                   type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
+                  />
               </div>
 
+              <!-- Postal Code -->
+              <div>
+                <PostalCode
+                  v-model="postalCode"
+                  @change='updateOrderShippingDetails'
+                />
+              </div>
+
+              <!-- Country -->
               <div class="sm:col-span-2">
                 <label for="country" class="block text-sm font-medium text-gray-700"></label>
                 <div class="mt-1">
@@ -113,17 +81,37 @@
 
 </template>
 
-<script>
+<script>// @ts-nocheck
+
 import {ref, reactive, computed, toRefs} from 'vue'
 import {useStore} from 'vuex';
 
+// Form fields
+import FirstName from '@/components/formFields/FirstName.vue'
+import LastName from '@/components/formFields/LastName.vue'
+import CompanyName from '@/components/formFields/CompanyName.vue'
+import Address from '@/components/formFields/MainAddress.vue'
+import AdditionalAddress from '@/components/formFields/AdditionalAddress.vue'
+import City from '@/components/formFields/CityField.vue'
+import PostalCode from '@/components/formFields/PostCode.vue'
+
 export default {
+  components: {
+     FirstName,
+     LastName,
+     CompanyName,
+     Address,
+     AdditionalAddress,
+     City,
+    PostalCode     
+  },
   setup() {
     const store = useStore()
 
     const selected = ref("Israel")
 
     const updateOrderShippingDetails =  () => {
+      console.log("updateOrderShippingDetails  ", ShippingDetails)
       ShippingDetails.country = selected.value
       store.dispatch('cart/setOrderShippingDetails',ShippingDetails)
     }

@@ -5,10 +5,15 @@ const error = reactive({});
 const { isEmpty, minLength, isEmail, isNum } = fieldValidators();
 
 export default function FormValidation() {
-  const validateNameField = (fieldName, fieldValue) => {
+  const validateFirstNameField = (fieldName, fieldValue,length) => {
     error[fieldName] = !fieldValue
-      ? isEmpty(fieldName, fieldValue)
-      : minLength(fieldName, fieldValue, 4);
+      ? isEmpty(fieldName, fieldValue.trim())
+      : minLength(fieldName, fieldValue.trim(), length);
+  };
+  const validateLastNameField = (fieldName, fieldValue,length) => {
+    error[fieldName] = !fieldValue
+      ? isEmpty(fieldName, fieldValue.trim())
+      : minLength(fieldName, fieldValue.trim(), length);
   };
 
   const validateEmailField = (fieldName, fieldValue) => {
@@ -28,11 +33,35 @@ export default function FormValidation() {
       ? isEmpty(fieldName, fieldValue)
       : minLength(fieldName, fieldValue, 8);
   };
+
+  const validateAddressField = (fieldName, fieldValue, length) => {
+    error[fieldName] = !fieldValue
+      ? isEmpty(fieldName, fieldValue)
+      : minLength(fieldName, fieldValue, length);
+  };
+
+  const validateCityField = (fieldName, fieldValue, length) => {
+    error[fieldName] = !fieldValue
+      ? isEmpty(fieldName, fieldValue)
+      : minLength(fieldName, fieldValue, length);
+  };
+
+  const validatePostalCodeField = (fieldName, fieldValue, length) => {
+    error[fieldName] = !fieldValue
+      ? isEmpty(fieldName, fieldValue)
+      : minLength(fieldName, fieldValue, length);
+  };
+
+
   return {
     error,
-    validateNameField,
+    validateFirstNameField,
+    validateLastNameField,
     validateEmailField,
     validatePhoneField,
     validatePasswordField,
+    validateAddressField,
+    validateCityField,
+    validatePostalCodeField,
   };
 }

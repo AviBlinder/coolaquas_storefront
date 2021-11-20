@@ -66,19 +66,6 @@
 
 <!-- email field -->
               <EmailField v-model="email" />
-
-              <!-- <div class="mt-6">
-                <label for="email-address" class="block text-sm font-medium text-gray-700"></label>
-                <div class="mt-1">
-                  <input
-                  required
-                  placeholder="Email address"
-                  v-model="email"
-                  @change="updateEmail"
-                   type="email" id="email-address" name="email-address" autocomplete="email"
-                   class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
-                </div>
-              </div> -->
             </div>
 
             <div class="mt-10">

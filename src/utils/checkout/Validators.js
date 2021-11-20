@@ -1,10 +1,18 @@
+  const camelToWords = (fieldName) => {
+    const result = fieldName.replace(/([A-Z])/g, ' $1');
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+    return finalResult
+  }
+
 export default function fieldValidators() {
+
   const isEmpty = (fieldName, fieldValue) => {
-    return !fieldValue ? 'The ' + fieldName + ' field is required' : '';
+
+    return !fieldValue ? 'The ' + camelToWords(fieldName) + ' field is required' : '';
   };
   const minLength = (fieldName, fieldValue, min) => {
     return fieldValue.length < min
-      ? `The ${fieldName} field must be at least ${min} characters long`
+      ? `The ${camelToWords(fieldName)} field must be at least ${min} characters long`
       : '';
   };
   const isNum = (fieldName, fieldValue) => {
