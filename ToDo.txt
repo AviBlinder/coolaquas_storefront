@@ -1,6 +1,6 @@
 MVP:
 CART + Checkout
-Search (API Queries/Algolia)
+Search: Composition API + vue-search/typeahead component + search page
 Filter & Sort (API?)
 User Authentication
 

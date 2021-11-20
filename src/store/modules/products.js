@@ -1,10 +1,24 @@
-const state = {};
+const state = {
+  allProducts: []
+};
 
-const getters = {};
+const getters = {
+  getAllProducts(state){
+    return state.allProducts
+  }
+  }
 
-const actions = {};
+const actions = {
+  setProducts({ commit }, payload) {    
+    commit('setProducts', payload);
+  },
+};
 
-const mutations = {};
+const mutations = {
+  setProducts(state, payload) {
+    state.allProducts = payload;
+  },
+};
 export default {
   namespaced: true,
   state,

@@ -48,3 +48,4 @@ app.component('Product', Product);
 app.component('CategorySample', CategorySample);
 app.component('Footer', Footer);
 app.component('Footer', Cart);
+

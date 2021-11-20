@@ -64,8 +64,10 @@
             <div>
               <h3 id="contact-info-heading" class="text-lg font-medium text-gray-900">Contact information</h3>
 
-              <p>mailInvalid: {{mailInvalid}}</p>
-              <div class="mt-6">
+<!-- email field -->
+              <EmailField v-model="email" />
+
+              <!-- <div class="mt-6">
                 <label for="email-address" class="block text-sm font-medium text-gray-700"></label>
                 <div class="mt-1">
                   <input
@@ -76,7 +78,7 @@
                    type="email" id="email-address" name="email-address" autocomplete="email"
                    class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm" />
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="mt-10">
@@ -133,18 +135,23 @@ import paypalButton from '../components/PaypalButton/PaypalButton.vue'
 import shippingMethod from '../components/checkout/shippingMethod.vue'
 import shippingAddress from '../components/checkout/shippingAddress.vue'
 import billingAddress from '../components/checkout/billingAddress.vue'
+// Form fields
+import EmailField from '../components/formFields/EmailField.vue'
+
+
 export default {
   components: {
     paypalButton,
     shippingMethod,
     shippingAddress,
-    billingAddress
+    billingAddress,
+    // form fields
+    EmailField    
     },
   setup() {
       const store = useStore()
 
       const email = ref('')
-      const mailInvalid = ref(false)
       const billingAsShipping = ref(true)
 
       const currencySign = store.getters['general/getCurrencySign']
@@ -182,7 +189,6 @@ export default {
       finalCost,
       currencySign,
       email,
-      mailInvalid
     }
   }
 } 

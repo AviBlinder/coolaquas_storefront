@@ -47,19 +47,17 @@
                 <span class="sr-only">Open menu</span>
                 <MenuIcon class="h-6 w-6" aria-hidden="true" />
               </button>
-
-
             </div>
 
             <!-- Logo -->
-            <router-link to="/" class="flex">
+            <router-link to="/" class="flex ">
               <span class="sr-only">Coolaquas Logo</span>
-              <img class="h-12 w-auto" src="../assets/CoolAquasLogo.png" alt="" />
+              <img class="h-12" src="../assets/CoolAquasLogo.png" alt="" />
             </router-link>
 
             <!-- Flyout menus -->
             <!-- <div class="hidden lg:flex-1 lg:block lg:self-stretch z-40 lg:ml-4"> -->
-            <div class="hidden lg:block lg:flex-1 ">
+            <div class="hidden lg:block lg:flex-1 ml-4 ">
 
               <div class="h-full flex space-x-8 items-center text-sm">
                 <div v-for="category in collections.stories" :key="category.uuid" 
@@ -72,20 +70,19 @@
                          {{ category.name }}                     
                         </router-link>                                        
                     </div>
-                  </div>
-
-   
+                  </div>  
                 </div>
               </div>
               <!-- Search -->
             </div>
-                <search class=""></search>               
+                <search class="sm:hidden md:inline-block md:w-32 lg:w-32 mx-6"></search>               
 
-            <div id="pages-link" class="flex-1 flex items-center justify-end">
+            <div id="pages-link" class="flex-1 lg:flex items-center justify-end sm:hidden">
                 <router-link v-for="page in navigation.pages" 
-                :key="page.name" 
+                :key="page.name"  
                 :to="{name: page.name}"
-                 class="mx-2 flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
+                 class="mx-2 flex items-center text-sm font-medium text-gray-700 
+                 hover:text-gray-800 ">
                  {{ page.description }}
                 </router-link>
 
@@ -97,7 +94,7 @@
 
   
               <!-- Cart -->
-              <div class="ml-4 flow-root lg:ml-6">
+              <div class="ml-4 flow-root lg:ml-6 sm:ml-2">
                 <div class="group -m-2 p-2 flex items-center">
                   <!-- {{cartOpen}} -->
                   <!-- <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" /> -->

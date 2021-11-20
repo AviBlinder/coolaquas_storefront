@@ -9,3 +9,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,600&display=swap');
 
+
+.fieldErrorBorder {
+  @apply border-red-500 mb-2 ring-red-500 
+}
+
+.fieldErrorMessage {
+  @apply text-red-500 text-left text-sm font-extralight tracking-wide italic
+}

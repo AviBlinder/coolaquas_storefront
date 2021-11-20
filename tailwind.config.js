@@ -2,6 +2,7 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  // important: true,
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
@@ -38,8 +39,7 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {
-    },
+    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),
