@@ -48,6 +48,5 @@
 
       return { input, error, validateInput, fieldError };
     },
-  };</script>
-
-<style></style>
+  }
+  </script>

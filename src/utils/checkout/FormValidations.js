@@ -2,7 +2,8 @@ import { reactive } from '@vue/reactivity';
 import fieldValidators from './Validators.js';
 
 const error = reactive({});
-const { isEmpty, minLength, isEmail, isNum } = fieldValidators();
+const { isEmpty, minLength, isEmail } = fieldValidators();
+// isNum not used
 
 export default function FormValidation() {
   const validateFirstNameField = (fieldName, fieldValue,length) => {
@@ -20,12 +21,6 @@ export default function FormValidation() {
     error[fieldName] = !fieldValue
       ? isEmpty(fieldName, fieldValue)
       : isEmail(fieldName, fieldValue);
-  };
-
-  const validatePhoneField = (fieldName, fieldValue) => {
-    error[fieldName] = !fieldValue
-      ? isEmpty(fieldName, fieldValue)
-      : isNum(fieldName, fieldValue);
   };
 
   const validatePasswordField = (fieldName, fieldValue) => {
@@ -52,16 +47,21 @@ export default function FormValidation() {
       : minLength(fieldName, fieldValue, length);
   };
 
+  const validatePhoneField = (fieldName, fieldValue, length) => {
+    error[fieldName] = !fieldValue
+      ? isEmpty(fieldName, fieldValue)
+      : minLength(fieldName, fieldValue, length);
+  };
 
   return {
     error,
     validateFirstNameField,
     validateLastNameField,
     validateEmailField,
-    validatePhoneField,
     validatePasswordField,
     validateAddressField,
     validateCityField,
     validatePostalCodeField,
+    validatePhoneField,
   };
 }

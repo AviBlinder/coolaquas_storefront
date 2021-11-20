@@ -15,7 +15,6 @@
        v-model="input"
        @input="$emit('update:modelValue', $event.target.value)"
        @blur="$emit('update:modelValue', $event.target.value)"
-
     />
   </div>
 </template>
