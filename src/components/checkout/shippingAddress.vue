@@ -4,36 +4,36 @@
             <h2 class="text-lg font-medium text-gray-900">Shipping information</h2>
             <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
               <!-- First Name -->
+              <!-- @change='updateOrderShippingDetails' -->
               <FirstName
-              @change='updateOrderShippingDetails'
               @update:modelValue='updateOrderShippingDetails'
                v-model="firstName"/>
 
               <!-- Last Name -->
+              <!-- @change='updateOrderShippingDetails' -->
               <LastName 
-              @change='updateOrderShippingDetails'
               @update:modelValue='updateOrderShippingDetails'              
                v-model="lastName"/>
 
             <!-- Company details -->
               <div class="sm:col-span-2">
+                <!-- @change='updateOrderShippingDetails' -->
                 <CompanyName
-                @change='updateOrderShippingDetails'
                 @update:modelValue='updateOrderShippingDetails'                
                 v-model="company" />
               </div>
               <!-- Main address -->
               <div class="sm:col-span-2">
+              <!-- @change='updateOrderShippingDetails' -->
             <Address 
-              @change='updateOrderShippingDetails'
               @update:modelValue='updateOrderShippingDetails'              
               v-model="address"
             />
            </div>
               <!-- Additional Address details (optional) -->
               <div class="sm:col-span-2">
+                <!-- @change='updateOrderShippingDetails' -->
                 <AdditionalAddress
-                @change='updateOrderShippingDetails'
                 @update:modelValue='updateOrderShippingDetails'                
                 v-model="address2"
                 />
@@ -41,8 +41,8 @@
 
               <!-- City -->
               <div>
+                  <!-- @change='updateOrderShippingDetails' -->
                 <City
-                  @change='updateOrderShippingDetails'
                   @update:modelValue='updateOrderShippingDetails'                  
                   v-model='city'
                   />
@@ -50,8 +50,8 @@
 
               <!-- Postal Code -->
               <div>
+                <!-- @change='updateOrderShippingDetails' -->
                 <PostalCode
-                @change='updateOrderShippingDetails'
                 @update:modelValue='updateOrderShippingDetails'                  
                 v-model='postalCode'
                 />
@@ -59,16 +59,16 @@
 
               <!-- Country -->
               <div class="sm:col-span-2">
+                 <!-- @change='updateOrderShippingDetails' -->
                 <Country
-                 @change='updateOrderShippingDetails'
                  @update:modelValue='updateOrderShippingDetails'                  
                  v-model='country'
                 />
               </div>
 
               <div class="sm:col-span-2">
+                 <!-- @change='updateOrderShippingDetails' -->
                 <Phone
-                 @change='updateOrderShippingDetails'
                  @update:modelValue='updateOrderShippingDetails'                  
                  v-model='phone'
                 />
