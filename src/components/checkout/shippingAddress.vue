@@ -65,7 +65,7 @@
                  v-model='country'
                 />
               </div>
-
+              <!-- Phone -->
               <div class="sm:col-span-2">
                  <!-- @change='updateOrderShippingDetails' -->
                 <Phone
@@ -126,6 +126,7 @@ export default {
       country: '',
       phone: ''
     })
+
 
     return {
       ...toRefs(ShippingDetails),

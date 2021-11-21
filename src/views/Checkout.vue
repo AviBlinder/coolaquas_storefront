@@ -59,7 +59,7 @@
       <section aria-labelledby="payment-and-shipping-heading" class="py-16 lg:max-w-lg lg:w-full lg:mx-auto lg:pt-0 lg:pb-24 lg:row-start-1 lg:col-start-1">
         <h2 id="payment-and-shipping-heading" class="sr-only">Payment and shipping details</h2>
 
-        <form>
+        <form @submit.prevent>
           <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
             <div>
               <h3 id="contact-info-heading" class="text-lg font-medium text-gray-900">Contact information</h3>
