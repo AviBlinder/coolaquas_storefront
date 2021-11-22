@@ -12,6 +12,9 @@ deliveryMethods : [
   { id: 3, title: 'Express', turnaround: '2–5 business days',
   price: '16.00', currency: '$',checked:false, name: 'express' },
 ],
+afterSaleMessage: "Thanks for your purchase. \
+  Your payment was successfully processed. ",
+
 countries : [
 {value:"AS", name:"American Samoa"},
 {value:"AG", name:"Antigua and Barbuda"},
@@ -152,6 +155,9 @@ const getters = {
   },
   getFreeShippingAmount(state) {
     return state.freeShippingAmount;
+  },
+  getafterSaleMessage(state){
+    return state.afterSaleMessage;
   }
 };
 // const actions = {};

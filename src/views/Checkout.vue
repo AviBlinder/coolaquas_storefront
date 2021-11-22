@@ -109,8 +109,16 @@
         <div>
 
        <paypalButton  v-show="!disablePaymentButton"
-       :finalCost="finalCost"> 
+       :finalCost="finalCost"
+       @paymentProcess="postCheckout"
+       > 
        </paypalButton>
+       <div v-if="postCheckoutMessage" class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0 bg-green-400 rounded-lg">
+         <div class="block w-full  ">
+        <p class="p-4  text-center text-2xl ">{{postCheckoutMessage}}</p> 
+        <p class="p-4  text-left italic text-xl ">{{postCheckoutMessage2}}</p> 
+         </div>
+       </div>
         </div>
       </section>
     </div>
@@ -169,6 +177,13 @@ export default {
     const updateDisableStatus = (event) => {
       disablePaymentButton.value = event
     }
+
+    const postCheckoutMessage = ref('')
+    const postCheckoutMessage2 = ref('')
+    const postCheckout = (event) => {
+      postCheckoutMessage.value =  store.getters['general/getafterSaleMessage']
+      postCheckoutMessage2.value = `Your orderId is ${event}`
+    }
     return {
       cartItems :computed(() => store.getters['cart/cartItems']),
       priceByProduct :computed(() => store.getters['cart/priceByProduct']),
@@ -183,7 +198,10 @@ export default {
       currencySign,
       email,
       disablePaymentButton,
-      updateDisableStatus
+      updateDisableStatus,
+      postCheckout,
+      postCheckoutMessage,
+      postCheckoutMessage2
     }
   }
 } 

@@ -1,5 +1,5 @@
 MVP:
-CART + Checkout
+Checkout --> Once payment is successfull, redirect to main page?/show message
 Search: Composition API + vue-search/typeahead component + search page
 Filter & Sort (API?)
 User Authentication

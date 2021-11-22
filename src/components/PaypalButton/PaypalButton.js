@@ -11,10 +11,16 @@ export default {
     }
   },
   name: 'PaypalButton',
-  setup(props){  
+  setup(props,context){  
     const store = useStore();
-      const currency = computed(() => store.getters['general/getCurrency']);
+      const currency = computed( () => store.getters['general/getCurrency']);
       const paypal = ref(null)
+      let loaded = ref(false);
+      let couponApplied = ref(false);
+      const paypalLink = 'https://www.paypal.com/sdk/js';
+      const clientIdProd = process.env.VUE_APP_PAYPAL_PROD_CLIENT_ID;
+      const clientIdDev = process.env.VUE_APP_PAYPAL_SANDBOX_CLIENT_ID;
+
       // @ts-ignore
       const { disableButton } = SubmitButtonState;
 
@@ -30,11 +36,6 @@ export default {
     document.body.appendChild(script);
   });
 
-      let loaded = ref(false)
-      let couponApplied =  ref(false)
-      const paypalLink = 'https://www.paypal.com/sdk/js'
-      const clientIdProd =  process.env.VUE_APP_PAYPAL_PROD_CLIENT_ID
-      const clientIdDev = process.env.VUE_APP_PAYPAL_SANDBOX_CLIENT_ID
 
       const setLoaded = function()  {
       loaded.value = true;
@@ -67,15 +68,17 @@ export default {
           // @ts-ignore
           onApprove: async (data, actions) => {
             const order = await actions.order.capture();
+            const orderId = order.purchase_units[0].payments.captures[0].id;
+            context.emit(
+              'paymentProcess',orderId
+            );
+
             // this.data;
             // this.paidForFlag = true;
-            couponApplied.value = true;
+            // couponApplied.value = true;
             if (process.env.NODE_ENV !== 'production') {
               console.log('order approved: ', order);
-              console.log(
-                'order id: ',
-                order.purchase_units[0].payments.captures[0].id
-              );
+              console.log('order id: ', orderId);
             }
             //
           },
