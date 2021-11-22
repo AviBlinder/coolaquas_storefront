@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import { ref } from 'vue';
+  import { ref , watch} from 'vue';
   // @ts-ignore
   import FormValidation from '@/utils/checkout/FormValidations.js';
   export default {
@@ -37,10 +37,16 @@
       const { validatePhoneField, error } = FormValidation();
       const validateInput = () => {
         validatePhoneField('Phone', input.value, 6);
+        error.Phone === ''
         error.Phone === undefined || error.Phone === ''
           ? (fieldError.value = false)
           : (fieldError.value = true);
       };
+
+      watch(
+        () => input.value, () => {
+            validateInput()
+        })
 
       return { input, error, validateInput, fieldError };
     },

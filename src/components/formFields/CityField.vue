@@ -30,7 +30,15 @@
   // @ts-ignore
   import FormValidation from '@/utils/checkout/FormValidations.js';
   export default {
-    setup() {
+    props: {
+      isRequired: {
+        type: Boolean,
+        required: true,
+        default: false
+        }
+    },
+
+    setup(props) {
       let input = ref('');
       let fieldError = ref(false);
 
@@ -42,6 +50,10 @@
           : (fieldError.value = true);
       };
 
+      if(!props.isRequired){
+        console.log("props",props.isRequired)
+
+      }
       return { input, error, validateInput, fieldError };
     },
   }

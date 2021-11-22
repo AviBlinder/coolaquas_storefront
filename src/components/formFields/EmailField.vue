@@ -39,7 +39,7 @@
 
       const { validateEmailField, error } = FormValidation();
       const validateInput = () => {
-        validateEmailField('email', input.value);
+        validateEmailField('email', input.value)
         error.email === undefined || error.email === ''
           ? (fieldError.value = false)
           : (fieldError.value = true);

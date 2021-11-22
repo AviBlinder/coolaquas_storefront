@@ -1,7 +1,9 @@
 import {ref,onMounted, computed} from 'vue'
 import { useStore } from 'vuex';
 
-// import SubmitButtonState from '@/utils/checkout/submitButtonState.js'
+import SubmitButtonState from '@/utils/checkout/SubmitButtonState';
+
+
 export default {
   props: {
     finalCost: {
@@ -13,6 +15,8 @@ export default {
     const store = useStore();
       const currency = computed(() => store.getters['general/getCurrency']);
       const paypal = ref(null)
+      // @ts-ignore
+      const { disableButton } = SubmitButtonState;
 
   onMounted(() => {
     const script = document.createElement('script');
@@ -34,17 +38,20 @@ export default {
 
       const setLoaded = function()  {
       loaded.value = true;
+      // @ts-ignore
       window.paypal
         .Buttons({
           // paypal.FUNDING.PAYPAL = Paypal
           // paypal.FUNDING.CARD = Credit or debit cards
           // paypal.FUNDING.CREDIT = PayPal Credit
+          // @ts-ignore
           fundingSource: window.paypal.FUNDING.PAYPAL,
           style: {
             // label: 'pay',
             shape: 'pill',
             color: 'gold',
           },
+          // @ts-ignore
           createOrder: (data, actions) => {
             return actions.order.create({
               purchase_units: [
@@ -57,6 +64,7 @@ export default {
               ],
             });
           },
+          // @ts-ignore
           onApprove: async (data, actions) => {
             const order = await actions.order.capture();
             // this.data;
@@ -87,6 +95,7 @@ export default {
         clientIdDev,
         setLoaded,
         paypal,
+        disableButton,
       };
   },
 

@@ -74,9 +74,9 @@
                 <shipping-method> </shipping-method>
               <!--  -->
             <!-- Shipping Address -->
-            <shipping-address> </shipping-address>
-
-
+            <shipping-address
+            @disablePayment="updateDisableStatus"
+            > </shipping-address>
             </div>
 
 <!-- Same as Shipping -->
@@ -108,7 +108,7 @@
         </form>
         <div>
 
-       <paypalButton 
+       <paypalButton  v-show="!disablePaymentButton"
        :finalCost="finalCost"> 
        </paypalButton>
         </div>
@@ -140,6 +140,7 @@ export default {
     },
   setup() {
       const store = useStore()
+        const disablePaymentButton = ref(true)
 
       const email = ref('')
       const billingAsShipping = ref(true)
@@ -165,7 +166,9 @@ export default {
           totalAmountInCart.value + shippingCost.value + taxCost.value;
         return +finalCost.toFixed(2);
       })
-     
+    const updateDisableStatus = (event) => {
+      disablePaymentButton.value = event
+    }
     return {
       cartItems :computed(() => store.getters['cart/cartItems']),
       priceByProduct :computed(() => store.getters['cart/priceByProduct']),
@@ -179,6 +182,8 @@ export default {
       finalCost,
       currencySign,
       email,
+      disablePaymentButton,
+      updateDisableStatus
     }
   }
 } 

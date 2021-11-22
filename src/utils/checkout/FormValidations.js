@@ -5,7 +5,7 @@ const error = reactive({});
 const { isEmpty, minLength, isEmail } = fieldValidators();
 // isNum not used
 
-export default function FormValidation() {
+export default function FormValidations() {
   const validateFirstNameField = (fieldName, fieldValue,length) => {
     error[fieldName] = !fieldValue
       ? isEmpty(fieldName, fieldValue.trim())

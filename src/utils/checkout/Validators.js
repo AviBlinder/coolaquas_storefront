@@ -7,7 +7,6 @@
 export default function fieldValidators() {
 
   const isEmpty = (fieldName, fieldValue) => {
-
     return !fieldValue ? 'The ' + camelToWords(fieldName) + ' field is required' : '';
   };
   const minLength = (fieldName, fieldValue, min) => {

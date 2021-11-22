@@ -1,15 +1,12 @@
-import { computed, ref } from 'vue';
+import {ref } from 'vue';
 
 const disableButton = ref(true)
 
 export default function SubmitButtonState(user, error) {
-  const isSignupButtonDisabled = computed(() => {
+  const isSignupButtonDisabled =  () => {
     let disabled = true;
     for (let prop in user) {
-      // if the field does not exist on user's object or
-      //  there is an error on that field
-      // then disable the button
-      if (!user[prop] || error[prop]) {
+      if ( error[prop] === undefined || error[prop] !== '') {
         disabled = true;
         disableButton.value = true
         break;
@@ -18,7 +15,6 @@ export default function SubmitButtonState(user, error) {
       disableButton.value = false
     }
     return disabled;
-  });
-
+  };
   return { isSignupButtonDisabled, disableButton };
 }

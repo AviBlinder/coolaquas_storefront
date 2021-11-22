@@ -2,16 +2,19 @@
 <!-- border-t border-gray-200 pt-10 -->
           <div class="mt-10 ">
             <h2 class="text-lg font-medium text-gray-900">Shipping information</h2>
+            <p>disableButton: {{disableButton}}</p>
             <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
               <!-- First Name -->
               <!-- @change='updateOrderShippingDetails' -->
               <FirstName
+              :isRequired="true"
               @update:modelValue='updateOrderShippingDetails'
                v-model="firstName"/>
 
               <!-- Last Name -->
               <!-- @change='updateOrderShippingDetails' -->
               <LastName 
+              :isRequired="true"
               @update:modelValue='updateOrderShippingDetails'              
                v-model="lastName"/>
 
@@ -19,6 +22,7 @@
               <div class="sm:col-span-2">
                 <!-- @change='updateOrderShippingDetails' -->
                 <CompanyName
+              :isRequired="false"
                 @update:modelValue='updateOrderShippingDetails'                
                 v-model="company" />
               </div>
@@ -26,6 +30,7 @@
               <div class="sm:col-span-2">
               <!-- @change='updateOrderShippingDetails' -->
             <Address 
+              :isRequired="true"
               @update:modelValue='updateOrderShippingDetails'              
               v-model="address"
             />
@@ -34,6 +39,7 @@
               <div class="sm:col-span-2">
                 <!-- @change='updateOrderShippingDetails' -->
                 <AdditionalAddress
+              :isRequired="false"
                 @update:modelValue='updateOrderShippingDetails'                
                 v-model="address2"
                 />
@@ -43,6 +49,7 @@
               <div>
                   <!-- @change='updateOrderShippingDetails' -->
                 <City
+                :isRequired="true"
                   @update:modelValue='updateOrderShippingDetails'                  
                   v-model='city'
                   />
@@ -52,6 +59,7 @@
               <div>
                 <!-- @change='updateOrderShippingDetails' -->
                 <PostalCode
+              :isRequired="true"
                 @update:modelValue='updateOrderShippingDetails'                  
                 v-model='postalCode'
                 />
@@ -61,6 +69,7 @@
               <div class="sm:col-span-2">
                  <!-- @change='updateOrderShippingDetails' -->
                 <Country
+              :isRequired="true"
                  @update:modelValue='updateOrderShippingDetails'                  
                  v-model='country'
                 />
@@ -69,6 +78,7 @@
               <div class="sm:col-span-2">
                  <!-- @change='updateOrderShippingDetails' -->
                 <Phone
+              :isRequired="true"
                  @update:modelValue='updateOrderShippingDetails'                  
                  v-model='phone'
                 />
@@ -80,8 +90,10 @@
 
 <script>// @ts-nocheck
 
-import { reactive, toRefs} from 'vue'
+import {ref, reactive, toRefs} from 'vue'
 import {useStore} from 'vuex';
+import SubmitButtonState from '@/utils/checkout/SubmitButtonState.js'
+import FormValidations from '@/utils/checkout/FormValidations.js'
 
 // Form fields
 import FirstName from '@/components/formFields/FirstName.vue'
@@ -106,12 +118,29 @@ export default {
      Country,
      Phone     
   },
-  setup() {
+  
+  setup(_,context) {
     const store = useStore()
+    let {disableButton} = SubmitButtonState()
+    const mandatoryFields = reactive({
+      email: '',
+      firstName: '',
+      lastName: '',
+      Address: '',
+      City: '',
+      postalCode: '',
+      Phone: ''
+    })
+    const { error } = FormValidations();
+    const { isSignupButtonDisabled } = SubmitButtonState(mandatoryFields, error);
+
+
+    const isDisable = ref(false)
 
     const updateOrderShippingDetails =  () => {
-      // ShippingDetails.country = selected.value
-      store.dispatch('cart/setOrderShippingDetails',ShippingDetails)
+      isDisable.value = isSignupButtonDisabled()
+       context.emit('disablePayment',isDisable.value)
+       store.dispatch('cart/setOrderShippingDetails',ShippingDetails)
     }
 
     const ShippingDetails = reactive({
@@ -126,20 +155,13 @@ export default {
       phone: ''
     })
 
-    const mandatoryFields = reactive({
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: '',
-      postalCode: '',
-      country: '',
-      phone: ''
-    })
-
     return {
       ...toRefs(ShippingDetails),
       updateOrderShippingDetails,
-      mandatoryFields
+      mandatoryFields,
+      disableButton,
+      isSignupButtonDisabled,
+      isDisable
     }
   },
 
