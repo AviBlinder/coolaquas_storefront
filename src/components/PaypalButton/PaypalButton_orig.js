@@ -1,6 +1,4 @@
-import {ref,onMounted, computed} from 'vue'
-import { useStore } from 'vuex';
-
+import { mapGetters } from "vuex";
 // import SubmitButtonState from '@/utils/checkout/submitButtonState.js'
 export default {
   props: {
@@ -9,31 +7,38 @@ export default {
     }
   },
   name: 'PaypalButton',
-  setup(props){  
-    const store = useStore();
-      const currency = computed(() => store.getters['general/getCurrency']);
-      const paypal = ref(null)
+  computed: {
+    ...mapGetters({
+      currency: 'general/getCurrency',
 
-  onMounted(() => {
+
+    }),
+  },
+  data: function() {
+    return {
+      loaded: false,
+      couponApplied: false,
+      paypalLink: 'https://www.paypal.com/sdk/js',
+      clientIdProd: process.env.VUE_APP_PAYPAL_PROD_CLIENT_ID,
+      clientIdDev: process.env.VUE_APP_PAYPAL_SANDBOX_CLIENT_ID,
+    };
+  },
+  mounted: function() {
     const script = document.createElement('script');
     if (process.env.NODE_ENV === 'production') {
-      script.src = `${paypalLink}?currency=${currency.value}&client-id=${clientIdProd}`;
+      script.src = `${this.paypalLink}?currency=${this.currency}&client-id=${this.clientIdProd}`;
     } else {
-      script.src = `${paypalLink}?currency=${currency.value}&client-id=${clientIdDev}`;
+      script.src = `${this.paypalLink}?currency=${this.currency}&client-id=${this.clientIdDev}`;
     }
+
     // script.addEventListener('load', this.setLoaded);
-    script.addEventListener('load', () => setLoaded());
+    script.addEventListener('load', () => this.setLoaded());
+
     document.body.appendChild(script);
-  });
-
-      let loaded = ref(false)
-      let couponApplied =  ref(false)
-      const paypalLink = 'https://www.paypal.com/sdk/js'
-      const clientIdProd =  process.env.VUE_APP_PAYPAL_PROD_CLIENT_ID
-      const clientIdDev = process.env.VUE_APP_PAYPAL_SANDBOX_CLIENT_ID
-
-      const setLoaded = function()  {
-      loaded.value = true;
+  },
+  methods: {
+    setLoaded: function() {
+      this.loaded = true;
       window.paypal
         .Buttons({
           // paypal.FUNDING.PAYPAL = Paypal
@@ -51,7 +56,7 @@ export default {
                 {
                   description: 'test product',
                   amount: {
-                    value: props.finalCost,
+                    value: this.finalCost,
                   },
                 },
               ],
@@ -60,8 +65,8 @@ export default {
           onApprove: async (data, actions) => {
             const order = await actions.order.capture();
             // this.data;
-            // this.paidForFlag = true;
-            couponApplied.value = true;
+            this.paidForFlag = true;
+            this.couponApplied = true;
             if (process.env.NODE_ENV !== 'production') {
               console.log('order approved: ', order);
               console.log(
@@ -72,22 +77,10 @@ export default {
             //
           },
           onError: (err) => {
-            console.log('paypal error: ', err);
+            console.log(err);
           },
         })
-        .render(paypal.value);
-    }
-
-      return {
-        currency,
-        loaded,
-        couponApplied,
-        paypalLink,
-        clientIdProd,
-        clientIdDev,
-        setLoaded,
-        paypal,
-      };
+        .render(this.$refs.paypal);
+    },
   },
-
 };

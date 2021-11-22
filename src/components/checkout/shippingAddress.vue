@@ -110,7 +110,6 @@ export default {
     const store = useStore()
 
     const updateOrderShippingDetails =  () => {
-      console.log("updateOrderShippingDetails  ", ShippingDetails)
       // ShippingDetails.country = selected.value
       store.dispatch('cart/setOrderShippingDetails',ShippingDetails)
     }
@@ -127,10 +126,20 @@ export default {
       phone: ''
     })
 
+    const mandatoryFields = reactive({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      postalCode: '',
+      country: '',
+      phone: ''
+    })
 
     return {
       ...toRefs(ShippingDetails),
-      updateOrderShippingDetails
+      updateOrderShippingDetails,
+      mandatoryFields
     }
   },
 

@@ -107,7 +107,10 @@
           </div>
         </form>
         <div>
-       <paypalButton :finalCost="finalCost"> </paypalButton>
+
+       <paypalButton 
+       :finalCost="finalCost"> 
+       </paypalButton>
         </div>
       </section>
     </div>
@@ -180,4 +183,3 @@ export default {
   }
 } 
 </script>
-

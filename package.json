@@ -14,11 +14,14 @@
     "@tailwindcss/typography": "^0.4.1",
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "marked": "^3.0.8",
     "register-service-worker": "^1.7.1",
     "storyblok-js-client": "^4.1.5",
     "vue": "^3.0.0",
+    "vue-bootstrap-typeahead": "^0.2.6",
     "vue-router": "^4.0.0-0",
+    "vue3-autocomplete": "^1.0.4",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

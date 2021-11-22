@@ -12,3 +12,7 @@
   a {
     color: #42b983;
   }
+
+  .disableButton {
+  @apply cursor-not-allowed
+}
