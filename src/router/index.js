@@ -20,6 +20,14 @@ const routes = [
       import(/* webpackChunkName: "Search" */ '../views/Search.vue'),
   },
   {
+    path: '/searchSample',
+    name: 'SearchSample',
+    component: () =>
+      import(
+        /* webpackChunkName: "SearchSample" */ '../views/SearchSample.vue'
+      ),
+  },
+  {
     path: '/cart',
     name: 'Cart',
     component: () =>

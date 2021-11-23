@@ -1,7 +1,7 @@
 MVP:
-Checkout --> Once payment is successfull, redirect to main page?/show message
 Search: Composition API + vue-search/typeahead component + search page
 Filter & Sort (API?)
+Reactivity!!
 User Authentication
 
 Add "value proposition" blok
@@ -11,13 +11,10 @@ Add 'general settings' component (currency, currency_sign, shipping...)
 ---> Add Github Actions
 
 Bugs:
-- Checkout button from 'cart' page not working
 - Cart is not responsive  --> Fix when creating clean frontstore
 
 Checkout Feature:
-- Add checkout page + Paypal button
 - Add 'quick checkout' on each product
-
 
 - Make all pages reactive
 

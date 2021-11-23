@@ -22,6 +22,7 @@ import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 
 import marked from 'marked';
+
 const markedMixin = {
   methods: {
     MDtoHTML: (input) => {

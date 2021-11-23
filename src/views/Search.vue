@@ -1,86 +1,84 @@
 <template>
-<div>
-  <vue-bootstrap-typeahead
-    class="mb-4"
-    v-model="query"
-    :data="users"
-    :serializer="item => item.login"
-    placeholder="Search GitHub Users"
-    prepend="Username:"
-    @hit="searchRepositories"
-  >
+  <div class="h-screen ">
+    <simple-typeahead
+	id="typeahead_id"
+	placeholder="Search"
+	:items="products"
+  :minInputLength="2"
+	:itemProjection="p => {
+    return  p}"
+	@selectItem="selectItemEventHandler"
+	@onInput="onInputEventHandler"
+	@onFocus="onFocusEventHandler"
+	@onBlur="onBlurEventHandler"
+>
+	<!-- <template #list-header>
+		LIST HEADER
+	</template> -->
+	<template #list-item-text="slot">
+    <!-- <span v-html="slot.boldMatchText(slot.itemProjection(slot.item))"></span> -->
+    <span v-html="slot.itemProjection(slot.item)"></span>
+  </template>
+	<!-- <template #list-footer>
+		LIST FOOTER
+	</template> -->
 
-<!-- Append a button -->
-<template v-slot:append>
-  <button @click="searchRepositories" class="btn btn-primary">
-  Search
-  </button>
-</template>
+</simple-typeahead>
 
-<!-- Begin custom suggestion slot -->
-<template v-slot:suggestion="{ data, htmlText }">
-  <div class="d-flex align-items-center">
-    <img
-      class="rounded-circle"
-      :src="data.avatar_url"
-      style="width: 40px; height: 40px;" />
-
-    <!-- Note: the v-html binding is used, as htmlText contains
-         the suggestion text highlighted with <strong> tags -->
-    <span class="ml-4" v-html="htmlText"></span>
-    <i class="ml-auto fab fa-github-square fa-2x"></i> 
   </div>
 </template>
 
-</vue-bootstrap-typeahead>
-
- <h3>Search Users Repositories</h3>
- <pre>{{ stringify }}</pre>
-</div>
-</template>
-
 <script>
-import _ from 'lodash'
-import axios from 'axios'
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+import SimpleTypeahead from '@/components/vue3-simple-typeahead';
+// import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'; //Optional default CSS
+import {computed } from 'vue'
+import { useStore } from 'vuex';
+import router from "@/router";
 
 export default {
-  components: {
-    VueBootstrapTypeahead
-  },
-  data() {
-    return {
-      query: '',
-      userRepositories: {},
-      users: []
-    }
-  },
-  computed: {
-    stringify() {
-      return JSON.stringify(this.userRepositories, null, 2)
+components: {
+  SimpleTypeahead
+},
+setup(){
+    const store = useStore();
+
+    // const itemProjection = ref([])
+
+    const onInputEventHandler = (event) => {
+      console.log("onInputEventHandler ", event.input)
+      console.log("onInputEventHandler items", event.items)
     }
 
-  },
-  methods: {
-    searchUsers(newQuery) {
-      axios.get(`https://api.github.com/search/users?q=${newQuery}`)
-        .then((res) => {
-          console.log(res.data)
-          this.users = res.data.items
-        })
-    },
-    searchRepositories() {
-      axios.get(`https://api.github.com/search/repositories?q=user:${this.query}`)
-        .then(res => {
-          this.userRepositories = res.data
-        })
-    }
-  },
-  watch: {
-    // When the query value changes, fetch new results from
-    // the API - debounce the search to avoid hitting the API limits
-    query: _.debounce(function(newQuery) { this.searchUsers(newQuery) }, 250)
-  },
+    const selectItemEventHandler = (event) => {
+      console.log("selectItemEventHandler ", event)
+      router.push(`/products/${event}`)
+  }
+
+  const onFocusEventHandler = (event) => {
+    console.log("onFocusEventHandler ",event)
+  }
+
+  const onBlurEventHandler = (event) => {
+    console.log("onBlurEventHandler ", event)
+  }
+
+  return {
+      // itemProjection,
+      onInputEventHandler,
+      selectItemEventHandler,
+      onFocusEventHandler,
+      onBlurEventHandler,
+      products: computed(
+          () => 
+          {
+            const products = store.getters['products/getAllProducts']   
+            return products      
+            // return products.map( p => p.name)
+          })
+      }
+},
+methods: {
+}
 }
 </script>
 
