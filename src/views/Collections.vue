@@ -37,10 +37,6 @@
 </template>
 
 <script>
-  import StoryblokClient from 'storyblok-js-client';
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
   export default {
     created() {
       window.storyblok.init({
@@ -61,7 +57,7 @@
     computed: {},
     methods: {
       getStory(slug, version) {
-        storyapi
+        this.storyapi
           .get(`cdn/stories/`, {
             version: version,
             starts_with: slug,
@@ -74,8 +70,8 @@
           });
       },
       getProducts(collection) {
-        // storyapi.get(`cdn/stories/?filter_query[price][gt_int]=25&starts_with=products/`,{
-        storyapi
+        // this.storyapi.get(`cdn/stories/?filter_query[price][gt_int]=25&starts_with=products/`,{
+        this.storyapi
           .get(
             'cdn/stories/?filter_query[Collections][in_array]=' +
               collection +

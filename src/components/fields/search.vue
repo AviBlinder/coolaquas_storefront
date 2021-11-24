@@ -66,7 +66,6 @@
   </div>
 </template>
 <script>
-  import StoryblokClient from 'storyblok-js-client';
   import {mapGetters,mapActions} from 'vuex'
   // import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
@@ -80,11 +79,7 @@
     },
     async mounted() {
       if(this.getAllProducts.length === 0){
-          let storyapi = new StoryblokClient({
-            accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-        });
-
-        await storyapi
+        await this.storyapi
           .get('cdn/stories' + '?starts_with=products', {
             version: 'published',
           })

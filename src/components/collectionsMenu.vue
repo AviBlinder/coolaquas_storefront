@@ -12,10 +12,6 @@
 </template>
 
 <script>
-  import StoryblokClient from 'storyblok-js-client';
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
   export default {
     created() {
       window.storyblok.init({
@@ -37,7 +33,7 @@
     methods: {
 
       getCollections(slug,version) {
-        storyapi
+        this.storyapi
           .get(`cdn/stories/`, {
             version,
             starts_with: slug,

@@ -127,13 +127,8 @@ const product = {
   ],
 }
 
-import StoryblokClient from 'storyblok-js-client';
 import {useStore} from 'vuex';
 import { ref, reactive } from 'vue'
-
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
 
 export default {
     props: {
@@ -149,7 +144,7 @@ export default {
     },
     computed: {
       richTextContent() {
-        return storyapi.richTextResolver.render(this.blok.description);
+        return this.storyapi.richTextResolver.render(this.blok.description);
       },
     },
 

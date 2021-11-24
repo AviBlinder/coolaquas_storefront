@@ -1,0 +1,14 @@
+import _ from 'lodash'
+
+watch: {
+  query: _.debounce(function(newQuery) {this.searchUsers(newQuery)},250)
+}
+
+-------------
+v-if="$slots['list-header']"
+-------------
+
+  import StoryblokClient from 'storyblok-js-client';
+  let storyapi = new StoryblokClient({
+    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+  });

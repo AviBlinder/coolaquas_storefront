@@ -134,11 +134,12 @@ const navigation = {
     { name: 'About', description: 'Company' },
   ],
 }
-  import StoryblokClient from 'storyblok-js-client';
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
 import Cart from './Cart.vue'
+// import StoryblokClient from 'storyblok-js-client';
+//   let storyapi = new StoryblokClient({
+//     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+//   });
+
 export default {
   components: {
     Cart,
@@ -178,7 +179,7 @@ export default {
     },
     methods: {
       getCollections(slug,version) {
-        storyapi
+        this.storyapi
           .get(`cdn/stories/`, {
             version,
             starts_with: slug,

@@ -15,10 +15,12 @@
       @keydown.enter.tab.prevent="selectCurrentSelection"
       autocomplete="off"
     />
-    <div v-if="isListVisible" class="simple-typeahead-list">
+    <!-- Search Results block -->
+    <div v-if="isListVisible" class="simple-typeahead-list  ">
       <div class="simple-typeahead-list-header" v-if="$slots['list-header']">
         <slot name="list-header"></slot>
       </div>
+      <!-- Search results list -->
       <div
         class="simple-typeahead-list-item "
         :class="{

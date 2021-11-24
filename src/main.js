@@ -22,6 +22,7 @@ import Footer from './components/Footer.vue';
 import Cart from './components/Cart.vue';
 
 import marked from 'marked';
+import StoryblokClient from 'storyblok-js-client';
 
 const markedMixin = {
   methods: {
@@ -33,6 +34,11 @@ const markedMixin = {
 
 // 
 const app = createApp(App);
+// Global properties
+  app.config.globalProperties.storyapi = new StoryblokClient({
+    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+  });
+
 app
   .use(store)
   .use(router)
@@ -40,6 +46,9 @@ app
   .mixin(markedMixin)
   .mount('#app');
 
+
+
+// Global components
 app.component('Landing', landingPage);
 app.component('Hero', Hero);
 app.component('slideshow', Slideshow);
@@ -49,4 +58,6 @@ app.component('Product', Product);
 app.component('CategorySample', CategorySample);
 app.component('Footer', Footer);
 app.component('Footer', Cart);
+
+
 

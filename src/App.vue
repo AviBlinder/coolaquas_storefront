@@ -25,6 +25,7 @@
   // import collectionMenu from './components/collectionsMenu.vue';
   import FooterLinks from './components/Footer.vue';
   import NavigationMenu from './components/NavigationMenu.vue';
+
   export default {
     components: {
       // collectionMenu,

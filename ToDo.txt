@@ -1,5 +1,11 @@
 MVP:
-Search: Composition API + vue-search/typeahead component + search page
+Search: Composition API + vue-search/typeahead component + search page:
+add _debound
+style results display
+
+
+
+
 Filter & Sort (API?)
 Reactivity!!
 User Authentication

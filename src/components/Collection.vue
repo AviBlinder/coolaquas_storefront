@@ -38,11 +38,6 @@
 <script>
 import { ref } from 'vue'
 
-  import StoryblokClient from 'storyblok-js-client';
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
-
 export default {
   components: {
   },
@@ -83,7 +78,7 @@ export default {
     },
     methods: {
       getProducts(slug,version) {
-        storyapi
+        this.storyapi
           .get(
             'cdn/stories/?filter_query[Collections][in_array]=' +
               slug +

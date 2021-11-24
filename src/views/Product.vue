@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import StoryblokClient from 'storyblok-js-client';
+// import StoryblokClient from 'storyblok-js-client';
 
-let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW
-  });
+// let storyapi = new StoryblokClient({
+//     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW
+//   });
 
 export default {
     created() {
@@ -38,7 +38,7 @@ export default {
     },
     methods: {
       getStory(slug, version) {
-        storyapi
+        this.storyapi
           .get(`cdn/stories/${slug}` , {
             version: version,
           })
