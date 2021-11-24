@@ -46,8 +46,6 @@ app
   .mixin(markedMixin)
   .mount('#app');
 
-
-
 // Global components
 app.component('Landing', landingPage);
 app.component('Hero', Hero);

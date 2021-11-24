@@ -1,6 +1,5 @@
 <template>
-<p>input {{input}}</p>
-  <div :id="wrapperId" class="simple-typeahead">
+  <div :id="wrapperId" class="simple-typeahead ">
     <input
       :id="inputId"
       class="simple-typeahead-input"
@@ -32,26 +31,34 @@
         @click="selectItem(item)"
         @mouseenter="currentSelectionIndex = index"
       >
-        <span
-          class="simple-typeahead-list-item-text"
-          :data-text="itemProjection(item.name)"
-          v-if="$slots['list-item-text']"
-          ><slot
-            name="list-item-text"
-            :item="item.name"
-            :itemProjection="itemProjection"
-            :boldMatchText="boldMatchText"
-          ></slot
-        
-        >
-        <img class="justify-end" :src="item.content.images[0].filename" width="60" height="60">
-        </span>
-        <span
-          class="simple-typeahead-list-item-text"
-          :data-text="itemProjection(item.name)"
-          v-html="boldMatchText(itemProjection(item.name))"
-          v-else
-        ></span>
+        <!-- Search result - single items -->
+        <!-- class="simple-typeahead-list-item-text" -->
+        <div v-if="$slots['list-item-text']" class="flex flex-1 justify-between	justify-items-center	">
+          <div class="flex justify-start items-center" :data-text="itemProjection(item.name)">
+            <slot
+              name="list-item-text"
+              :item="item.name"
+              :itemProjection="itemProjection"
+              :boldMatchText="boldMatchText"
+            ></slot>
+          </div>
+
+            <div class="ml-3 relative w-16 h-16">
+              <img class="rounded-full border border-gray-100 shadow-sm"
+                :src="item.content.images[0].filename"
+                width="50"
+                height="50"
+              />
+              <!-- <div class="absolute top-0 right-0 h-3 w-3 my-1 border-2 border-white rounded-full bg-green-400 z-2"></div>               -->
+            </div>
+        </div>
+        <div v-else>
+          <span
+            class="simple-typeahead-list-item-text bg-secondary-700"
+            :data-text="itemProjection(item.name)"
+            v-html="boldMatchText(itemProjection(item.name))"
+          ></span>
+        </div>
       </div>
       <div class="simple-typeahead-list-footer" v-if="$slots['list-footer']">
         <slot name="list-footer"></slot>
@@ -180,7 +187,10 @@
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       },
       boldMatchText(text) {
-        const regexp = new RegExp(`(${this.escapeRegExp(this.input.name)})`, 'ig');
+        const regexp = new RegExp(
+          `(${this.escapeRegExp(this.input.name)})`,
+          'ig'
+        );
         return text.replace(regexp, '<strong>$1</strong>');
       },
     },
@@ -189,15 +199,15 @@
         return `${this.inputId}_wrapper`;
       },
       filteredItems() {
-        let regexp = ''
-          if(typeof this.input === 'string'){
+        let regexp = '';
+        if (typeof this.input === 'string') {
           regexp = new RegExp(this.escapeRegExp(this.input), 'i');
         } else {
           regexp = new RegExp(this.escapeRegExp(this.input.name), 'i');
         }
-          return this.items.filter((item) =>
-                this.itemProjection(item.name).match(regexp)
-        ) 
+        return this.items.filter((item) =>
+          this.itemProjection(item.name).match(regexp)
+        );
       },
       isListVisible() {
         return (
@@ -218,21 +228,17 @@
 
 <style scoped>
   .simple-typeahead {
-    position: relative;
+    @apply flex items-center flex-col justify-end z-40 mt-4
+    /* position: relative;
     width: 100%;
-    z-index: 40;
+    z-index: 40; */
   }
   .simple-typeahead > input {
     margin-bottom: 0;
   }
   .simple-typeahead .simple-typeahead-list {
-    position: absolute;
-    width: 80%;
-    border: none;
-    max-height: 400px;
-    overflow-y: auto;
-    border-bottom: 0.1rem solid #d1d1d1;
-    z-index: 9;
+    @apply  mt-1 max-w-2xl max-h-80 overflow-y-hidden border-b-2 border-solid border-bluegray-200   
+    
   }
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-header {
     background-color: #fafafa;

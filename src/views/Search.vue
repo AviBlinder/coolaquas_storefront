@@ -5,8 +5,7 @@
 	placeholder="Search"
 	:items="products"
   :minInputLength="2"
-	:itemProjection="p => {
-    return  p}"
+	:itemProjection="p => { return  p}"
 	@selectItem="selectItemEventHandler"
 	@onInput="onInputEventHandler"
 	@onFocus="onFocusEventHandler"
@@ -30,7 +29,6 @@
 
 <script>
 import SimpleTypeahead from '@/components/vue3-simple-typeahead';
-// import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'; //Optional default CSS
 import {computed } from 'vue'
 import { useStore } from 'vuex';
 import router from "@/router";
@@ -44,22 +42,22 @@ setup(){
 
     // const itemProjection = ref([])
 
-    const onInputEventHandler = (event) => {
-      console.log("onInputEventHandler ", event.input)
-      console.log("onInputEventHandler items", event.items)
+    const onInputEventHandler = () => {
+      return false
+      // console.log("onInputEventHandler ", event.input)
+      // console.log("onInputEventHandler items", event.items)
     }
 
     const selectItemEventHandler = (event) => {
-      console.log("selectItemEventHandler ", event)
       router.push(`/products/${event}`)
   }
 
-  const onFocusEventHandler = (event) => {
-    console.log("onFocusEventHandler ",event)
+  const onFocusEventHandler = () => {
+    return false
   }
 
-  const onBlurEventHandler = (event) => {
-    console.log("onBlurEventHandler ", event)
+  const onBlurEventHandler = () => {
+      return false
   }
 
   return {
