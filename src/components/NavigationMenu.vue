@@ -128,8 +128,7 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 
 const navigation = {
   pages: [
-    { name: 'Search', description: 'Search'},
-    { name: 'SearchSample', description: 'Search Demo'},
+    // { name: 'Search', description: 'Search'},
     // { name: 'Cart', description: 'Cart'},
     { name: 'About', description: 'Company' },
   ],

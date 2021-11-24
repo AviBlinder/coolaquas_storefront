@@ -7,10 +7,10 @@
   :minInputLength="2"
 	:itemProjection="p => { return  p}"
 	@selectItem="selectItemEventHandler"
-	@onInput="onInputEventHandler"
-	@onFocus="onFocusEventHandler"
-	@onBlur="onBlurEventHandler"
 >
+	<!-- @onInput="onInputEventHandler" -->
+	<!-- @onFocus="onFocusEventHandler" -->
+	<!-- @onBlur="onBlurEventHandler" -->
 	<!-- <template #list-header>
 		LIST HEADER
 	</template> -->
@@ -42,36 +42,33 @@ setup(){
 
     // const itemProjection = ref([])
 
-    const onInputEventHandler = () => {
-      return false
-      // console.log("onInputEventHandler ", event.input)
-      // console.log("onInputEventHandler items", event.items)
-    }
+    // const onInputEventHandler = () => {
+    //   return false
+    // }
 
     const selectItemEventHandler = (event) => {
       router.push(`/products/${event}`)
   }
 
-  const onFocusEventHandler = () => {
-    return false
-  }
+  // const onFocusEventHandler = () => {
+  //   return false
+  // }
 
-  const onBlurEventHandler = () => {
-      return false
-  }
+  // const onBlurEventHandler = () => {
+  //     return false
+  // }
 
   return {
       // itemProjection,
-      onInputEventHandler,
+      // onInputEventHandler,
       selectItemEventHandler,
-      onFocusEventHandler,
-      onBlurEventHandler,
+      // onFocusEventHandler,
+      // onBlurEventHandler,
       products: computed(
           () => 
           {
             const products = store.getters['products/getAllProducts']   
             return products      
-            // return products.map( p => p.name)
           })
       }
 },

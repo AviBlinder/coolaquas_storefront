@@ -12,3 +12,23 @@ v-if="$slots['list-header']"
   let storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });
+
+--------------------------------------------------------------------------------------
+      searchField() {
+        // console.log(e.target.value)
+        const results  = this.getAllProducts.filter( (product) => {
+          return (
+            product.content.name
+            .toLowerCase()
+            .indexOf(this.searchQuery.toLowerCase()) != -1 
+          )
+            } )
+        console.log("results =", results)
+        return  this.searchResults =  results.map(p => {
+          console.log("image: ",p.content.images[0].filename)
+          let retValue = `<img src="${p.content.images[0].filename}" width="50" height="50">`
+          console.log('retValue =', retValue)
+          return p.content.name
+          // return p.content.images[0].filename
+        })
+      }

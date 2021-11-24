@@ -234,10 +234,13 @@
     z-index: 40; */
   }
   .simple-typeahead > input {
-    margin-bottom: 0;
+    @apply mb-0 rounded-md shadow-sm
+    /* margin-bottom: 0; */
   }
   .simple-typeahead .simple-typeahead-list {
-    @apply  mt-1 max-w-2xl max-h-80 overflow-y-hidden border-b-2 border-solid border-bluegray-200   
+    @apply  mt-1 max-w-4xl w-1/3 max-h-80 
+    overflow-y-hidden 
+    /* border-b-2 border-t-2 border-solid border-bluegray-200    */
     
   }
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-header {
@@ -254,25 +257,30 @@
     border-right: 0.1rem solid #d1d1d1;
   }
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-item {
-    cursor: pointer;
+    @apply cursor-pointer bg-white p-1 mx-16 border-blue-200 
+    border-t-2 border-b-2 
+     border-l-2 border-r-2
+     border-solid
+    /* cursor: pointer;
     background-color: #ffffff;
     padding: 0.6rem 1rem;
     margin-left: 8rem;
     margin-right: 8rem;
     border-bottom: 0.1rem solid #d1d1d1;
     border-left: 0.1rem solid #d1d1d1;
-    border-right: 0.1rem solid #d1d1d1;
+    border-right: 0.1rem solid #d1d1d1; */
   }
 
   .simple-typeahead
     .simple-typeahead-list
     .simple-typeahead-list-item:last-child {
-    border-bottom: none;
+    /* border-bottom: none; */
   }
 
   .simple-typeahead
     .simple-typeahead-list
     .simple-typeahead-list-item.simple-typeahead-list-item-active {
-    background-color: #e1e1e1;
+      @apply bg-secondary-100
+    /* background-color: #e1e1e1; */
   }
 </style>
