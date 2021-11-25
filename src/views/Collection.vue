@@ -15,11 +15,6 @@
 
 <script>
   export default {
-        watch: {
-      $route() {
-        this.loadCollection()
-      },
-    },
 
     created() {
         this.loadCollection()

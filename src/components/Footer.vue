@@ -14,7 +14,7 @@
 }
 
   #footer a.router-link-exact-active {
-  @apply bg-gray-200 rounded-md p-1
+  @apply bg-blue-100 rounded-md p-1
   }
 </style>
 

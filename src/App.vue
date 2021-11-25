@@ -13,10 +13,12 @@
     <!-- </div> -->
     
       <!-- <collectionMenu> </collectionMenu> -->
-    <div >
+    <div class="h-full">
       <router-view :key="$route.fullPath"/>
-      <FooterLinks> </FooterLinks>
     </div>
+      <div>
+      <FooterLinks> </FooterLinks>
+      </div>
 
   </div>
 </template>

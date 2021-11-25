@@ -65,3 +65,7 @@ v-if="$slots['list-header']"
           });
         }
     },
+
+  import FooterLinks from './components/Footer.vue';
+
+      <FooterLinks> </FooterLinks>

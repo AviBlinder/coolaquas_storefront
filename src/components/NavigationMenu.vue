@@ -53,8 +53,7 @@
 
             </div>
 
-            <!-- Logo -->
-            
+            <!-- Logo -->            
             <router-link to="/" >
               <span class="sr-only">Coolaquas Logo</span>
               <img class="h-12" src="../assets/CoolAquasLogo.png" alt="" />
@@ -141,10 +140,6 @@ const navigation = {
   ],
 }
 import Cart from './Cart.vue'
-// import StoryblokClient from 'storyblok-js-client';
-//   let storyapi = new StoryblokClient({
-//     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-//   });
 
 export default {
   components: {
@@ -215,7 +210,7 @@ export default {
   #collection-link a.router-link-exact-active,
   #pages-link a.router-link-exact-active
   {
-  @apply bg-gray-200 rounded-md p-1
+  @apply bg-blue-100 rounded-md p-1
   }
 
 </style>
