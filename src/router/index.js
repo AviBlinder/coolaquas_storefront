@@ -52,6 +52,7 @@ const routes = [
   {
     path: '/products/:product',
     name: 'product',
+    props: (router) => ({ product: router.params.product }),
     component: () =>
       import(/* webpackChunkName: "Product" */ '../views/Product.vue'),
   },
@@ -109,6 +110,7 @@ const router = createRouter({
 
 // router.beforeEach((to, from, next) => {
 //   console.log("beforeEach - to: ", to.name)
+//     console.log("to params: ", to.params.product)
 //    next();
 // });
 

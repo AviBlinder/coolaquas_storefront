@@ -178,7 +178,9 @@
         }
       },
       selectItem(item) {
-        this.input = this.itemProjection(item);
+        console.log("inside selectItem ",item.name)
+        // this.input = this.itemProjection(item);
+        this.input = ''
         this.currentSelectionIndex = 0;
         document.getElementById(this.inputId).blur();
         this.$emit('selectItem', item.slug);

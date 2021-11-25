@@ -28,7 +28,10 @@
 import SimpleTypeahead from '@/components/search/vue3-simple-typeahead';
 import {computed , onMounted} from 'vue'
 import { useStore } from 'vuex';
-import router from "@/router";
+import { useRouter, } from 'vue-router'
+
+
+// import router from "@/router";
   import StoryblokClient from 'storyblok-js-client';
   let storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
@@ -40,8 +43,12 @@ components: {
 },
 setup(){
     const store = useStore();
-     onMounted(async () => {
+    const router = useRouter()
+    // const route = useRoute()
 
+    // const route = useRoute()
+  
+     onMounted(async () => {
       if(store.state.products.allProducts.length === 0){
         await storyapi
           .get('cdn/stories' + '?starts_with=products', {
@@ -58,7 +65,8 @@ setup(){
 
 
     const selectItemEventHandler = (event) => {
-      router.push(`/products/${event}`)
+      // router.push(`/products/${event}`)
+     router.push({name: 'product', params: {product: event}})      
   }
 
   return {
