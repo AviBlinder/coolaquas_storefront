@@ -138,7 +138,7 @@ export default {
     },
     watch: {
       blok() {
-        console.log("inside watch: ",this.blok)
+        // console.log("inside watch: ",this.blok)
         // this.getProducts(this.blok.uuid,'published');
       },
     },

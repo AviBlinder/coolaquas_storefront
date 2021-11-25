@@ -69,7 +69,7 @@
 
 <script>
   import { defineComponent } from 'vue';
-
+  import _ from 'lodash'
   export default /*#__PURE__*/ defineComponent({
     name: 'Vue3SimpleTypeahead',
     emits: ['onInput', 'onFocus', 'onBlur', 'selectItem'],
@@ -107,18 +107,28 @@
         input: '',
         isInputFocused: false,
         currentSelectionIndex: 0,
+        debounceDelay: 250
       };
     },
     methods: {
-      onInput() {
+      onInput () {
+        // _.debounce( console.log() ,250)
         if (
           this.isListVisible &&
-          this.currentSelectionIndex >= this.filteredItems.length
+          _.debounce( function() 
+          {this.currentSelectionIndex >= this.filteredItems.length},this.debounceDelay)
         ) {
-          this.currentSelectionIndex = (this.filteredItems.length || 1) - 1;
+          _.debounce( function() 
+          {this.currentSelectionIndex = (this.filteredItems.length || 1) - 1},
+          this.debounceDelay);
         }
-        this.$emit('onInput', { input: this.input, items: this.filteredItems });
+      // this.$emit('onInput', { input: this.input, items: this.filteredItems })
+      _.debounce(function() 
+      {this.$emit('onInput', { input: this.input, items: this.filteredItems })},
+      this.debounceDelay)
       },
+
+      // 
       onFocus() {
         this.isInputFocused = true;
         this.$emit('onFocus', { input: this.input, items: this.filteredItems });
@@ -178,7 +188,6 @@
         }
       },
       selectItem(item) {
-        console.log("inside selectItem ",item.name)
         // this.input = this.itemProjection(item);
         this.input = ''
         this.currentSelectionIndex = 0;
@@ -297,7 +306,7 @@ w-56;
   .simple-typeahead
     .simple-typeahead-list
     .simple-typeahead-list-item.simple-typeahead-list-item-active {
-      @apply bg-secondary-100
+      @apply bg-blue-200
     /* background-color: #e1e1e1; */
   }
 </style>
