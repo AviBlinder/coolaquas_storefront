@@ -32,3 +32,36 @@ v-if="$slots['list-header']"
           // return p.content.images[0].filename
         })
       }
+
+---------------------------------------------------------------------------------
+  @media screen and (min-width: 769px) {
+    .expandFocus {
+      width: 140%;
+      /* transform: translateX(15%); */
+      -webkit-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+
+    computed: {
+      ...mapGetters({getAllProducts:'products/getAllProducts'}),
+        // return this.getAllProducts.length;
+    },
+    methods: {
+      ...mapActions({setProducts:'products/setProducts'}),
+
+
+    async mounted() {
+      if(this.getAllProducts.length === 0){
+        await this.storyapi
+          .get('cdn/stories' + '?starts_with=products', {
+            version: 'published',
+          })
+          .then((response) => {
+            this.setProducts(response.data.stories)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+    },

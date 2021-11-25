@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import SimpleTypeahead from '@/components/vue3-simple-typeahead';
+import SimpleTypeahead from '@/components/search/vue3-simple-typeahead';
 import {computed } from 'vue'
 import { useStore } from 'vuex';
 import router from "@/router";

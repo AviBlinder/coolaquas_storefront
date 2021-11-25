@@ -1,5 +1,5 @@
 <template>
-  <div :id="wrapperId" class="simple-typeahead ">
+  <div :id="wrapperId" class="simple-typeahead">
     <input
       :id="inputId"
       class="simple-typeahead-input"
@@ -15,13 +15,13 @@
       autocomplete="off"
     />
     <!-- Search Results block -->
-    <div v-if="isListVisible" class="simple-typeahead-list  ">
+    <div v-if="isListVisible" class="simple-typeahead-list">
       <div class="simple-typeahead-list-header" v-if="$slots['list-header']">
         <slot name="list-header"></slot>
       </div>
       <!-- Search results list -->
       <div
-        class="simple-typeahead-list-item "
+        class="simple-typeahead-list-item"
         :class="{
           'simple-typeahead-list-item-active': currentSelectionIndex == index,
         }"
@@ -29,12 +29,12 @@
         :key="index"
         @mousedown.prevent
         @click="selectItem(item)"
-        @mouseenter="currentSelectionIndex = index"
-      >
+        @mouseenter="currentSelectionIndex = index">
         <!-- Search result - single items -->
-        <!-- class="simple-typeahead-list-item-text" -->
-        <div v-if="$slots['list-item-text']" class="flex flex-1 justify-between	justify-items-center	">
-          <div class="flex justify-start items-center" :data-text="itemProjection(item.name)">
+        <div v-if="$slots['list-item-text']" class="simple-typeahead-list-item-text">
+          <div 
+          class="simple-typeahead-list-item-text-inner" 
+          :data-text="itemProjection(item.name)">
             <slot
               name="list-item-text"
               :item="item.name"
@@ -43,7 +43,7 @@
             ></slot>
           </div>
 
-            <div class="ml-3 relative w-16 h-16">
+            <div class="simple-typeahead-list-item-text-image">
               <img class="rounded-full border border-gray-100 shadow-sm"
                 :src="item.content.images[0].filename"
                 width="50"
@@ -228,7 +228,8 @@
 
 <style scoped>
   .simple-typeahead {
-    @apply flex items-center flex-col justify-end z-40 mt-4
+    /*  */
+    @apply relative flex items-center flex-col justify-end z-40 mt-4
     /* position: relative;
     width: 100%;
     z-index: 40; */
@@ -238,11 +239,13 @@
     /* margin-bottom: 0; */
   }
   .simple-typeahead .simple-typeahead-list {
-    @apply  mt-1 max-w-4xl w-1/3 max-h-80 
-    overflow-y-hidden 
-    /* border-b-2 border-t-2 border-solid border-bluegray-200    */
-    
+    @apply absolute top-0 mt-12 z-40 
   }
+    /* w-1/3  */
+    /* max-h-80  */
+    /* overflow-y-auto   */
+    /* border-b-2 border-t-2 border-solid border-bluegray-200    */   
+
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-header {
     background-color: #fafafa;
     padding: 0.6rem 1rem;
@@ -271,6 +274,18 @@
     border-right: 0.1rem solid #d1d1d1; */
   }
 
+.simple-typeahead .simple-typeahead-list .simple-typeahead-list-item .simple-typeahead-list-item-text {
+@apply flex flex-1 justify-between	justify-items-center
+
+w-56;
+}
+.simple-typeahead-list-item-text .simple-typeahead-list-item-text-inner {
+@apply ml-2 flex justify-start items-center
+}
+
+.simple-typeahead-list-item-text .simple-typeahead-list-item-text-image {
+@apply ml-3 relative w-16 h-16 flex items-center
+}
   .simple-typeahead
     .simple-typeahead-list
     .simple-typeahead-list-item:last-child {

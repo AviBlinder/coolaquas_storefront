@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white flex">
+  <div class="bg-white mx-4">
     <!-- Mobile menu -->
     <TransitionRoot as="template" :show="open">
       <Dialog as="div" class="fixed inset-0 flex z-40 lg:hidden" @close="open = false">
@@ -38,7 +38,7 @@
     </TransitionRoot>
 
     <header class="relative bg-white">
-      <nav aria-label="Top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Top" class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="border-b border-gray-200">
           <div class="h-16 flex items-center justify-between">
             <div class="flex-1 flex items-center lg:hidden">
@@ -47,21 +47,26 @@
                 <span class="sr-only">Open menu</span>
                 <MenuIcon class="h-6 w-6" aria-hidden="true" />
               </button>
+                <div class="flex justify-center items-center mb-4 ml-2 w-full">
+                    <search></search>               
+                </div>
+
             </div>
 
             <!-- Logo -->
-            <router-link to="/" class="flex ">
+            
+            <router-link to="/" >
               <span class="sr-only">Coolaquas Logo</span>
               <img class="h-12" src="../assets/CoolAquasLogo.png" alt="" />
             </router-link>
 
             <!-- Flyout menus -->
             <!-- <div class="hidden lg:flex-1 lg:block lg:self-stretch z-40 lg:ml-4"> -->
-            <div class="hidden lg:block lg:flex-1 ml-4 ">
+            <div class="hidden lg:flex lg:flex-1 ml-4 ">
 
               <div class="h-full flex space-x-8 items-center text-sm">
                 <div v-for="category in collections.stories" :key="category.uuid" 
-                class="flex">
+                class="inline-flex">
                   <div class="relative flex">
                     <div id="collection-link">    
                       <router-link 
@@ -72,12 +77,13 @@
                     </div>
                   </div>  
                 </div>
-              </div>
-              <!-- Search -->
-            </div>
-                <search class="sm:hidden md:inline-block md:w-32 lg:w-32 mx-6"></search>               
 
-            <div id="pages-link" class="flex-1 lg:flex items-center justify-end sm:hidden">
+            <div id="pages-link" class="lg:flex items-center justify-between sm:hidden">
+              <div class="md:flex-1 mb-2 mx-6 h-1/5">
+                <search  ></search>               
+              </div>
+              <div>
+
                 <router-link v-for="page in navigation.pages" 
                 :key="page.name"  
                 :to="{name: page.name}"
@@ -85,6 +91,7 @@
                  hover:text-gray-800 ">
                  {{ page.description }}
                 </router-link>
+              </div>
 
               <!-- Account -->
               <!-- <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
@@ -94,7 +101,7 @@
 
   
               <!-- Cart -->
-              <div class="ml-4 flow-root lg:ml-6 sm:ml-2">
+              <div class="ml-4 lg:ml-6 sm:ml-2">
                 <div class="group -m-2 p-2 flex items-center">
                   <!-- {{cartOpen}} -->
                   <!-- <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" /> -->
@@ -102,11 +109,13 @@
                       class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                   </Cart>
                 </div>
-
-              </div>
-           
+              </div> <!-- cart end -->
+            </div>  <!-- right sidebar end -->
             </div>
+              </div>
+
           </div>
+
         </div>
       </nav>
     </header>
@@ -128,8 +137,6 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 
 const navigation = {
   pages: [
-    // { name: 'Search', description: 'Search'},
-    // { name: 'Cart', description: 'Cart'},
     { name: 'About', description: 'Company' },
   ],
 }
