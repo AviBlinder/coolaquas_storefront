@@ -65,8 +65,14 @@ export default {
   },
     props: {
       blok: {
-        Type: Object,
+        Type: Object
       },
+      filterParams: {
+        Type: Object
+      },
+      sortParams: {
+        Type: Object        
+      }
     },
     watch: {
       blok() {

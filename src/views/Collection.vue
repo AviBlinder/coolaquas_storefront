@@ -118,9 +118,8 @@
         <div
           class="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200"
         >
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">
-            New Arrivals
-          </h1>
+          <div class="text-4xl font-extrabold tracking-tight text-gray-900">            
+          </div>
 
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
@@ -173,13 +172,6 @@
 
             <button
               type="button"
-              class="p-2 -m-2 ml-5 sm:ml-7 text-gray-400 hover:text-gray-500"
-            >
-              <span class="sr-only">View grid</span>
-              <ViewGridIcon class="w-5 h-5" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
               class="p-2 -m-2 ml-4 sm:ml-6 text-gray-400 hover:text-gray-500 lg:hidden"
               @click="mobileFiltersOpen = true"
             >
@@ -196,6 +188,7 @@
             <!-- Filters -->
             <form class="hidden lg:block">
               <h3 class="sr-only">Categories</h3>
+              <p>Filter products</p>
               <ul
                 role="list"
                 class="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200"
@@ -257,19 +250,17 @@
                 </DisclosurePanel>
               </Disclosure>
             </form>
-
-            <!-- Product grid -->
             <div class="lg:col-span-3">
-              <!-- Replace with your content -->
               <!-- <div
                 class="border-1 border-dashed border-gray-200 rounded-lg h-96 lg:h-full"> -->
                 <div class="border-1  border-gray-400 rounded-lg h-96 lg:h-full">
               <component
                 :blok="collection"
                 :is="collection.content.component"
+                :filterParams="filters"
+                :sortParams="sortOptions"
               ></component>
             </div>  
-              <!-- /End replace -->
             </div>
           </div>
         </section>
@@ -313,11 +304,6 @@
     { name: 'Price: High to Low', href: '#', current: false },
   ];
   const subCategories = [
-    { name: 'Totes', href: '#' },
-    { name: 'Backpacks', href: '#' },
-    { name: 'Travel Bags', href: '#' },
-    { name: 'Hip Bags', href: '#' },
-    { name: 'Laptop Sleeves', href: '#' },
   ];
   const filters = [
     {
