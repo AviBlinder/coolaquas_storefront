@@ -2,16 +2,29 @@
   <div class="bg-white">
     <div>
       <!-- Mobile filter dialog -->
-      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- max-w-7xl -->
+      <main class=" mx-auto px-4 sm:px-6 lg:px-8">
 
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
 
-          <div class="grid grid-cols-1 lg:grid-cols-4 lg:col-start-2  gap-x-10 gap-y-8">
+          <div class="grid sm-grid-cols-2 md:grid-cols-9 
+          gap-x-3 gap-y-8">
             <!-- Product grid -->
-            <div class="grid grid-cols-1 gap-y-10 gap-x-3 sm:grid-cols-2 lg:col-span-3 lg:gap-x-8	
-            ">
-              <router-link :to="{name: 'product', params: {product:product.slug}}" v-for="product in products.stories" :key="product.uuid" 
+            <div class="
+            relative
+            grid gap-y-10 gap-x-2  
+            md:col-span-3 md:gap-x-2
+            sm:grid-2  sm:border-b-2
+            max-w-4xl w-3/4 md:ml-6"
+            v-for="product in products.stories" :key="product.uuid">
+
+            <div v-show="product.content.valueProposition"
+            class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-10 rounded-full p-1 shadow-sm
+            text-center text-xs  justify-center items-center
+            ">{{product.content.valueProposition}}</div>
+
+              <router-link :to="{name: 'product', params: {product:product.slug}}" 
               class="group text-sm">
                 <div class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100 group-hover:opacity-80
                 hover:border-gray-400	border-2 	
