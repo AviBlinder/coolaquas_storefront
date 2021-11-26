@@ -27,8 +27,18 @@
   // import collectionMenu from './components/collectionsMenu.vue';
   import FooterLinks from './components/Footer.vue';
   import NavigationMenu from './components/NavigationMenu.vue';
+  // import StoryblokClient from 'storyblok-js-client';
 
   export default {
+//Global properties - Vue 3
+// provide(){
+//   return {
+//     storyAPI : new StoryblokClient({
+//     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+//   })
+//   }
+// },
+
     components: {
       // collectionMenu,
       NavigationMenu,

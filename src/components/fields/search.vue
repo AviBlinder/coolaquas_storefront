@@ -28,7 +28,7 @@
 import SimpleTypeahead from '@/components/search/vue3-simple-typeahead';
 import {computed , onMounted} from 'vue'
 import { useStore } from 'vuex';
-import { useRouter, } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 
 // import router from "@/router";

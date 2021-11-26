@@ -1,11 +1,12 @@
 const state = {
-  allProducts: []
+  allProducts: [],
+  collections: []
 };
 
 const getters = {
   getAllProducts(state){
     return state.allProducts
-  }
+    }
   }
 
 const actions = {

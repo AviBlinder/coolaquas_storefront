@@ -19,6 +19,8 @@ Checkout Feature:
 - Sort (view Ninja TS sample) & Filter 
 - Account: Login/Signin/Logout
 
+- Enhance navbar and clip-path(image)?
+
 Enhancements (next epics):
 - Create new project (github backed) with 
   - clean components only

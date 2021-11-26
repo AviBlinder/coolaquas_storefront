@@ -16,6 +16,7 @@ import Hero from './components/Hero.vue';
 import Slideshow from './components/Slideshow.vue';
 import SlideshowImage from './components/SlideshowImage.vue';
 import Collection from './components/Collection.vue';
+import CollectionFilterAndSort from './components/CollectionWIthFilterAndSort.vue';
 import Product from './components/Product.vue';
 import CategorySample from './components/category_sample.vue';
 import Footer from './components/Footer.vue';
@@ -34,7 +35,7 @@ const markedMixin = {
 
 // 
 const app = createApp(App);
-// Global properties
+// Global properties - Vue 2
   app.config.globalProperties.storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });
@@ -52,10 +53,8 @@ app.component('Hero', Hero);
 app.component('slideshow', Slideshow);
 app.component('slideshow-image', SlideshowImage);
 app.component('collection', Collection);
+app.component('CollectionFilterAndSort', CollectionFilterAndSort);
 app.component('Product', Product);
 app.component('CategorySample', CategorySample);
 app.component('Footer', Footer);
 app.component('Footer', Cart);
-
-
-
