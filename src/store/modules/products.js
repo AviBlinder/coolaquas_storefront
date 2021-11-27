@@ -1,6 +1,5 @@
 const state = {
   allProducts: [],
-  collections: []
 };
 
 const getters = {

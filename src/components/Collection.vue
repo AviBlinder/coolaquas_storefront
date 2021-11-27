@@ -4,79 +4,98 @@
       <!-- Mobile filter dialog -->
       <!-- max-w-7xl -->
       <main class=" mx-auto px-4 sm:px-6 lg:px-8">
-
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
 
-          <div class="grid sm-grid-cols-2 md:grid-cols-9 
-          gap-x-3 gap-y-8">
+          <div
+            class="grid sm-grid-cols-2 md:grid-cols-9 
+          gap-x-3 gap-y-8"
+          >
             <!-- Product grid -->
-            <div class="
+            <div
+              class="
             relative
             grid gap-y-10 gap-x-2  
             md:col-span-3 md:gap-x-2
             sm:grid-2  sm:border-b-2
             max-w-4xl w-3/4 md:ml-6"
-            v-for="product in products.stories" :key="product.uuid">
-
-            <div v-show="product.content.valueProposition"
-            class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-10 rounded-full p-1 shadow-sm
+              v-for="product in displayProducts"
+              :key="product.uuid"
+            >
+              <div
+                v-show="product.content.valueProposition"
+                class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-10 rounded-full p-1 shadow-sm
             text-center text-xs  justify-center items-center
-            ">{{product.content.valueProposition}}</div>
+            "
+              >
+                {{ product.content.valueProposition }}
+              </div>
 
-              <router-link :to="{name: 'product', params: {product:product.slug}}" 
-              class="group text-sm">
-                <div class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100 group-hover:opacity-80
+              <router-link
+                :to="{ name: 'product', params: { product: product.slug } }"
+                class="group text-sm"
+              >
+                <div
+                  class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100 group-hover:opacity-80
                 hover:border-gray-400	border-2 	
-                ">
-                  <img :src="product.content.images[0].filename" :alt="product.content.images[0].alt" 
-                  class="w-full h-full object-center object-cover" />
+                "
+                >
+                  <img
+                    :src="product.content.images[0].filename"
+                    :alt="product.content.images[0].alt"
+                    class="w-full h-full object-center object-cover"
+                  />
                 </div>
                 <h3 class="mt-4 font-medium text-gray-900">
                   {{ product.name }}
                 </h3>
                 <p class="mt-2 font-medium text-gray-900">
-                  {{ product.content.price }} {{product.content.currency}}
+                  {{ product.content.price }} {{ product.content.currency }}
                 </p>
+                <p>Size: {{ product.content.size }}</p>
               </router-link>
             </div>
           </div>
         </section>
       </main>
-
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+  import { ref } from 'vue';
 
-export default {
-  components: {
-  },
-  setup() {
-    const mobileMenuOpen = ref(false)
-    const mobileFiltersOpen = ref(false)
+  export default {
+    setup() {
+      const mobileMenuOpen = ref(false);
+      const mobileFiltersOpen = ref(false);
 
-    return {
-      mobileMenuOpen,
-      mobileFiltersOpen,
-    }
-  },
+      return {
+        mobileMenuOpen,
+        mobileFiltersOpen,
+      };
+    },
     props: {
       blok: {
-        Type: Object
+        Type: Object,
       },
       filterParams: {
-        Type: Object
+        Type: Array,
       },
       sortParams: {
-        Type: Object        
-      }
+        Type: Array,
+      },
     },
     watch: {
       blok() {
-        this.getProducts(this.blok.uuid,'published');
+        this.getProducts(this.blok.uuid, 'published');
+      },
+      filterParams() {
+        console.log('filter changed ', this.filterParams);
+        this.filterProducts();
+      },
+      sortParams() {
+        console.log('filter changed ', this.sortParams);
       },
     },
 
@@ -95,8 +114,41 @@ export default {
         }
       });
     },
+
+    computed: {
+      displayProducts() {
+        const results = this.filterProducts();
+        if (results) {
+          return results;
+        } else {
+          return this.products;
+        }
+      },
+    },
     methods: {
-      getProducts(slug,version) {
+      filterProducts() {
+        const filters = this.filterParams.map((p) => p.split('.'));
+        console.log('filters: ', filters);
+
+        //
+        if (filters.length) {
+          let filter0 = {};
+          filter0.key = filters[0][0];
+          filter0.value = filters[0][1];
+          console.log('filter0 =', filter0);
+
+          const results = this.products.filter((product) => {
+            return product.content[filter0.key] === filter0.value;
+          });
+          console.log('results =', results);
+          return results;
+        } else {
+          return false;
+        }
+        //
+      },
+
+      getProducts(slug, version) {
         this.storyapi
           .get(
             'cdn/stories/?filter_query[Collections][in_array]=' +
@@ -107,7 +159,7 @@ export default {
             }
           )
           .then((response) => {
-            this.products = response.data
+            this.products = response.data.stories;
           })
           .catch((error) => {
             console.log(error);
@@ -116,9 +168,8 @@ export default {
     },
     data() {
       return {
-        products: {
-        },
+        products: {},
       };
-    },  
-}
+    },
+  };
 </script>
