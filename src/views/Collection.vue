@@ -215,7 +215,7 @@
                       <input
                         :id="`filter-${section.id}-${optionIdx}`"
                         :name="`${section.id}[]`"
-                        :value="option.value"
+                        :value="`${section.id}.${option.value}`"
                         v-model="filterValue"
                         type="checkbox"
                         :checked="option.checked"
@@ -288,7 +288,7 @@
           id: 'color',
           name: 'Color',
           options: [
-            { value: 'color.white', label: 'White', checked: false },
+            { value: 'white', label: 'White', checked: false },
             { value: 'color.blue', label: 'Blue', checked: true },
             { value: 'color.green', label: 'Green', checked: false },
             { value: 'color.purple', label: 'Purple', checked: false },
@@ -298,10 +298,10 @@
           id: 'size',
           name: 'Size',
           options: [
-            { value: 'size.18', label: '18L', checked: false },
-            { value: 'size.20', label: '20L', checked: false },
-            { value: 'size.22', label: '22L', checked: true },
-            { value: 'size.40', label: '40L', checked: true },
+            { value: '18', label: '18L', checked: false },
+            { value: '20', label: '20L', checked: false },
+            { value: '22', label: '22L', checked: true },
+            { value: '40', label: '40L', checked: true },
           ],
         },
       ];
