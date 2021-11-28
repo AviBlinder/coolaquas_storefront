@@ -87,11 +87,9 @@
         this.getProducts(this.blok.uuid, 'published');
       },
       filterParams() {
-        console.log('filter changed ', this.filterParams);
         this.displayProducts = this.filterProducts();
       },
       sortParams() {
-        console.log('filter changed ', this.sortParams);
       },
     },
 
@@ -110,18 +108,6 @@
         }
       });
     },
-
-    // computed: {
-      // displayProducts() {
-      //   const results = this.filterProducts();
-      //   if (results) {
-      //     console.log("displayProducts :",results)
-      //     return results;
-      //   } else {
-      //     return this.products;
-      //   }
-      // },
-    // },
     methods: {
       filterProducts() {
         const filters = this.filterParams.map( (p) => p.split('.'));
@@ -131,8 +117,6 @@
           // create Object of filter parameters
           //sample output format: {'size': [40,20]}
           let filtersObject = this.reduceFilters(filters);
-
-          console.log("filtersObject = ",filtersObject)
           // let filterResults = this.products;
           let filterResults = []
 
@@ -140,16 +124,15 @@
             value.map( val => {
                 this.products.map( (product ) => {
                   // if the product has the filtered value on 'key' property:
-                  if (product.content[key].indexOf(val) !== -1 ){
+                  if (product.content[key] !== undefined && product.content[key].indexOf(val) !== -1 ){
                       filterResults.push(product)
-                      console.log("after push ",filterResults)
                 }
               })
             })
         }
-          console.log("filterResults: ",filterResults)
           return filterResults
-
+        } else {
+          return this.products
         }
       },
     
