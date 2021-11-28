@@ -1,12 +1,12 @@
 <template>
   <div class="bg-white">
+
     <div>
       <!-- Mobile filter dialog -->
       <!-- max-w-7xl -->
       <main class=" mx-auto px-4 sm:px-6 lg:px-8">
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
-
           <div
             class="grid sm-grid-cols-2 md:grid-cols-9 
           gap-x-3 gap-y-8"
@@ -20,15 +20,11 @@
             sm:grid-2  sm:border-b-2
             max-w-4xl w-3/4 md:ml-6"
               v-for="product in displayProducts"
-              :key="product.uuid"
-            >
-              <div
-                v-show="product.content.valueProposition"
+              :key="product.uuid">
+              <div v-if="product.content.valueProposition"
                 class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-10 rounded-full p-1 shadow-sm
             text-center text-xs  justify-center items-center
-            "
-              >
-                {{ product.content.valueProposition }}
+            "> {{ product.content.valueProposition }}
               </div>
 
               <router-link
@@ -92,7 +88,7 @@
       },
       filterParams() {
         console.log('filter changed ', this.filterParams);
-        this.filterProducts();
+        this.displayProducts = this.filterProducts();
       },
       sortParams() {
         console.log('filter changed ', this.sortParams);
@@ -115,39 +111,72 @@
       });
     },
 
-    computed: {
-      displayProducts() {
-        const results = this.filterProducts();
-        if (results) {
-          return results;
-        } else {
-          return this.products;
-        }
-      },
-    },
+    // computed: {
+      // displayProducts() {
+      //   const results = this.filterProducts();
+      //   if (results) {
+      //     console.log("displayProducts :",results)
+      //     return results;
+      //   } else {
+      //     return this.products;
+      //   }
+      // },
+    // },
     methods: {
       filterProducts() {
-        const filters = this.filterParams.map((p) => p.split('.'));
-        console.log('filters: ', filters);
-
+        const filters = this.filterParams.map( (p) => p.split('.'));
         //
         if (filters.length) {
-          let filter0 = {};
-          filter0.key = filters[0][0];
-          filter0.value = filters[0][1];
-          console.log('filter0 =', filter0);
+          //
+          // create Object of filter parameters
+          //sample output format: {'size': [40,20]}
+          let filtersObject = this.reduceFilters(filters);
 
-          const results = this.products.filter((product) => {
-            return product.content[filter0.key] === filter0.value;
-          });
-          console.log('results =', results);
-          return results;
-        } else {
-          return false;
+          console.log("filtersObject = ",filtersObject)
+          // let filterResults = this.products;
+          let filterResults = []
+
+          for (const [key, value] of Object.entries(filtersObject)) {
+            value.map( val => {
+                this.products.map( (product ) => {
+                  // if the product has the filtered value on 'key' property:
+                  if (product.content[key].indexOf(val) !== -1 ){
+                      filterResults.push(product)
+                      console.log("after push ",filterResults)
+                }
+              })
+            })
         }
-        //
-      },
+          console.log("filterResults: ",filterResults)
+          return filterResults
 
+        }
+      },
+    
+      reduceFilters(filters) {
+
+        let reducedFilters = {};
+        if (filters.length === 1) {
+          reducedFilters[ filters[0][0] ] = [ filters[0][1] ]
+        } else {
+          filters.reduce((prev, curr, index) => {
+            // Initial setup
+            if (index === 1) {
+              reducedFilters[prev[0]] = [prev[1]];
+            }
+            // If same key, push value to existing key
+            if (Object.keys(reducedFilters).includes(curr[0])) {
+              reducedFilters[curr[0]].push(curr[1]);
+              return reducedFilters;
+              //Different keys
+            } else {
+              reducedFilters[curr[0]] = [curr[1]];
+              return reducedFilters;
+            }
+          });
+        }
+        return reducedFilters;
+      },
       getProducts(slug, version) {
         this.storyapi
           .get(
@@ -160,6 +189,7 @@
           )
           .then((response) => {
             this.products = response.data.stories;
+            this.displayProducts = this.products
           })
           .catch((error) => {
             console.log(error);
@@ -169,6 +199,7 @@
     data() {
       return {
         products: {},
+        displayProducts: {}
       };
     },
   };

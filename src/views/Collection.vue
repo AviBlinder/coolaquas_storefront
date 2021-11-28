@@ -298,9 +298,9 @@
           id: 'size',
           name: 'Size',
           options: [
-            { value: 'size.14', label: '14L', checked: false },
             { value: 'size.18', label: '18L', checked: false },
             { value: 'size.20', label: '20L', checked: false },
+            { value: 'size.22', label: '22L', checked: true },
             { value: 'size.40', label: '40L', checked: true },
           ],
         },
