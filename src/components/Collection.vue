@@ -60,7 +60,6 @@
 
 <script>
   import { ref } from 'vue';
-
   export default {
     setup() {
       const mobileMenuOpen = ref(false);
@@ -73,10 +72,16 @@
     },
     props: {
       blok: {
-        Type: Object,
+        type: Object,
       },
       filterParams: {
-        Type: Array,
+        type: Array,
+      },
+      priceRange: {
+        type: Array,
+        default: function () {
+        return [0,100]
+        }
       },
       sortParams: {
         Type: Array,
@@ -87,7 +92,10 @@
         this.getProducts(this.blok.uuid, 'published');
       },
       filterParams() {
-        this.displayProducts = this.filterProducts();
+        this.displayProducts = this.filterByFeature();
+      },
+      priceRange(){
+        this.displayProducts = this.filterByPrice()
       },
       sortParams() {
       },
@@ -109,7 +117,19 @@
       });
     },
     methods: {
-      filterProducts() {
+      filterByPrice(){
+            let filterResults = []
+            // 
+            this.filteredByFeature.map( (product ) => {
+              if(product.content.price >= this.priceRange[0] && product.content.price <= this.priceRange[1])
+              {
+                filterResults.push(product)
+              }
+            })
+            this.filteredByPrice = filterResults
+            return filterResults 
+      },
+      filterByFeature() {
         const filters = this.filterParams.map( (p) => p.split('.'));
         //
         if (filters.length) {
@@ -120,9 +140,10 @@
           // let filterResults = this.products;
           let filterResults = []
 
+
           for (const [key, value] of Object.entries(filtersObject)) {
             value.map( val => {
-                this.products.map( (product ) => {
+              this.filteredByPrice.map( (product ) => {
                   // if the product has the filtered value on 'key' property:
                   if (product.content[key] !== undefined && product.content[key].indexOf(val) !== -1 ){
                       filterResults.push(product)
@@ -130,8 +151,10 @@
               })
             })
         }
+          this.filteredByFeature = filterResults
           return filterResults
         } else {
+          this.filteredByFeature = this.products
           return this.products
         }
       },
@@ -172,6 +195,8 @@
           )
           .then((response) => {
             this.products = response.data.stories;
+            this.filteredByPrice = this.products
+            this.filteredByFeature = this.products
             this.displayProducts = this.products
           })
           .catch((error) => {
@@ -181,8 +206,10 @@
     },
     data() {
       return {
-        products: {},
-        displayProducts: {}
+        products: {},        
+        displayProducts: {},
+        filteredByPrice: {},
+        filteredByFeature: {}
       };
     },
   };

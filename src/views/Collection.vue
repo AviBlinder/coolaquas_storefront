@@ -81,23 +81,23 @@
                         :key="option.value"
                         class="flex items-center"
                       >
-                        <input
+                        <input v-if="section.type === 'checkbox'"
                           :id="`filter-mobile-${section.id}-${optionIdx}`"
                           :name="`${section.id}[]`"
                           :value="`${section.id}.${option.value}`"
                           v-model="filterValue"
-                          type="checkbox"
+                          :type="section.type"
                           :checked="option.checked"
                           class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                         />
-                        <label
+                        <label v-if="section.type === 'checkbox'"
                           :for="`filter-mobile-${section.id}-${optionIdx}`"
                           class="ml-3 min-w-0 flex-1 text-gray-500"
                         >
                           {{ option.label }}
                         </label>
                       </div>
-                    </div>
+                      </div>
                   </DisclosurePanel>
                 </Disclosure>
               </form>
@@ -177,6 +177,9 @@
           <h2 id="products-heading" class="sr-only">Products</h2>
 
           <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
+            <!-- Slider -->
+
+            <!--  -->
             <!-- Filters -->
             <form class="hidden lg:block">
               <h3 class="sr-only">Categories</h3>
@@ -188,7 +191,7 @@
                 class="border-b border-gray-200 py-6"
                 v-slot="{ open }"
               >
-                <h3 class="-my-3 flow-root">
+                <h3 class="-my-3 flow-root"  v-if="section.type==='checkbox'">
                   <DisclosureButton
                     class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500"
                   >
@@ -205,23 +208,41 @@
                     </span>
                   </DisclosureButton>
                 </h3>
-                <DisclosurePanel class="pt-6">
+                <h3 class="-my-3 flow-root"  v-if="section.type==='range'">
+                  <DisclosureButton
+                    class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500"
+                  >
+                    <span class="font-medium text-gray-900">
+                      {{ section.name }}
+                    </span>
+                    <span class="ml-6 flex items-center">
+                      <PlusSmIcon
+                        v-if="!open"
+                        class="h-5 w-5"
+                        aria-hidden="true"
+                      />
+                      <MinusSmIcon v-else class="h-5 w-5" aria-hidden="true" />
+                    </span>
+                  </DisclosureButton>
+                </h3>
+                
+                <DisclosurePanel class="pt-6" v-if="section.type==='checkbox'">
                   <div class="space-y-4">
                     <div
                       v-for="(option, optionIdx) in section.options"
                       :key="option.value"
                       class="flex items-center"
                     >
-                      <input
+                      <input v-if="section.type === 'checkbox'"
                         :id="`filter-${section.id}-${optionIdx}`"
                         :name="`${section.id}[]`"
                         :value="`${section.id}.${option.value}`"
                         v-model="filterValue"
-                        type="checkbox"
+                       :type="section.type"
                         :checked="option.checked"
                         class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                       />
-                      <label
+                      <label v-if="section.type === 'checkbox'"
                         :for="`filter-${section.id}-${optionIdx}`"
                         class="ml-3 text-sm text-gray-600"
                       >
@@ -230,7 +251,17 @@
                     </div>
                   </div>
                 </DisclosurePanel>
-              </Disclosure>
+                <DisclosurePanel class="pt-6" v-if="section.type==='range'">
+                <div class="my-4">
+                    <div class="space-y-4">
+                      <SliderUI
+                      :min="section.options[0].minValue"
+                      :max="section.options[0].maxValue"
+                      ></SliderUI>
+                    </div>  
+              </div>
+                </DisclosurePanel>
+              </Disclosure>                    
             </form>
             <div class="lg:col-span-3">
               <!-- <div
@@ -240,6 +271,7 @@
                 :blok="collection"
                 :is="collection.content.component"
                 :filterParams="filterValue"
+                :priceRange="sliderModel.value"
                 :sortParams="sortOptions"
               ></component>
             </div>  
@@ -267,10 +299,11 @@
     TransitionChild,
     TransitionRoot,
   } from '@headlessui/vue';
-  import { XIcon } from '@heroicons/vue/outline';
-  import Collection from '@/components/Collection.vue';
+import { XIcon } from '@heroicons/vue/outline';
+import Collection from '@/components/Collection.vue';
+import SliderUI from '@/components/UI/SliderUI.vue'
 
-  import {
+import {
     ChevronDownIcon,
     FilterIcon,
     MinusSmIcon,
@@ -287,6 +320,7 @@
         {
           id: 'color',
           name: 'Color',
+          type: 'checkbox',
           options: [
             { value: 'white', label: 'White', checked: false },
             { value: 'color.blue', label: 'Blue', checked: true },
@@ -297,6 +331,7 @@
         {
           id: 'size',
           name: 'Size',
+          type: 'checkbox',
           options: [
             { value: '14', label: '14L', checked: false },
             { value: '20', label: '20L', checked: false },
@@ -304,6 +339,15 @@
             { value: '40', label: '40L', checked: true },
           ],
         },
+        {
+          id: 'price',
+          name: 'Price',
+          type: 'range',
+          options: [
+            {minValue: 0, maxValue: 100,label: 'price'},
+
+          ]
+        }
       ];
   export default {
 
@@ -311,6 +355,7 @@
         this.loadCollection()
     },
     components: {
+      SliderUI,
       Collection,
       Dialog,
       DialogOverlay,
@@ -334,8 +379,12 @@
       const mobileFiltersOpen = ref(false);
 
       const filterValue = ref([])
+      const range = ref({
+      value: [20, 40]
+    })
       return {
         filterValue,
+        range,
         sortOptions,
         filters,
         mobileFiltersOpen,
@@ -375,6 +424,9 @@
 
     data() {
       return {
+    sliderModel: {
+      value: [0, 100]
+    },        
         collection: {
           content: {
             body: [],
@@ -384,3 +436,14 @@
     },
   };
 </script>
+
+<style scoped
+src="@vueform/slider/themes/default.css">
+
+.priceSlider{
+  --slider-connect-bg: #EF4444;
+  --slider-tooltip-bg: #EF4444;
+  --slider-handle-ring-color: #EF444430;
+
+}
+</style>
