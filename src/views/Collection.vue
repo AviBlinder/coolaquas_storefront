@@ -181,8 +181,7 @@
                       :key="option.name"
                       v-slot="{ active }"
                     >
-                      <a
-                        :href="option.href"
+                      <button
                         :class="[
                           option.current
                             ? 'font-medium text-gray-900'
@@ -190,9 +189,10 @@
                           active ? 'bg-gray-100' : '',
                           'block px-4 py-2 text-sm',
                         ]"
+                        @click="sortValue = option.sortName"
                       >
                         {{ option.name }}
-                      </a>
+                      </button>
                     </MenuItem>
                   </div>
                 </MenuItems>
@@ -311,7 +311,7 @@
                   :is="collection.content.component"
                   :filterParams="filterValue"
                   :priceRange="sliderModel.value"
-                  :sortParams="sortOptions"
+                  :sortParams="sortValue"
                 ></component>
               </div>
             </div>
@@ -349,10 +349,8 @@
       ViewGridIcon,
     } from '@heroicons/vue/solid';
         const sortOptions = [
-          { name: 'Best Rating', href: '#', current: false },
-          { name: 'Newest', href: '#', current: false },
-          { name: 'Price: Low to High', href: '#', current: false },
-          { name: 'Price: High to Low', href: '#', current: false },
+          { name: 'Price: Low to High', href: '#', current: false, sortName:"price.asc" },
+          { name: 'Price: High to Low', href: '#', current: false, sortName:"price.desc" },
         ];
         const filters = [
           {
@@ -417,11 +415,13 @@
         const mobileFiltersOpen = ref(false);
 
         const filterValue = ref([])
+        const sortValue = ref('')
         const range = ref({
         value: [20, 40]
       })
         return {
           filterValue,
+          sortValue,
           range,
           sortOptions,
           filters,

@@ -17,6 +17,15 @@ Checkout Feature:
 - Make all pages reactive
 
 - Sort (view Ninja TS sample) & Filter 
+setup(props) {
+    const orderedJobs = computed(() => {
+      return [...props.jobs].sort((a: Job, b: Job) => {
+        return a[props.order] > b[props.order] ? 1 : -1
+      })
+    })
+    return { orderedJobs }
+  },
+
 - Account: Login/Signin/Logout
 
 - Enhance navbar and clip-path(image)?

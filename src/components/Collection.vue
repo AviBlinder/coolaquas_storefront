@@ -92,14 +92,18 @@
         this.getProducts(this.blok.uuid, 'published');
       },
       filterParams() {
-        this.displayProducts = this.filterByFeature();
+        this.displayProducts = this.sorted ? this.sortProducts(this.sortParams,this.filterByFeature()) : this.filterByFeature()
       },
      priceRange: {
-      handler: function () {this.displayProducts = this.filterByPrice() },
+      handler: function () {
+        this.displayProducts = this.sorted ? this.sortProducts(this.sortParams,this.filterByPrice()) : this.filterByPrice()
+        },
       deep: true
     },
 
       sortParams() {
+        this.sorted = true
+        this.displayProducts = this.sortProducts(this.sortParams,this.displayProducts)
       },
     },
 
@@ -119,6 +123,16 @@
       });
     },
     methods: {
+      sortProducts(sortKey,payload){
+      const sortKeys = sortKey.split('.')
+      return [...payload].sort((a, b) => {
+        if(sortKeys[1] === 'asc'){
+          return a.content[sortKeys[0] ] > b.content[sortKeys[0]] ? 1 : -1
+        } else {        
+          return a.content[sortKeys[0] ] < b.content[sortKeys[0]] ? 1 : -1
+        }
+      })        
+      },
       filterByPrice(){
             let filterResults = []
             // 
@@ -211,7 +225,8 @@
         products: {},        
         displayProducts: {},
         filteredByPrice: {},
-        filteredByFeature: {}
+        filteredByFeature: {},
+        sorted : false
       };
     },
   };
