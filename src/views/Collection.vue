@@ -238,9 +238,9 @@
                         :name="`${section.id}[]`"
                         :value="`${section.id}.${option.value}`"
                         v-model="filterValue"
-                       :type="section.type"
+                        :type="section.type"
                         :checked="option.checked"
-                        class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                        class="h-4 w-4 border-gray-300 rounded text-secondary-600 focus:ring-secondary-500"
                       />
                       <label v-if="section.type === 'checkbox'"
                         :for="`filter-${section.id}-${optionIdx}`"
@@ -256,13 +256,22 @@
                     <div class="space-y-4">
                       <SliderUI
                       :min="section.options[0].minValue"
+                      @update:min="sliderModel.value[0] = $event"
                       :max="section.options[0].maxValue"
+                      @priceRange-update="PriceRangeUpdate($event)"
+                      :currencySign="'$ '"
+                      :decimals="0"
                       ></SliderUI>
+                      <!-- @update:max="sliderModel.value[1] = $event"                       -->
+              <!-- @update:modelValue="pageTitle = $event" -->
+              <!-- <ChildComponent :title="pageTitle" 
+                  @update:title="pageTitle = $event" /> -->
                     </div>  
               </div>
                 </DisclosurePanel>
               </Disclosure>                    
             </form>
+
             <div class="lg:col-span-3">
               <!-- <div
                 class="border-1 border-dashed border-gray-200 rounded-lg h-96 lg:h-full"> -->
@@ -274,6 +283,9 @@
                 :priceRange="sliderModel.value"
                 :sortParams="sortOptions"
               ></component>
+              <!-- @update:modelValue="pageTitle = $event" -->
+              <!-- <ChildComponent :title="pageTitle" @update:title="pageTitle = $event" /> -->
+
             </div>  
             </div>
           </div>
@@ -392,6 +404,11 @@ import {
     },
 
     methods: {
+      PriceRangeUpdate(event){
+        this.sliderModel.value[0] = event[0]
+        this.sliderModel.value[1] = event[1]
+        
+      },
       loadCollection(){
       const slug = `collections/${this.$route.params.collection}`
       window.storyblok.init({

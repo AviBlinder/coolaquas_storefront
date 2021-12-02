@@ -94,9 +94,11 @@
       filterParams() {
         this.displayProducts = this.filterByFeature();
       },
-      priceRange(){
-        this.displayProducts = this.filterByPrice()
-      },
+     priceRange: {
+      handler: function () {this.displayProducts = this.filterByPrice() },
+      deep: true
+    },
+
       sortParams() {
       },
     },
