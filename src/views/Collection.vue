@@ -53,7 +53,7 @@
                   class="border-t border-gray-200 px-4 py-6"
                   v-slot="{ open }"
                 >
-                  <h3 class="-mx-2 -my-3 flow-root">
+                  <h3 class="-mx-2 -my-3 flow-root" v-if="section.type==='checkbox'">
                     <DisclosureButton
                       class="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500"
                     >
@@ -74,14 +74,37 @@
                       </span>
                     </DisclosureButton>
                   </h3>
-                  <DisclosurePanel class="pt-6">
+                  <h3 class="-mx-2 -my-3 flow-root" v-if="section.type==='range'">
+                    <DisclosureButton
+                      class="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500"
+                    >
+                      <span class="font-medium text-gray-900">
+                        {{ section.name }}
+                      </span>
+                      <span class="ml-6 flex items-center">
+                        <PlusSmIcon
+                          v-if="!open"
+                          class="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                        <MinusSmIcon
+                          v-else
+                          class="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </DisclosureButton>
+                  </h3>
+
+                  <DisclosurePanel class="pt-6" v-if="section.type==='checkbox'">
                     <div class="space-y-6">
                       <div
                         v-for="(option, optionIdx) in section.options"
                         :key="option.value"
                         class="flex items-center"
                       >
-                        <input v-if="section.type === 'checkbox'"
+                        <input
+                          v-if="section.type === 'checkbox'"
                           :id="`filter-mobile-${section.id}-${optionIdx}`"
                           :name="`${section.id}[]`"
                           :value="`${section.id}.${option.value}`"
@@ -90,15 +113,28 @@
                           :checked="option.checked"
                           class="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
                         />
-                        <label v-if="section.type === 'checkbox'"
+                        <label
+                          v-if="section.type === 'checkbox'"
                           :for="`filter-mobile-${section.id}-${optionIdx}`"
                           class="ml-3 min-w-0 flex-1 text-gray-500"
                         >
                           {{ option.label }}
                         </label>
                       </div>
-                      </div>
+                    </div>
                   </DisclosurePanel>
+                  <DisclosurePanel class="pt-6" v-if="section.type==='range'">
+                    <div class="space-y-6 mx-2 mt-4">                      
+                      <SliderUI
+                        :min="section.options[0].minValue"
+                        @update:min="sliderModel.value[0] = $event"
+                        :max="section.options[0].maxValue"
+                        @priceRange-update="PriceRangeUpdate($event)"
+                        :currencySign="'$ '"
+                        :decimals="0"
+                      ></SliderUI>
+                    </div>
+                  </DisclosurePanel>                  
                 </Disclosure>
               </form>
             </div>
@@ -110,8 +146,9 @@
         <div
           class="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200"
         >
-          <div class="text-4xl font-extrabold tracking-tight text-gray-900">            
-          </div>
+          <div
+            class="text-4xl font-extrabold tracking-tight text-gray-900"
+          ></div>
 
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
@@ -177,9 +214,6 @@
           <h2 id="products-heading" class="sr-only">Products</h2>
 
           <div class="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-            <!-- Slider -->
-
-            <!--  -->
             <!-- Filters -->
             <form class="hidden lg:block">
               <h3 class="sr-only">Categories</h3>
@@ -191,7 +225,7 @@
                 class="border-b border-gray-200 py-6"
                 v-slot="{ open }"
               >
-                <h3 class="-my-3 flow-root"  v-if="section.type==='checkbox'">
+                <h3 class="-my-3 flow-root" v-if="section.type==='checkbox'">
                   <DisclosureButton
                     class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500"
                   >
@@ -208,7 +242,7 @@
                     </span>
                   </DisclosureButton>
                 </h3>
-                <h3 class="-my-3 flow-root"  v-if="section.type==='range'">
+                <h3 class="-my-3 flow-root" v-if="section.type==='range'">
                   <DisclosureButton
                     class="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500"
                   >
@@ -225,7 +259,7 @@
                     </span>
                   </DisclosureButton>
                 </h3>
-                
+
                 <DisclosurePanel class="pt-6" v-if="section.type==='checkbox'">
                   <div class="space-y-4">
                     <div
@@ -233,7 +267,8 @@
                       :key="option.value"
                       class="flex items-center"
                     >
-                      <input v-if="section.type === 'checkbox'"
+                      <input
+                        v-if="section.type === 'checkbox'"
                         :id="`filter-${section.id}-${optionIdx}`"
                         :name="`${section.id}[]`"
                         :value="`${section.id}.${option.value}`"
@@ -242,7 +277,8 @@
                         :checked="option.checked"
                         class="h-4 w-4 border-gray-300 rounded text-secondary-600 focus:ring-secondary-500"
                       />
-                      <label v-if="section.type === 'checkbox'"
+                      <label
+                        v-if="section.type === 'checkbox'"
                         :for="`filter-${section.id}-${optionIdx}`"
                         class="ml-3 text-sm text-gray-600"
                       >
@@ -252,123 +288,43 @@
                   </div>
                 </DisclosurePanel>
                 <DisclosurePanel class="pt-6" v-if="section.type==='range'">
-                <div class="my-4">
+                  <div class="my-4">
                     <div class="space-y-4">
                       <SliderUI
-                      :min="section.options[0].minValue"
-                      @update:min="sliderModel.value[0] = $event"
-                      :max="section.options[0].maxValue"
-                      @priceRange-update="PriceRangeUpdate($event)"
-                      :currencySign="'$ '"
-                      :decimals="0"
+                        :min="section.options[0].minValue"
+                        @update:min="sliderModel.value[0] = $event"
+                        :max="section.options[0].maxValue"
+                        @priceRange-update="PriceRangeUpdate($event)"
+                        :currencySign="'$ '"
+                        :decimals="0"
                       ></SliderUI>
-                      <!-- @update:max="sliderModel.value[1] = $event"                       -->
-              <!-- @update:modelValue="pageTitle = $event" -->
-              <!-- <ChildComponent :title="pageTitle" 
-                  @update:title="pageTitle = $event" /> -->
-                    </div>  
-              </div>
+                    </div>
+                  </div>
                 </DisclosurePanel>
-              </Disclosure>                    
+              </Disclosure>
             </form>
 
             <div class="lg:col-span-3">
-              <!-- <div
-                class="border-1 border-dashed border-gray-200 rounded-lg h-96 lg:h-full"> -->
-                <div class="border-1  border-gray-400 rounded-lg h-96 lg:h-full">
-              <component
-                :blok="collection"
-                :is="collection.content.component"
-                :filterParams="filterValue"
-                :priceRange="sliderModel.value"
-                :sortParams="sortOptions"
-              ></component>
-              <!-- @update:modelValue="pageTitle = $event" -->
-              <!-- <ChildComponent :title="pageTitle" @update:title="pageTitle = $event" /> -->
-
-            </div>  
+              <div class="border-1  border-gray-400 rounded-lg h-96 lg:h-full">
+                <component
+                  :blok="collection"
+                  :is="collection.content.component"
+                  :filterParams="filterValue"
+                  :priceRange="sliderModel.value"
+                  :sortParams="sortOptions"
+                ></component>
+              </div>
             </div>
           </div>
         </section>
       </main>
     </div>
   </div>
-
 </template>
 
 <script>
-  import { ref } from 'vue';
-  import {
-    Dialog,
-    DialogOverlay,
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    TransitionChild,
-    TransitionRoot,
-  } from '@headlessui/vue';
-import { XIcon } from '@heroicons/vue/outline';
-import Collection from '@/components/Collection.vue';
-import SliderUI from '@/components/UI/SliderUI.vue'
-
-import {
-    ChevronDownIcon,
-    FilterIcon,
-    MinusSmIcon,
-    PlusSmIcon,
-    ViewGridIcon,
-  } from '@heroicons/vue/solid';
-      const sortOptions = [
-        { name: 'Best Rating', href: '#', current: false },
-        { name: 'Newest', href: '#', current: false },
-        { name: 'Price: Low to High', href: '#', current: false },
-        { name: 'Price: High to Low', href: '#', current: false },
-      ];
-      const filters = [
-        {
-          id: 'color',
-          name: 'Color',
-          type: 'checkbox',
-          options: [
-            { value: 'white', label: 'White', checked: false },
-            { value: 'color.blue', label: 'Blue', checked: true },
-            { value: 'color.green', label: 'Green', checked: false },
-            { value: 'color.purple', label: 'Purple', checked: false },
-          ],
-        },
-        {
-          id: 'size',
-          name: 'Size',
-          type: 'checkbox',
-          options: [
-            { value: '14', label: '14L', checked: false },
-            { value: '20', label: '20L', checked: false },
-            { value: '22', label: '22L', checked: true },
-            { value: '40', label: '40L', checked: true },
-          ],
-        },
-        {
-          id: 'price',
-          name: 'Price',
-          type: 'range',
-          options: [
-            {minValue: 0, maxValue: 100,label: 'price'},
-
-          ]
-        }
-      ];
-  export default {
-
-    created() {
-        this.loadCollection()
-    },
-    components: {
-      SliderUI,
-      Collection,
+    import { ref } from 'vue';
+    import {
       Dialog,
       DialogOverlay,
       Disclosure,
@@ -380,87 +336,154 @@ import {
       MenuItems,
       TransitionChild,
       TransitionRoot,
+    } from '@headlessui/vue';
+  import { XIcon } from '@heroicons/vue/outline';
+  import Collection from '@/components/Collection.vue';
+  import SliderUI from '@/components/UI/SliderUI.vue'
+
+  import {
       ChevronDownIcon,
       FilterIcon,
       MinusSmIcon,
       PlusSmIcon,
       ViewGridIcon,
-      XIcon,
-    },
-     setup() {
-      const mobileFiltersOpen = ref(false);
-
-      const filterValue = ref([])
-      const range = ref({
-      value: [20, 40]
-    })
-      return {
-        filterValue,
-        range,
-        sortOptions,
-        filters,
-        mobileFiltersOpen,
-      };
-    },
-
-    methods: {
-      PriceRangeUpdate(event){
-        this.sliderModel.value[0] = event[0]
-        this.sliderModel.value[1] = event[1]
-        
-      },
-      loadCollection(){
-      const slug = `collections/${this.$route.params.collection}`
-      window.storyblok.init({
-        accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-      });
-      window.storyblok.on('change', () => {
-        this.getStory(slug, 'draft');
-      });
-      window.storyblok.pingEditor(() => {
-        if (window.storyblok.isInEditor()) {
-          this.getStory(slug, 'draft');
-        } else {
-          this.getStory(slug, 'published');
-        }
-      });
-      },
-      getStory(slug, version) {
-         this.storyapi
-          .get(`cdn/stories/${slug}`, {
-            version: version,
-          })
-          .then((response) => {
-            this.collection = response.data.story;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-    },
-
-    data() {
-      return {
-    sliderModel: {
-      value: [0, 100]
-    },        
-        collection: {
-          content: {
-            body: [],
+    } from '@heroicons/vue/solid';
+        const sortOptions = [
+          { name: 'Best Rating', href: '#', current: false },
+          { name: 'Newest', href: '#', current: false },
+          { name: 'Price: Low to High', href: '#', current: false },
+          { name: 'Price: High to Low', href: '#', current: false },
+        ];
+        const filters = [
+          {
+            id: 'color',
+            name: 'Color',
+            type: 'checkbox',
+            options: [
+              { value: 'white', label: 'White', checked: false },
+              { value: 'color.blue', label: 'Blue', checked: true },
+              { value: 'color.green', label: 'Green', checked: false },
+              { value: 'color.purple', label: 'Purple', checked: false },
+            ],
           },
+          {
+            id: 'size',
+            name: 'Size',
+            type: 'checkbox',
+            options: [
+              { value: '14', label: '14L', checked: false },
+              { value: '20', label: '20L', checked: false },
+              { value: '22', label: '22L', checked: true },
+              { value: '40', label: '40L', checked: true },
+            ],
+          },
+          {
+            id: 'price',
+            name: 'Price',
+            type: 'range',
+            options: [
+              {minValue: 0, maxValue: 100,label: 'price'},
+
+            ]
+          }
+        ];
+    export default {
+
+      created() {
+          this.loadCollection()
+      },
+      components: {
+        SliderUI,
+        Collection,
+        Dialog,
+        DialogOverlay,
+        Disclosure,
+        DisclosureButton,
+        DisclosurePanel,
+        Menu,
+        MenuButton,
+        MenuItem,
+        MenuItems,
+        TransitionChild,
+        TransitionRoot,
+        ChevronDownIcon,
+        FilterIcon,
+        MinusSmIcon,
+        PlusSmIcon,
+        ViewGridIcon,
+        XIcon,
+      },
+       setup() {
+        const mobileFiltersOpen = ref(false);
+
+        const filterValue = ref([])
+        const range = ref({
+        value: [20, 40]
+      })
+        return {
+          filterValue,
+          range,
+          sortOptions,
+          filters,
+          mobileFiltersOpen,
+        };
+      },
+
+      methods: {
+        PriceRangeUpdate(event){
+          this.sliderModel.value[0] = event[0]
+          this.sliderModel.value[1] = event[1]
+
         },
-      };
-    },
-  };
+        loadCollection(){
+        const slug = `collections/${this.$route.params.collection}`
+        window.storyblok.init({
+          accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+        });
+        window.storyblok.on('change', () => {
+          this.getStory(slug, 'draft');
+        });
+        window.storyblok.pingEditor(() => {
+          if (window.storyblok.isInEditor()) {
+            this.getStory(slug, 'draft');
+          } else {
+            this.getStory(slug, 'published');
+          }
+        });
+        },
+        getStory(slug, version) {
+           this.storyapi
+            .get(`cdn/stories/${slug}`, {
+              version: version,
+            })
+            .then((response) => {
+              this.collection = response.data.story;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        },
+      },
+
+      data() {
+        return {
+      sliderModel: {
+        value: [0, 100]
+      },
+          collection: {
+            content: {
+              body: [],
+            },
+          },
+        };
+      },
+    };
 </script>
 
-<style scoped
-src="@vueform/slider/themes/default.css">
-
-.priceSlider{
-  --slider-connect-bg: #EF4444;
-  --slider-tooltip-bg: #EF4444;
-  --slider-handle-ring-color: #EF444430;
-
-}
+<style scoped src="@vueform/slider/themes/default.css">
+  .priceSlider {
+    --slider-connect-bg: #ef4444;
+    --slider-tooltip-bg: #ef4444;
+    --slider-handle-ring-color: #ef444430;
+  }
 </style>
