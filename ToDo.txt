@@ -17,7 +17,7 @@ Checkout Feature:
 - Make all pages reactive
 
 - Sort (view Ninja TS sample) & Filter 
-
+C:\Projects\Sandbox\Vue3-Typescript\vue3-typescript-Ninja
 - Account: Login/Signin/Logout
 
 - Enhance navbar and clip-path(image)?
