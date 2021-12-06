@@ -121,8 +121,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { mapGetters } from 'vuex'
+import {computed, ref,inject } from 'vue'
+
+import { useStore } from 'vuex';
+
 import search from '../components/fields/search.vue'
 import {
   Dialog,
@@ -151,55 +153,64 @@ export default {
     XIcon,
     search
   },
-  computed: {
-    ...mapGetters(['cartQuantity'])
-  },
   setup() {
-    const open = ref(false)
+    const storyapi = inject('storyapi')
 
-    return {
-      navigation,
-      open,
-    }
-  },
-    created() {
-      window.storyblok.init({
-        accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-      });
-      window.storyblok.on('change', () => {
-        this.getCollections(this.slug, 'draft');
-      });
-      window.storyblok.pingEditor(() => {
-        if (window.storyblok.isInEditor()) {
-          this.getCollections(this.slug, 'draft');
-        } else {
-          this.getCollections(this.slug, 'published');
-        }
-      });
-    },
-    methods: {
-      getCollections(slug,version) {
-        this.storyapi
+   const store = useStore()
+   const cartQuantity = computed( () => store.getters['cart/cartQuantity'])
+
+    const open = ref(false)
+    const slug = 'collections/'
+    let collections = ref({content: {body: []}})
+    //
+    let getCollections = (slug,version)  => 
+      {
+        storyapi
           .get(`cdn/stories/`, {
             version,
             starts_with: slug,
           })
           .then((response) => {
-            this.collections = response.data;
+            console.log("resonse.data = ", response.data)
+            collections = response.data;
           })
           .catch((error) => {
             console.log(error);
           });
-      },
-    },
+      }
+      
+    // 
+      window.storyblok.init({
+        accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
+      });
+      window.storyblok.on('change', () => {
+        getCollections(slug, 'draft');
+      });
+      window.storyblok.pingEditor(() => {
+        if (window.storyblok.isInEditor()) {
+          getCollections(slug, 'draft');
+        } else {
+          getCollections(slug, 'published');
+        }
+      });
+
+// 
+
+    return {
+      cartQuantity,
+      navigation,
+      open,
+      collections
+    }
+  },
     data() {
       return {
-        slug: 'collections/',
-        collections: {
-          content: {
-            body: [],
-          },
-        },
+        // slug: 'collections/',
+        // collections: {
+        //   content: {
+        //     body: [],
+        //   },
+        // },
       };
     },
   };  

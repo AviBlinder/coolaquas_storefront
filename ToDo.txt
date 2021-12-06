@@ -38,6 +38,22 @@ paypal setup:
 3 npm install --save-dev vue-plugin-load-script
 
 ------------------------------------------------------------------------------------------------------
+provide/inject:
+App.vue:
+  import {provide} from 'vue'
+  ...
+  setup(){
+    provide('storyapi',storyapi)
+  }
+
+Component.vue:
+import {inject } from 'vue'
+...
+const storyapi = inject('storyapi')
+...
+storyapi.get(...)
+
+------------------------------------------------------------------------------------------------------
 Sync parent v-model based on child changes
 @update:modelValue='updateOrderShippingDetails' 
 
