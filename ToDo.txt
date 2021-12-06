@@ -1,4 +1,4 @@
-Filter & Sort (API?)
+Navbar fixed
 Reactivity!!
 User Authentication
 
@@ -12,7 +12,7 @@ Bugs:
 - Cart is not responsive  --> Fix when creating clean frontstore
 
 Checkout Feature:
-- Add 'quick checkout' on each product
+- Add 'quick checkout' on each product (for authenticated users?)
 
 - Make all pages reactive
 
@@ -37,7 +37,7 @@ paypal setup:
 2. Set credentials
 3 npm install --save-dev vue-plugin-load-script
 
-
+------------------------------------------------------------------------------------------------------
 Sync parent v-model based on child changes
 @update:modelValue='updateOrderShippingDetails' 
 

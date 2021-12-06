@@ -30,14 +30,6 @@
   // import StoryblokClient from 'storyblok-js-client';
 
   export default {
-//Global properties - Vue 3
-// provide(){
-//   return {
-//     storyAPI : new StoryblokClient({
-//     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-//   })
-//   }
-// },
 
     components: {
       // collectionMenu,

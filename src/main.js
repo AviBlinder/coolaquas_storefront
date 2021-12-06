@@ -34,7 +34,8 @@ const markedMixin = {
 
 // 
 const app = createApp(App);
-// Global properties - Vue 2
+// Global properties - Vue 3:
+//app.config.globalProperties.propertyName ==> access it on components via: this.propertyName 
   app.config.globalProperties.storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });

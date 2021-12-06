@@ -98,8 +98,7 @@
                 <UserIcon class="w-6 h-6" aria-hidden="true" />
               </a> -->
 
-  
-              <!-- Cart -->
+                <!-- Cart -->
               <div class="ml-4 lg:ml-6 sm:ml-2">
                 <div class="group -m-2 p-2 flex items-center">
                   <!-- {{cartOpen}} -->
