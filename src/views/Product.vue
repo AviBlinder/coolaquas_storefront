@@ -26,10 +26,6 @@ export default {
       });
     },
 
-    components: {
-    },
-    computed: {
-    },
     methods: {
       getStory(slug, version) {
         this.storyapi

@@ -28,8 +28,6 @@
       });
     },
 
-    components: {},
-    computed: {},
     methods: {
       getStory(slug, version) {
         this.storyapi
