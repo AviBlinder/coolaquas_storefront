@@ -187,10 +187,10 @@
       const navigation = {
         pages: [{ name: 'About', description: 'Company' }],
       };
+      const store = useStore();
 
       const storyapi = inject('storyapi');
 
-      const store = useStore();
       const cartQuantity = computed(() => store.getters['cart/cartQuantity']);
 
       const open = ref(false);

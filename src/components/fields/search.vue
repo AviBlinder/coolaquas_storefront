@@ -26,16 +26,11 @@
 </template>
 <script>
 import SimpleTypeahead from '@/components/search/vue3-simple-typeahead';
-import {computed , onMounted} from 'vue'
+import {computed , onMounted, inject} from 'vue'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router'
 
 
-// import router from "@/router";
-  import StoryblokClient from 'storyblok-js-client';
-  let storyapi = new StoryblokClient({
-    accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
-  });
 
 export default {
 components: {
@@ -44,10 +39,8 @@ components: {
 setup(){
     const store = useStore();
     const router = useRouter()
-    // const route = useRoute()
+    const storyapi = inject('storyapi');
 
-    // const route = useRoute()
-  
      onMounted(async () => {
       if(store.state.products.allProducts.length === 0){
         await storyapi
@@ -81,5 +74,3 @@ setup(){
 },
 }
 </script>
-<style scoped>
-</style>
