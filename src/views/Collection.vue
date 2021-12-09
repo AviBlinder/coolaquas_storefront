@@ -144,7 +144,7 @@
 
       <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          class="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200"
+          class="relative z-5 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200"
         >
           <div
             class="text-4xl font-extrabold tracking-tight text-gray-900"

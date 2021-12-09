@@ -8,11 +8,15 @@
         <!-- Left side Logo -->
         <div class="relative z-10 px-2 flex lg:px-0">
           <div class="flex-shrink-0 flex items-center">
+            <DisclosureButton
+            @click="$router.push({name:'Home'})"
+            > 
             <img
               class="block h-12 w-auto"
               src="../assets/CoolAquasLogo.png"
               alt="Coolaquas"
             />
+            </DisclosureButton>
           </div>
         </div>
         <!-- Search Bar sm:absolute + inset-0 -->
@@ -107,28 +111,26 @@
       <!-- Second Row Menu -->
       <!-- sm/md: hidden - Categories -->
       <nav class="hidden lg:py-2 lg:flex lg:space-x-8" aria-label="Global">
-        <a
-          v-for="item in navigation"
-          :key="item.name"
-          :href="item.href"
-          :class="[
-            item.current
-              ? 'bg-gray-100 text-gray-900'
-              : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-            'rounded-md py-2 px-3 inline-flex items-center text-sm font-medium',
-          ]"
-          :aria-current="item.current ? 'page' : undefined"
-        >
-          {{ item.name }}
-        </a>
+              <router-link
+                v-for="collection in collections.stories"
+                @click="open = false"
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                 "
+                :key="collection.uuid"
+                :to="{
+                  name: 'collection',
+                  params: { collection: collection.slug },
+                }"
+              >
+                {{ collection.name }}
+              </router-link>
       </nav>
     </div>
 
     <!-- lg: hidden - Categories -->
     <DisclosurePanel as="nav" class="lg:hidden" aria-label="Global">
       <div class="pt-2 pb-3 px-2 space-y-1">
-        <DisclosureButton
-          v-for="item in navigation"
+          <!-- v-for="item in navigation"
           :key="item.name"
           as="a"
           :href="item.href"
@@ -139,9 +141,21 @@
             'block rounded-md py-2 px-3 text-base font-medium',
           ]"
           :aria-current="item.current ? 'page' : undefined"
-          >{{ item.name }}</DisclosureButton
+          >{{ item.name }} -->
+        <DisclosureButton
+                as="router-link"
+                v-for="collection in collections.stories"
+                @click="$router.push({name:'collection',params:{collection: collection.slug}})"
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                 "
+                :key="collection.uuid"
+              >
+                {{ collection.name }}
+          </DisclosureButton
         >
       </div>
+
+      <!-- User Sub-menu -->
       <div class="border-t border-gray-200 pt-4 pb-3">
         <div v-if="userAuthenticated">
         <div  class="px-4 flex items-center">
