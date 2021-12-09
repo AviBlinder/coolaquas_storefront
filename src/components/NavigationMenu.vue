@@ -21,7 +21,7 @@
         </div>
         <!-- Search Bar sm:absolute + inset-0 -->
         <div
-          class="relative z-10 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0"
+          class="relative z-10 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0 lg:relative"
         >
           <div class="w-full sm:max-w-xs">
             <label for="search" class="sr-only">Search</label>
