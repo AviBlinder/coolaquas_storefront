@@ -1,45 +1,54 @@
 <template>
   <Disclosure as="header" class="bg-white shadow" v-slot="{ open }">
     <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
+      <!-- First Row Menu: -->
       <div class="relative h-16 flex justify-between">
+       <!-- Left side Logo -->
         <div class="relative z-10 px-2 flex lg:px-0">
           <div class="flex-shrink-0 flex items-center">
-            <!-- Logo -->
-            <router-link to="/">
-              <span class="sr-only">Coolaquas Logo</span>
-              <img class="block h-12 w-auto" src="../assets/CoolAquasLogo.png" alt="Coolaquas" />
-            </router-link>
+            <img class="block h-12 w-auto" src="../assets/CoolAquasLogo.png" alt="Coolaquas" />
           </div>
         </div>
-        <div class="relative z-40 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
+        <!-- Search Bar sm:absolute + inset-0 -->
+        <div class="relative z-10 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
           <div class="w-full sm:max-w-xs">
-            <label for="search" class="sr-only">Search</label>
-            <search></search>
+            <label for="search" class="sr-only ">Search</label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
+                <search></search>
+            </div>
           </div>
         </div>
-        <div class="relative z-10 flex items-center">
-          <!-- Mobile menu button -->
-          <!-- Hamburger -->
-          <DisclosureButton 
-          class="rounded-md p-2 inline-flex items-center justify-center 
-          text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none 
-          focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+
+        <!-- <div class="relative z-10 flex items-center lg:hidden  ">
+          <Cart></Cart>
+        </div> -->
+
+        <!-- Hamburger menu sm + md -->
+        <div class="relative z-10 flex items-center lg:hidden">
+          <div class="flex justify-between">
+        <div class="relative z-10 flex items-center lg:hidden  ">
+          <Cart></Cart>
+        </div>
+        <div>
+          <!-- Mobile menu hamburger button -->
+          <DisclosureButton class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
             <span class="sr-only">Open menu</span>
             <MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
             <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
           </DisclosureButton>
+          </div>
         </div>
-
-        <!-- Cart -->
-        <div class="relative z-10 ml-4 flex items-center">
-<!--  -->
-               <!-- class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800" -->
-          <button @click="cartState">             
-          <Cart>
-          </Cart>
-          </button>
-<!--  -->
-
+</div>
+        <!-- lg screens: Notifications icon + User Menu -->
+        <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+          <!-- <button type="button" class="flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="sr-only">View notifications</span>
+            <BellIcon class="h-6 w-6" aria-hidden="true" />
+          </button> -->
+          <Cart></Cart>
           <!-- Profile dropdown -->
           <Menu as="div" class="flex-shrink-0 relative ml-4">
             <div>
@@ -58,6 +67,9 @@
           </Menu>
         </div>
       </div>
+
+      <!-- Second Row Menu -->
+      <!-- sm/md: hidden - Categories -->
       <nav class="hidden lg:py-2 lg:flex lg:space-x-8" aria-label="Global">
         <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'rounded-md py-2 px-3 inline-flex items-center text-sm font-medium']" :aria-current="item.current ? 'page' : undefined">
           {{ item.name }}
@@ -65,6 +77,7 @@
       </nav>
     </div>
 
+    <!-- lg: hidden - Categories -->
     <DisclosurePanel as="nav" class="lg:hidden" aria-label="Global">
       <div class="pt-2 pb-3 px-2 space-y-1">
         <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'block rounded-md py-2 px-3 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
@@ -78,10 +91,10 @@
             <div class="text-base font-medium text-gray-800">{{ user.name }}</div>
             <div class="text-sm font-medium text-gray-500">{{ user.email }}</div>
           </div>
-          <button type="button" class="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <!-- <button type="button" class="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="sr-only">View notifications</span>
             <BellIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
+          </button> -->
         </div>
         <div class="mt-3 px-2 space-y-1">
           <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" class="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">{{ item.name }}</DisclosureButton>
@@ -90,12 +103,10 @@
     </DisclosurePanel>
   </Disclosure>
 </template>
-
-
 <script>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 // import { SearchIcon } from '@heroicons/vue/solid'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
+import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 
 import { computed, ref, inject } from 'vue';
 import { useStore } from 'vuex';
@@ -130,7 +141,6 @@ export default {
     MenuButton,
     MenuItem,
     MenuItems,
-    BellIcon,
     MenuIcon,
     // SearchIcon,
     XIcon,

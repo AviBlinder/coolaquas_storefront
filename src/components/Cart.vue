@@ -138,8 +138,6 @@ import { computed } from '@vue/reactivity';
     },
 
     setup() {
-      // watchEffect(() => console.log("cartItems changed ", cartItems.value))
-
       const store = useStore()
 
       const taxesAndShipping = 'Taxes and shipping are calculated at checkout';
