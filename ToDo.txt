@@ -1,5 +1,3 @@
-Navbar fixed
-Reactivity!!
 User Authentication
 
 Add "value proposition" blok

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ValueProposition></ValueProposition>
     <NavigationMenu></NavigationMenu>
     <!-- <div id="nav" class="flex justify-center">
       <router-link to="/">Home</router-link> -->
@@ -28,12 +29,13 @@
   import FooterLinks from './components/Footer.vue';
   // import NavigationMenu from './components/NavigationMenu.vue';
   import NavigationMenu from './components/NavigationMenu.vue';
+  import ValueProposition from './components/ValueProposition.vue';
   import StoryblokClient from 'storyblok-js-client';
   import {provide} from 'vue'
   export default {
 
     setup(){
-      window.storyblok.init({
+    window.storyblok.init({
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
       });
       const storyapi = new StoryblokClient({
@@ -46,6 +48,7 @@
     
     components: {
       // collectionMenu,
+      ValueProposition,
       NavigationMenu,
       FooterLinks
     },
