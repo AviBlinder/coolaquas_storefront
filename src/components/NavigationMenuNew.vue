@@ -15,27 +15,30 @@
           <div class="w-full sm:max-w-xs">
             <label for="search" class="sr-only">Search</label>
             <search></search>
-            <!-- <div class="relative">
-              <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-              </div>
-              <input id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Search" type="search" />
-            </div> -->
           </div>
         </div>
-        <div class="relative z-10 flex items-center lg:hidden">
+        <div class="relative z-10 flex items-center">
           <!-- Mobile menu button -->
-          <DisclosureButton class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+          <!-- Hamburger -->
+          <DisclosureButton 
+          class="rounded-md p-2 inline-flex items-center justify-center 
+          text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none 
+          focus:ring-2 focus:ring-inset focus:ring-indigo-500">
             <span class="sr-only">Open menu</span>
             <MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
             <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
           </DisclosureButton>
         </div>
-        <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-          <button type="button" class="flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="sr-only">View notifications</span>
-            <BellIcon class="h-6 w-6" aria-hidden="true" />
+
+        <!-- Cart -->
+        <div class="relative z-10 ml-4 flex items-center">
+<!--  -->
+               <!-- class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800" -->
+          <button @click="cartState">             
+          <Cart>
+          </Cart>
           </button>
+<!--  -->
 
           <!-- Profile dropdown -->
           <Menu as="div" class="flex-shrink-0 relative ml-4">
@@ -93,7 +96,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 // import { SearchIcon } from '@heroicons/vue/solid'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
-  import search from '../components/fields/search.vue';
+
+import { computed, ref, inject } from 'vue';
+import { useStore } from 'vuex';
+import Cart from './Cart.vue';
+
+import search from '../components/fields/search.vue';
 
 const user = {
   name: 'Tom Cook',
@@ -126,13 +134,60 @@ export default {
     MenuIcon,
     // SearchIcon,
     XIcon,
-    search
+    search,
+    Cart
   },
   setup() {
+      // const navigation = {
+      //   pages: [{ name: 'About', description: 'Company' }],
+      // };
+      const store = useStore();
+      const storyapi = inject('storyapi');
+      const cartQuantity = computed(() => store.getters['cart/cartQuantity']);
+      const slug = 'collections/';
+      const isLoading = ref(false);
+
+      const getCollections = async (slug, version) => {
+        try {
+          let fetchCollections = ref({});
+          isLoading.value = true;
+          const fetch = await storyapi.get(`cdn/stories/`, {
+            version,
+            starts_with: slug,
+          });
+          fetchCollections.value = await fetch.data;
+          isLoading.value = false;
+          return fetchCollections.value;
+        } catch (e) {
+          console.log('error : ', e);
+        }
+      };
+      // storyblok editor event listener
+      //init done on App.vue
+      window.storyblok.on('change', () => {
+        getCollections(slug, 'draft');
+      });
+      window.storyblok.pingEditor(() => {
+        if (window.storyblok.isInEditor()) {
+          getCollections(slug, 'draft');
+        } else {
+          getCollections(slug, 'published');
+        }
+      });
+
+      const collections = ref({});
+      getCollections(slug, 'published').then((res) => {
+        collections.value = res;
+      });
+
     return {
       user,
       navigation,
       userNavigation,
+      cartQuantity,
+      collections,
+      isLoading,
+      cartState: (e) => console.log("inside cart ",e)
     }
   },
 }

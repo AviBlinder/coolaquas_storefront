@@ -1,10 +1,9 @@
 <template>
-  <div class="z-10 relative border-b border-gray-200 px-4 sm:static sm:px-0 ">
-    <div class="h-16 flex items-center justify-between">
-      <div class="flex-1 flex items-center justify-end">
-        <!-- Cart -->
-        <Popover class="ml-4 flow-root text-sm lg:relative lg:ml-8">
-          <PopoverButton class="group -m-2 p-2 flex flex-row items-center">
+  <div class="px-4 sm:px-0 ">
+    <!-- Cart -->
+        <Popover class="ml-4 flow-root text-sm lg:mr-4 ">
+          <PopoverButton 
+          class="group -m-2 p-2 flex flex-row items-center">
             <ShoppingBagIcon
               class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
               aria-hidden="true"
@@ -12,8 +11,7 @@
             <span
               class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
             >
-           <p class="hidden">{{cartItems}}</p>
-              {{ cartQuantity }}
+             {{ cartQuantity }} 
             </span>
             <span class="sr-only">items in cart, view bag</span>
           </PopoverButton>
@@ -25,8 +23,18 @@
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
           >
+               <!-- bg-white inset-x-0 -->
+              <!-- class="absolute top-16 mt-px pb-6 
+              w-screen      
+              sm:transform -translate-x-16
+               shadow-lg sm:px-2 
+              lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 
+              lg:w-80 lg:rounded-lg lg:ring-1 
+              lg:ring-black lg:ring-opacity-5" -->
          <PopoverPanel v-slot="{ close }"
-              class="absolute top-16 inset-x-0 mt-px pb-6 bg-white shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5"
+         class="absolute z-10 inset-x-0 w-screen max-w-md px-4 mt-3 
+         bg-white shadow-lg border-gray-300 rounded-md
+         transform -translate-x-3/4 sm:mr-8 sm:px-1 pb-2 lg:max-w-3xl"
             >
               <h2 class="sr-only">Shopping Cart</h2>
 
@@ -110,8 +118,6 @@
             </PopoverPanel>
           </transition>
         </Popover>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -141,8 +147,6 @@ import { computed } from '@vue/reactivity';
       const cartItems =    computed( () => store.getters['cart/cartItems'])
       const cartQuantity = computed( () => store.getters['cart/cartQuantity'])
 
-
-
       return {
         taxesAndShipping,
         totalAmountInCart,
@@ -150,6 +154,7 @@ import { computed } from '@vue/reactivity';
         cartQuantity,
         modifyQuantity: (payload) => store.dispatch('cart/modifyQuantity',payload),
         // products,
+
         accept: async (close) => {
           close()
         },
