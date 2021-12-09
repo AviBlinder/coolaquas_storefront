@@ -86,9 +86,10 @@
                   v-for="item in userNavigation"
                   :key="item.name"
                   v-slot="{ active }"
+                  class="hover:cursor-pointer"
                 >
                   <a
-                    :href="item.href"
+                    :href="item.href"                    
                     :class="[
                       active ? 'bg-gray-100' : '',
                       'block py-2 px-4 text-sm text-gray-700',
@@ -102,7 +103,7 @@
           </div>
           <div v-else class="text-sm font-medium text-gray-800 border-l-2">
             <div class="ml-2">
-            Sign In
+              <p >Sign In</p>            
             </div>
           </div>
         </div>
@@ -130,24 +131,13 @@
     <!-- lg: hidden - Categories -->
     <DisclosurePanel as="nav" class="lg:hidden" aria-label="Global">
       <div class="pt-2 pb-3 px-2 space-y-1">
-          <!-- v-for="item in navigation"
-          :key="item.name"
-          as="a"
-          :href="item.href"
-          :class="[
-            item.current
-              ? 'bg-gray-100 text-gray-900'
-              : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
-            'block rounded-md py-2 px-3 text-base font-medium',
-          ]"
-          :aria-current="item.current ? 'page' : undefined"
-          >{{ item.name }} -->
-        <DisclosureButton
+         <DisclosureButton
                 as="router-link"
                 v-for="collection in collections.stories"
                 @click="$router.push({name:'collection',params:{collection: collection.slug}})"
                 class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
-                 "
+                hover:cursor-pointer
+                "
                 :key="collection.uuid"
               >
                 {{ collection.name }}
@@ -181,7 +171,7 @@
             >{{ item.name }}</DisclosureButton>
         </div>
         </div>
-        <div v-else class="text-base font-medium text-gray-800">
+        <div v-else class="text-base font-medium text-gray-800 hover:cursor-pointer">
             <p>Sign In</p>
         </div>
       </div>

@@ -42,6 +42,7 @@ module.exports = {
     extend: {
       backgroundColor: ['active'],
       borderRadius: ['hover,active', 'focus'],
+      cursor: ['hover', 'focus'],
     },
   },
   plugins: [
