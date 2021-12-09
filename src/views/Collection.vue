@@ -144,13 +144,13 @@
 
       <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          class="relative z-5 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200"
+          class="relative z-5 flex items-baseline justify-between pt-2 pb-6 border-b border-gray-200"
         >
           <div
             class="text-4xl font-extrabold tracking-tight text-gray-900"
           ></div>
 
-          <div class="flex items-center">
+          <div class="flex items-center z-10">
             <Menu as="div" class="relative inline-block text-left">
               <div>
                 <MenuButton

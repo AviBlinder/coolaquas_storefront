@@ -1,51 +1,121 @@
 <template>
-  <div class="bg-white mx-4">
-    <!-- Mobile menu -->
-    <TransitionRoot as="template" :show="open">
-      <Dialog
-        as="div"
-        class="fixed inset-0 flex z-40 lg:hidden"
-        @close="open = false"
-      >
-        <TransitionChild
-          as="template"
-          enter="transition-opacity ease-linear duration-300"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="transition-opacity ease-linear duration-300"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
+  <Disclosure as="header" class="bg-white shadow" v-slot="{ open }">
+    <div
+      class="max-w-7xl mx-auto px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8"
+    >
+      <!-- First Row Menu: -->
+      <div class="relative h-16 flex justify-between">
+        <!-- Left side Logo -->
+        <div class="relative z-10 px-2 flex lg:px-0">
+          <div class="flex-shrink-0 flex items-center">
+            <DisclosureButton
+            @click="$router.push({name:'Home'})"
+            > 
+            <img
+              class="block h-12 w-auto"
+              src="../assets/CoolAquasLogo.png"
+              alt="Coolaquas"
+            />
+            </DisclosureButton>
+          </div>
+        </div>
+        <!-- Search Bar sm:absolute + inset-0 -->
+        <div
+          class="relative z-10 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-black bg-opacity-25" />
-        </TransitionChild>
-
-        <TransitionChild
-          as="template"
-          enter="transition ease-in-out duration-300 transform"
-          enter-from="-translate-x-full"
-          enter-to="translate-x-0"
-          leave="transition ease-in-out duration-300 transform"
-          leave-from="translate-x-0"
-          leave-to="-translate-x-full"
-        >
-          <div
-            class="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto"
-          >
-            <div class="px-4 pt-5 pb-2 flex">
-              <button
-                type="button"
-                class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400"
-                @click="open = false"
+          <div class="w-full sm:max-w-xs">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center"
               >
-                <span class="sr-only">Close menu</span>
-                <XIcon class="h-6 w-6" aria-hidden="true" />
-              </button>
+                <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+              </div>
+              <search></search>
             </div>
-            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+          </div>
+        </div>
+        <!-- Hamburger menu sm + md -->
+        <div class="relative z-10 flex items-center lg:hidden">
+          <div class="flex justify-between">
+            <div class="relative z-10 flex items-center lg:hidden">
+              <Cart></Cart>
+            </div>
+            <div>
+              <!-- Mobile menu hamburger button -->
+              <DisclosureButton
+                class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              >
+                <span class="sr-only">Open menu</span>
+                <MenuIcon
+                  v-if="!open"
+                  class="block h-6 w-6"
+                  aria-hidden="true"
+                />
+                <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
+              </DisclosureButton>
+            </div>
+          </div>
+        </div>
+        <!-- lg screens: Cart + User Menu -->
+        <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+          <Cart></Cart>
+          <!-- Profile dropdown -->
+            <div v-if="userAuthenticated">
+          <Menu as="div" class="flex-shrink-0 relative ml-4">
+            <div>
+              <MenuButton
+                class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <span class="sr-only">Open user menu</span>
+                <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+              </MenuButton>
+            </div>
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <MenuItems
+                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+              >
+                <MenuItem
+                  v-for="item in userNavigation"
+                  :key="item.name"
+                  v-slot="{ active }"
+                >
+                  <a
+                    :href="item.href"
+                    :class="[
+                      active ? 'bg-gray-100' : '',
+                      'block py-2 px-4 text-sm text-gray-700',
+                    ]"
+                    >{{ item.name }}</a
+                  >
+                </MenuItem>
+              </MenuItems>
+            </transition>
+          </Menu>
+          </div>
+          <div v-else class="text-sm font-medium text-gray-800 border-l-2">
+            <div class="ml-2">
+            Sign In
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Row Menu -->
+      <!-- sm/md: hidden - Categories -->
+      <nav id="collections" class="hidden lg:pt-2 lg:flex lg:space-x-8" aria-label="Global">
               <router-link
                 v-for="collection in collections.stories"
                 @click="open = false"
-                class="-m-2 p-2 block font-medium text-gray-900 border-l"
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                 "
                 :key="collection.uuid"
                 :to="{
                   name: 'collection',
@@ -54,150 +124,132 @@
               >
                 {{ collection.name }}
               </router-link>
-            </div>
-          </div>
-        </TransitionChild>
-      </Dialog>
-    </TransitionRoot>
+      </nav>
+    </div>
 
-    <header class="relative bg-white">
-      <nav aria-label="Top" class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="border-b border-gray-200">
-          <div class="h-16 flex items-center justify-between">
-            <div class="flex-1 flex items-center lg:hidden">
-              <button
-                type="button"
-                class="-ml-2 bg-white p-2 rounded-md text-gray-400"
-                @click="open = true"
+    <!-- lg: hidden - Categories -->
+    <DisclosurePanel as="nav" class="lg:hidden" aria-label="Global">
+      <div class="pt-2 pb-3 px-2 space-y-1">
+          <!-- v-for="item in navigation"
+          :key="item.name"
+          as="a"
+          :href="item.href"
+          :class="[
+            item.current
+              ? 'bg-gray-100 text-gray-900'
+              : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900',
+            'block rounded-md py-2 px-3 text-base font-medium',
+          ]"
+          :aria-current="item.current ? 'page' : undefined"
+          >{{ item.name }} -->
+        <DisclosureButton
+                as="router-link"
+                v-for="collection in collections.stories"
+                @click="$router.push({name:'collection',params:{collection: collection.slug}})"
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                 "
+                :key="collection.uuid"
               >
-                <span class="sr-only">Open menu</span>
-                <MenuIcon class="h-6 w-6" aria-hidden="true" />
-              </button>
-              <div class="flex justify-center items-center mb-4 ml-2 w-full">
-                <search></search>
-              </div>
+                {{ collection.name }}
+          </DisclosureButton
+        >
+      </div>
+
+      <!-- User Sub-menu -->
+      <div class="border-t border-gray-200 pt-4 pb-3">
+        <div v-if="userAuthenticated">
+        <div  class="px-4 flex items-center">
+          <div class="flex-shrink-0">
+            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+          </div>
+          <div class="ml-3">
+            <div class="text-base font-medium text-gray-800">
+             {{ user.name }}
             </div>
-
-            <!-- Logo -->
-            <router-link to="/">
-              <span class="sr-only">Coolaquas Logo</span>
-              <img class="h-12" src="../assets/CoolAquasLogo.png" alt="" />
-            </router-link>
-
-            <!-- Flyout menus -->
-            <!-- <div class="hidden lg:flex-1 lg:block lg:self-stretch z-40 lg:ml-4"> -->
-            <div class="hidden lg:flex lg:flex-1 ml-4">
-              <div v-if="isLoading"></div>
-              <div v-else class="h-full flex space-x-8 items-center text-sm">
-                <div
-                  v-for="category in collections.stories"
-                  :key="category.uuid"
-                  class="inline-flex"
-                >
-                  <div class="relative flex">
-                    <div id="collection-link">
-                      <router-link
-                        class="hover:underline"
-                        :to="{
-                          name: 'collection',
-                          params: { collection: category.slug },
-                        }"
-                      >
-                        {{ category.name }}
-                      </router-link>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  id="pages-link"
-                  class="lg:flex items-center justify-between sm:hidden"
-                >
-                  <div class="md:flex-1 mb-2 mx-6 h-1/5">
-                    <search></search>
-                  </div>
-                  <div>
-                    <router-link
-                      v-for="page in navigation.pages"
-                      :key="page.name"
-                      :to="{ name: page.name }"
-                      class="mx-2 flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {{ page.description }}
-                    </router-link>
-                  </div>
-
-                  <!-- Account -->
-                  <!-- <a href="#" class="p-2 text-gray-400 hover:text-gray-500 lg:ml-4">
-                <span class="sr-only">Account</span>
-                <UserIcon class="w-6 h-6" aria-hidden="true" />
-              </a> -->
-
-                  <!-- Cart -->
-                  <div class="ml-4 lg:ml-6 sm:ml-2">
-                    <div class="group -m-2 p-2 flex items-center">
-                      <!-- {{cartOpen}} -->
-                      <!-- <ShoppingBagIcon class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" /> -->
-                      <Cart
-                        class="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-                      >
-                      </Cart>
-                    </div>
-                  </div>
-                  <!-- cart end -->
-                </div>
-                <!-- right sidebar end -->
-              </div>
+            <div class="text-sm font-medium text-gray-500">
+              {{ user.email }}
             </div>
           </div>
         </div>
-      </nav>
-    </header>
-  </div>
+        <div class="mt-3 px-2 space-y-1">
+          <DisclosureButton
+            v-for="item in userNavigation"
+            :key="item.name"
+            as="a"
+            :href="item.href"
+            class="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+            >{{ item.name }}</DisclosureButton>
+        </div>
+        </div>
+        <div v-else class="text-base font-medium text-gray-800">
+            <p>Sign In</p>
+        </div>
+      </div>
+    </DisclosurePanel>
+  </Disclosure>
 </template>
-
 <script>
-  import { computed, ref, inject } from 'vue';
-
-  import { useStore } from 'vuex';
-
-  import search from '../components/fields/search.vue';
   import {
-    Dialog,
-    DialogOverlay,
-    TransitionChild,
-    TransitionRoot,
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItems,
   } from '@headlessui/vue';
+  // import { SearchIcon } from '@heroicons/vue/solid'
   import { MenuIcon, XIcon } from '@heroicons/vue/outline';
 
+  import { computed, ref, inject } from 'vue';
+  import { useStore } from 'vuex';
   import Cart from './Cart.vue';
+
+  import search from './fields/search.vue';
+
+  const user = {
+    name: 'Tom Cook',
+    email: 'tom@example.com',
+    imageUrl:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  };
+  const navigation = [
+    { name: 'Dashboard', href: '#', current: true },
+    { name: 'Team', href: '#', current: false },
+    { name: 'Projects', href: '#', current: false },
+    { name: 'Calendar', href: '#', current: false },
+  ];
+  const userNavigation = [
+    { name: 'Sign out', href: '#' },
+  ];
 
   export default {
     components: {
-      Cart,
-      Dialog,
-      DialogOverlay,
-      TransitionChild,
-      TransitionRoot,
+      Disclosure,
+      DisclosureButton,
+      DisclosurePanel,
+      Menu,
+      MenuButton,
+      MenuItem,
+      MenuItems,
       MenuIcon,
+      // SearchIcon,
       XIcon,
       search,
+      Cart,
     },
     setup() {
-      const navigation = {
-        pages: [{ name: 'About', description: 'Company' }],
-      };
+      // const navigation = {
+      //   pages: [{ name: 'About', description: 'Company' }],
+      // };
       const store = useStore();
-
       const storyapi = inject('storyapi');
-
       const cartQuantity = computed(() => store.getters['cart/cartQuantity']);
-
-      const open = ref(false);
       const slug = 'collections/';
       const isLoading = ref(false);
 
-      //
+      const userAuthenticated = ref(false)
+
       const getCollections = async (slug, version) => {
         try {
           let fetchCollections = ref({});
@@ -213,7 +265,6 @@
           console.log('error : ', e);
         }
       };
-
       // storyblok editor event listener
       //init done on App.vue
       window.storyblok.on('change', () => {
@@ -231,21 +282,24 @@
       getCollections(slug, 'published').then((res) => {
         collections.value = res;
       });
+
       return {
+        user,
+        navigation,
+        userNavigation,
+        cartQuantity,
         collections,
         isLoading,
-        cartQuantity,
-        navigation,
-        open,
-        slug,
+        cartState: (e) => console.log('inside cart ', e),
+        userAuthenticated
       };
     },
   };
 </script>
 
 <style scoped>
-  #collection-link a.router-link-exact-active,
-  #pages-link a.router-link-exact-active {
-    @apply bg-blue-100 rounded-md p-1;
+   #collections a.router-link-exact-active {
+  @apply border-b-2 border-bluegray-400
   }
+
 </style>
