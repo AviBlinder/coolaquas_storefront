@@ -251,7 +251,7 @@
     /* margin-bottom: 0; */
   }
   .simple-typeahead .simple-typeahead-list {
-    @apply absolute top-11 ml-12 lg:ml-8 z-40 
+    @apply absolute top-11 ml-12 md:ml-8 z-40 
   }
     /* w-1/3  */
     /* max-h-80  */
@@ -288,7 +288,7 @@
 
 .simple-typeahead .simple-typeahead-list .simple-typeahead-list-item .simple-typeahead-list-item-text {
 /* @apply flex flex-1 justify-between	justify-items-center w-56; */
-@apply flex flex-1 
+@apply flex flex-1 justify-between	justify-items-center
 
 }
 .simple-typeahead-list-item-text .simple-typeahead-list-item-text-inner {
