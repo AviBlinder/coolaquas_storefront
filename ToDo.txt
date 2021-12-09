@@ -38,6 +38,8 @@ paypal setup:
 3 npm install --save-dev vue-plugin-load-script
 
 ------------------------------------------------------------------------------------------------------
+items-center justify-center --> place-items-center	
+------------------------------------------------------------------------------------------------------
 provide/inject:
 App.vue:
   import {provide} from 'vue'

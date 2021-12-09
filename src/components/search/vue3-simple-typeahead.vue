@@ -239,18 +239,19 @@
 
 <style scoped>
   .simple-typeahead {
+    @apply relative flex-col items-center
     /*  */
-    @apply relative flex items-center flex-col justify-end z-40 mt-4
+    /* @apply relative flex items-center flex-col justify-end z-40 mt-4 */
     /* position: relative;
     width: 100%;
     z-index: 40; */
   }
   .simple-typeahead > input {
-    @apply mb-0 rounded-md shadow-sm
+    /* @apply mb-0 rounded-md shadow-sm */
     /* margin-bottom: 0; */
   }
   .simple-typeahead .simple-typeahead-list {
-    @apply absolute top-0 mt-12 z-40 
+    @apply absolute top-11 ml-12 lg:ml-8 z-40 
   }
     /* w-1/3  */
     /* max-h-80  */
@@ -259,7 +260,7 @@
 
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-header {
     background-color: #fafafa;
-    padding: 0.6rem 1rem;
+    /* padding: 0.6rem 1rem; */
     border-bottom: 0.1rem solid #d1d1d1;
     border-left: 0.1rem solid #d1d1d1;
     border-right: 0.1rem solid #d1d1d1;
@@ -271,7 +272,7 @@
     border-right: 0.1rem solid #d1d1d1;
   }
   .simple-typeahead .simple-typeahead-list .simple-typeahead-list-item {
-    @apply cursor-pointer bg-white p-1 mx-16 border-blue-200 
+    @apply cursor-pointer bg-white p-1 mx-1 border-blue-200 
     border-t-2 border-b-2 
      border-l-2 border-r-2
      border-solid
@@ -286,9 +287,9 @@
   }
 
 .simple-typeahead .simple-typeahead-list .simple-typeahead-list-item .simple-typeahead-list-item-text {
-@apply flex flex-1 justify-between	justify-items-center
+/* @apply flex flex-1 justify-between	justify-items-center w-56; */
+@apply flex flex-1 
 
-w-56;
 }
 .simple-typeahead-list-item-text .simple-typeahead-list-item-text-inner {
 @apply ml-2 flex justify-start items-center

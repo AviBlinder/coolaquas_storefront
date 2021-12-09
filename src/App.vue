@@ -26,7 +26,8 @@
 <script>
   // import collectionMenu from './components/collectionsMenu.vue';
   import FooterLinks from './components/Footer.vue';
-  import NavigationMenu from './components/NavigationMenu.vue';
+  // import NavigationMenu from './components/NavigationMenu.vue';
+  import NavigationMenu from './components/NavigationMenuNew.vue';
   import StoryblokClient from 'storyblok-js-client';
   import {provide} from 'vue'
   export default {
