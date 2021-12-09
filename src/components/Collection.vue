@@ -22,8 +22,9 @@
               v-for="product in displayProducts"
               :key="product.uuid">
               <div v-if="product.content.valueProposition"
-                class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-10 rounded-full p-1 shadow-sm
-            text-center text-xs  justify-center items-center
+                class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-1 rounded-full 
+                p-1 shadow-sm
+                text-center text-xs  justify-center items-center
             "> {{ product.content.valueProposition }}
               </div>
 
