@@ -76,7 +76,6 @@ export default {
     console.log("onMounted ", selectedDeliveryMethod.value)
 
     const deliveryChecked = () => {
-      console.log('deliveryChecked: ', selectedDeliveryMethod.value)
       store.dispatch('cart/setShippingCost',Number(selectedDeliveryMethod.value.price))
       store.dispatch('cart/setShippingType',selectedDeliveryMethod.value.name)
     }

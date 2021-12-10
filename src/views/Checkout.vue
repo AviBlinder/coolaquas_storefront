@@ -156,6 +156,7 @@ export default {
       const currencySign = store.getters['general/getCurrencySign']
       const totalAmountInCart = computed(() => store.getters['cart/totalAmountInCart'])
       const freeShippingAmount = store.getters['general/getFreeShippingAmount']
+      const cartShippingCost = computed(() => store.getters['cart/getShippingCost'])
 
       //shippingCost logic:
       //If amount of products > freeShippingAmount then shipping cost is 0, 
@@ -163,12 +164,9 @@ export default {
       const shippingCost = computed( () => {
         {
         if (totalAmountInCart.value > freeShippingAmount) {
-          console.log("shp (0) :", totalAmountInCart.value + '<>' + freeShippingAmount)
           return 0;
         } else {
-          console.log("shp (1) :", store.getters['cart/getShippingCost'])
-          // return +store.state.cart.order.shippingCost.toFixed(2);
-          return store.getters['cart/getShippingCost'];
+          return cartShippingCost.value
         }
         } 
       })     
