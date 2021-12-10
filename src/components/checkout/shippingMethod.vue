@@ -70,6 +70,11 @@ export default {
     const deliveryMethods =  computed(() => store.getters['general/getDeliveryMethods'])
     const selectedDeliveryMethod = ref(deliveryMethods.value[1])
 
+// On mount, update deliveryMethod details
+    store.dispatch('cart/setShippingCost',Number(selectedDeliveryMethod.value.price))
+    store.dispatch('cart/setShippingType',selectedDeliveryMethod.value.name)
+    console.log("onMounted ", selectedDeliveryMethod.value)
+
     const deliveryChecked = () => {
       console.log('deliveryChecked: ', selectedDeliveryMethod.value)
       store.dispatch('cart/setShippingCost',Number(selectedDeliveryMethod.value.price))

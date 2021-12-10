@@ -171,7 +171,7 @@ export default {
     const addToCart =  (payload) => store.dispatch('cart/addToCart',payload)
 
     const addToCartLocal = () => {
-      console.log("props: ",blokProp)
+      // console.log("props: ",blokProp)
       context.emit('cart-updated', blokProp);
       return true
     }

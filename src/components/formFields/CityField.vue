@@ -38,7 +38,7 @@
         }
     },
 
-    setup(props) {
+    setup() {
       let input = ref('');
       let fieldError = ref(false);
 
@@ -50,10 +50,9 @@
           : (fieldError.value = true);
       };
 
-      if(!props.isRequired){
-        console.log("props",props.isRequired)
-
-      }
+      // if(!props.isRequired){
+      //   console.log("props",props.isRequired)
+      // }
       return { input, error, validateInput, fieldError };
     },
   }
