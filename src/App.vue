@@ -31,13 +31,12 @@
   import NavigationMenu from './components/NavigationMenu.vue';
   import ValueProposition from './components/ValueProposition.vue';
   import StoryblokClient from 'storyblok-js-client';
-  // Global Event bus
+  // Global Eventbus library
   import mitt from 'mitt';
-
-  // 
+  // Global variables function
   import {provide} from 'vue'
-  export default {
 
+  export default {
     setup(){
     window.storyblok.init({      
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
@@ -46,9 +45,10 @@
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   })
 
+// Setup Global Eventbus as global variable
     const eventBus = mitt();
-
     provide('eventBus',eventBus)
+
     provide('storyapi',storyapi)
     return {}
     },
@@ -58,13 +58,6 @@
       ValueProposition,
       NavigationMenu,
       FooterLinks
-    },
-    methods: {
-      routePage(page) {
-        console.log('page:', page);
-        this.$router.push('/pages/' + page);
-        console.log('$router =', this.$route.fullPath);
-      },
     },
   };
 </script>
