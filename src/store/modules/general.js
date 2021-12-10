@@ -3,14 +3,14 @@ const state = {
     currency: 'USD',
     currencySign: '$'
   },
-freeShippingAmount: 100,
+freeShippingAmount: 0,
 deliveryMethods : [
   { id: 1, title: 'Pickup from store', turnaround: '1 business day ', 
-  price: '0',currency: '$',checked:false ,name: 'pickup'},
+  price: 0,currency: '$',checked:false ,name: 'pickup'},
   { id: 2, title: 'Standard', turnaround: '4–10 business days',
-   price: '5.00',currency: '$' ,checked:false, name: 'standard'},
+   price: 5.00,currency: '$' ,checked:false, name: 'standard'},
   { id: 3, title: 'Express', turnaround: '2–5 business days',
-  price: '16.00', currency: '$',checked:false, name: 'express' },
+  price: 16.50, currency: '$',checked:false, name: 'express' },
 ],
 afterSaleMessage: "Thanks for your purchase. \
   Your payment was successfully processed. ",
@@ -154,7 +154,7 @@ const getters = {
     return state.countries;
   },
   getFreeShippingAmount(state) {
-    return state.freeShippingAmount;
+    return state.freeShippingAmount.toFixed(2);
   },
   getafterSaleMessage(state){
     return state.afterSaleMessage;
@@ -174,7 +174,7 @@ const actions = {
 
 const mutations = {
   setFreeShippingAmount(state, payload) {
-    state.freeShippingAmount = payload;
+    state.freeShippingAmount = Number(payload);
   },
   setCurrency(state, payload) {
     state.settings.currency = payload;

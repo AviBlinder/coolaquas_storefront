@@ -1,24 +1,16 @@
-User Authentication
+User Authentication:
+- Account: Login/Signin/Logout
 
-Add "value proposition" blok
-Add 'general settings' component (currency, currency_sign, shipping...)
 ---> Build New clean storefront (based on TS + Componsition APIs)
 ---> Add Jest/Cypress tests
 ---> Add Github Actions
-
-Bugs:
-- Cart is not responsive  --> Fix when creating clean frontstore
 
 Checkout Feature:
 - Add 'quick checkout' on each product (for authenticated users?)
 
 - Make all pages reactive
 
-- Sort (view Ninja TS sample) & Filter 
-C:\Projects\Sandbox\Vue3-Typescript\vue3-typescript-Ninja
-- Account: Login/Signin/Logout
-
-- Enhance navbar and clip-path(image)?
+- Enhance navbar with clip-path(image)?
 
 Enhancements (next epics):
 - Create new project (github backed) with 
@@ -35,6 +27,8 @@ paypal setup:
 2. Set credentials
 3 npm install --save-dev vue-plugin-load-script
 
+------------------------------------------------------------------------------------------------------
+C:\Projects\Sandbox\Vue3-Typescript\vue3-typescript-Ninja
 ------------------------------------------------------------------------------------------------------
 items-center justify-center --> place-items-center	
 ------------------------------------------------------------------------------------------------------

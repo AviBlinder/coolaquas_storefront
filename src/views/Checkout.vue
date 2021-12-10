@@ -155,13 +155,15 @@ export default {
 
       const currencySign = store.getters['general/getCurrencySign']
       const totalAmountInCart = computed(() => store.getters['cart/totalAmountInCart'])
+      const freeShippingAmount = store.getters['general/getFreeShippingAmount']
       const shippingCost = computed( () => {
         {
-        if (totalAmountInCart.value > store.state.general.freeShippingAmount) {
+        if (totalAmountInCart.value > freeShippingAmount) {
+          console.log("shp 0 :", totalAmountInCart.value )
           return 0;
         } else {
+          console.log("shp 1", totalAmountInCart.value)
           return +store.state.cart.order.shippingCost.toFixed(2);
-
         }
         } 
       })     

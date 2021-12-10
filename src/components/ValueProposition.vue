@@ -1,6 +1,7 @@
 <template>
   <div class="w-scree bg-bluegray-300" v-if="!isLoading">
-    <div v-if="generalSettings.ValueProposition" class="flex h-8 items-center justify-center">
+    <div v-if="generalSettings.ValueProposition && generalSettings.freeShippingAmount" 
+    class="flex h-8 items-center justify-center">
       <div class="flex" >        
         <p class="font-light text-sm ">
           {{generalSettings.ValueProposition}} {{generalSettings.freeShippingAmount}}

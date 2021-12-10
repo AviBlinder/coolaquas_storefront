@@ -3,18 +3,21 @@
     <!-- border-t border-gray-200 pt-10 -->
           <div class="mt-2 ">
             
-            <RadioGroup v-model="selectedDeliveryMethod">
+            <RadioGroup v-model="selectedDeliveryMethod"
+            @click="deliveryChecked"
+            >              
               <RadioGroupLabel class="text-lg font-medium text-gray-900">
               </RadioGroupLabel>
 
               <div class="mt-4 grid grid-cols-3 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
-                <RadioGroupOption as="template" v-for="deliveryMethod in deliveryMethods" :key="deliveryMethod.id" :value="deliveryMethod" v-slot="{ checked, active }">
-                  <div :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-secondary-500' : '', 'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none']">                    
-                    <div class="flex-1 flex"
-                    >
+                <RadioGroupOption as="template" 
+                v-for="deliveryMethod in deliveryMethods" :key="deliveryMethod.id" 
+                :value="deliveryMethod" v-slot="{ checked, active }">
+                  <div :class="[checked ? 'border-transparent' : 'border-gray-300', active ? 'ring-2 ring-secondary-500' : '', 'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none']">                   
+                    <div class="flex-1 flex">
                       <div class="flex flex-col">
                         <RadioGroupLabel as="span" class="block text-sm font-medium text-gray-900">
-                          {{ deliveryMethod.title }}
+                          {{ deliveryMethod.title }} 
                         </RadioGroupLabel>
                         <RadioGroupDescription as="span" class="mt-1 flex items-center text-sm text-gray-500">
                           {{ deliveryMethod.turnaround }}
@@ -22,7 +25,7 @@
                         <RadioGroupDescription 
                         v-if="deliveryMethod.price > 0"
                         as="span" class="mt-6 text-sm font-medium text-gray-900">
-                          {{ deliveryMethod.price }}  {{deliveryMethod.currency}}
+                          {{ deliveryMethodPrice(deliveryMethod.price) }}  {{deliveryMethod.currency}}
                         </RadioGroupDescription>
                         <RadioGroupDescription 
                         v-else
@@ -46,7 +49,7 @@
   </div>
 </template>
 <script>
-import {ref, computed, watch} from 'vue'
+import {ref, computed} from 'vue'
 import {useStore} from 'vuex';
 
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption } from '@headlessui/vue'
@@ -63,18 +66,24 @@ export default {
   setup() {
     const store = useStore()
 
+    // const deliveryMethodPrice = computed( () => 1)
     const deliveryMethods =  computed(() => store.getters['general/getDeliveryMethods'])
     const selectedDeliveryMethod = ref(deliveryMethods.value[1])
 
-    watch(selectedDeliveryMethod,(currentValue) => {
-      store.dispatch('cart/setShippingCost',parseInt(currentValue.price))
-      store.dispatch('cart/setShippingType',currentValue.name)
+    const deliveryChecked = () => {
+      console.log('deliveryChecked: ', selectedDeliveryMethod.value)
+      store.dispatch('cart/setShippingCost',Number(selectedDeliveryMethod.value.price))
+      store.dispatch('cart/setShippingType',selectedDeliveryMethod.value.name)
+    }
 
-    })
-
+    const deliveryMethodPrice = (value) =>{
+      return value.toFixed(2).toString()
+    }
     return {
       selectedDeliveryMethod,
       deliveryMethods,
+      deliveryMethodPrice,
+      deliveryChecked
     }
   },
 

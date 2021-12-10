@@ -122,13 +122,13 @@ const mutations = {
   },
 
   setShippingCost(state, amount) {
-    state.order.shippingCost = amount;
+    state.order.shippingCost = Number(amount);
   },
   setShippingType(state, type) {
     state.order.shippingType = type;
   },
   setOrderTotal(state, { amount, currency }) {
-    state.order.total.amount = amount;
+    state.order.total.amount = Number(amount);
     state.order.total.currency = currency;
   },
   setOrderShippingDetails(state, payload) {
@@ -171,7 +171,8 @@ const mutations = {
   totalProductPrice(state, id) {
     return state.added.map((p) => {
       if (p.id === id) {
-        return p.quantity * p.price;
+        let val = p.quantity * p.price;
+        return val.toFixed(2);
       }
     });
   },
