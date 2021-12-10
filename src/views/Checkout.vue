@@ -128,7 +128,7 @@
 <script>
 import {useStore} from 'vuex';
   
-import {ref, computed} from 'vue';
+import {ref, computed, inject} from 'vue';
 import paypalButton from '../components/PaypalButton/PaypalButton.vue'
 import shippingMethod from '../components/checkout/shippingMethod.vue'
 import shippingAddress from '../components/checkout/shippingAddress.vue'
@@ -157,6 +157,13 @@ export default {
       const totalAmountInCart = computed(() => store.getters['cart/totalAmountInCart'])
       const freeShippingAmount = store.getters['general/getFreeShippingAmount']
       const cartShippingCost = computed(() => store.getters['cart/getShippingCost'])
+
+    let cartItems = ref(store.getters['cart/cartItems'])
+
+      const eventBus = inject('eventBus')
+      eventBus.on('cartUpdate', () => {
+        cartItems.value = store.getters['cart/cartItems']
+    })
 
       //shippingCost logic:
       //If amount of products > freeShippingAmount then shipping cost is 0, 
@@ -189,8 +196,10 @@ export default {
       postCheckoutMessage.value =  store.getters['general/getafterSaleMessage']
       postCheckoutMessage2.value = `Your orderId is ${event}`
     }
+
+
     return {
-      cartItems :computed(() => store.getters['cart/cartItems']),
+      cartItems,
       priceByProduct :computed(() => store.getters['cart/priceByProduct']),
       cartQuantity :computed(() => store.getters['cart/cartQuantity']),
       // Trigger mutation directly

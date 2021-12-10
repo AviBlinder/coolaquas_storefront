@@ -124,8 +124,8 @@
 <script>
   import { ShoppingBagIcon, PlusIcon, MinusIcon } from '@heroicons/vue/outline';
   import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
-  import { useStore } from 'vuex';
-import { computed } from '@vue/reactivity';
+  import { useStore } from 'vuex';  
+  import { computed , ref, inject} from 'vue';
 
   export default {
     components: {
@@ -139,20 +139,34 @@ import { computed } from '@vue/reactivity';
 
     setup() {
       const store = useStore()
+      const eventBus = inject('eventBus')
 
       const taxesAndShipping = 'Taxes and shipping are calculated at checkout';
       const totalAmountInCart = computed( () => store.getters['cart/totalAmountInCart'])
-      const cartItems =    computed( () => store.getters['cart/cartItems'])
+      let cartItems =    ref(store.getters['cart/cartItems'])
       const cartQuantity = computed( () => store.getters['cart/cartQuantity'])
 
+      const modifyQuantity =  (payload) => {
+        store.dispatch('cart/modifyQuantity',payload)
+          cartItems.value = store.getters['cart/cartItems']
+          eventBus.emit('cartUpdate')          
+        } 
+
+      // const cartQuantity =  computed({
+      //   get() {
+      //     return store.getters['cart/cartQuantity']
+      //   },
+      //   set(payload) {
+      //     store.dispatch('cart/modifyQuantity',payload)
+      //   },
+      // });
       return {
         taxesAndShipping,
         totalAmountInCart,
         cartItems,
         cartQuantity,
-        modifyQuantity: (payload) => store.dispatch('cart/modifyQuantity',payload),
+        modifyQuantity,
         // products,
-
         accept: async (close) => {
           close()
         },

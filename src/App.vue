@@ -31,6 +31,10 @@
   import NavigationMenu from './components/NavigationMenu.vue';
   import ValueProposition from './components/ValueProposition.vue';
   import StoryblokClient from 'storyblok-js-client';
+  // Global Event bus
+  import mitt from 'mitt';
+
+  // 
   import {provide} from 'vue'
   export default {
 
@@ -42,6 +46,9 @@
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   })
 
+    const eventBus = mitt();
+
+    provide('eventBus',eventBus)
     provide('storyapi',storyapi)
     return {}
     },

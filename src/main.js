@@ -24,6 +24,7 @@ import Cart from './components/Cart/Cart.vue';
 import marked from 'marked';
 import StoryblokClient from 'storyblok-js-client';
 
+
 const markedMixin = {
   methods: {
     MDtoHTML: (input) => {
