@@ -35,10 +35,10 @@
   export default {
 
     setup(){
-    window.storyblok.init({
+    window.storyblok.init({      
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
       });
-      const storyapi = new StoryblokClient({
+    const storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   })
 

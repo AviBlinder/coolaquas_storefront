@@ -160,13 +160,33 @@ const getters = {
     return state.afterSaleMessage;
   }
 };
-// const actions = {};
+const actions = {
+  setFreeShippingAmount({ commit }, payload) {
+    commit('setFreeShippingAmount', payload);
+  },
+  setCurrency({ commit }, payload) {
+    commit('setCurrency', payload);
+  },
+  setCurrencySign({ commit }, payload) {
+    commit('setCurrencySign', payload);
+  },
+};
 
-// const mutations = {};
+const mutations = {
+  setFreeShippingAmount(state, payload) {
+    state.freeShippingAmount = payload;
+  },
+  setCurrency(state, payload) {
+    state.settings.currency = payload;
+  },
+  setCurrencySign(state, payload) {
+    state.settings.currencySign = payload;
+  },
+};
 export default {
   namespaced: true,
   state,
   getters,
-  // actions,
-  // mutations,
+  actions,
+  mutations,
 };
