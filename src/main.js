@@ -19,7 +19,7 @@ import CollectionFilterAndSort from './components/CollectionWIthFilterAndSort.vu
 import Product from './components/Product.vue';
 import CategorySample from './components/category_sample.vue';
 import Footer from './components/Footer.vue';
-import Cart from './components/Cart.vue';
+import Cart from './components/Cart/Cart.vue';
 
 import marked from 'marked';
 import StoryblokClient from 'storyblok-js-client';

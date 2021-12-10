@@ -205,7 +205,7 @@ const mutations = {
     let cartQuantity = 0;
     if (quantities.length) {
       cartQuantity = quantities.reduce((total, p) => {
-        return total + p;
+        return Number(total + p);
       });
     }
     state.cartQuantity = cartQuantity;

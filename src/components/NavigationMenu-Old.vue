@@ -170,7 +170,7 @@
   } from '@headlessui/vue';
   import { MenuIcon, XIcon } from '@heroicons/vue/outline';
 
-  import Cart from './Cart.vue';
+  import Cart from './Cart/Cart.vue';
 
   export default {
     components: {

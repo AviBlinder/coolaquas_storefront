@@ -193,7 +193,7 @@
 
   import { computed, ref, inject } from 'vue';
   import { useStore } from 'vuex';
-  import Cart from './Cart.vue';
+  import Cart from './Cart/Cart.vue';
 
   import search from './fields/search.vue';
 
