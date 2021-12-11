@@ -162,7 +162,7 @@ export default {
     PlusSmIcon,
     // StarIcon,
   },
-  setup(props,context) {
+  setup(props) {
     const selectedColor = ref(product.colors[0])
     const store = useStore()
 
@@ -172,17 +172,11 @@ export default {
       store.dispatch('cart/addToCart',payload)
     } 
 
-    const addToCartLocal = () => {
-      // console.log("props: ",blokProp)
-      context.emit('cart-updated', blokProp);
-      return true
-    }
 
     return {
       blokProp,
       product,
       selectedColor,
-      addToCartLocal,
       addToCart
     }
   },
