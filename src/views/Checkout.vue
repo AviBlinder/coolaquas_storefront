@@ -1,124 +1,176 @@
 <template>
   <div class="bg-white">
     <!-- Background color split screen for large screens -->
-    <div class="hidden lg:block absolute  left-4 w-1/2 h-full bg-white" aria-hidden="true" />
-    <div class="hidden lg:block absolute right-4 w-1/2 h-full bg-gray-500 rounded-md" aria-hidden="true" />
+    <div
+      class="hidden lg:block absolute left-4 w-1/2 h-full bg-white"
+      aria-hidden="true"
+    />
+    <div
+      class="hidden lg:block absolute right-4 w-1/2 h-full bg-gray-500 rounded-md"
+      aria-hidden="true"
+    />
 
-    <div class="relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 lg:pt-16">
+    <div
+      class="relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 lg:pt-16"
+    >
       <h1 class="sr-only">Checkout</h1>
 
-      <section aria-labelledby="summary-heading" class="bg-gray-500 rounded-md text-secondary-400 
-      py-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent 
-      lg:row-start-1 lg:col-start-2">
+      <section
+        aria-labelledby="summary-heading"
+        class="bg-gray-500 rounded-md text-secondary-400 py-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
+      >
         <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
           <h2 id="summary-heading" class="sr-only">Order summary</h2>
 
           <dl>
             <dt class="text-sm font-medium">Amount due</dt>
-            <dd class="mt-1 text-3xl font-extrabold text-white">{{currencySign}}{{finalCost}}</dd>
+            <dd class="mt-1 text-3xl font-extrabold text-white">
+              {{ currencySign }}{{ finalCost }}
+            </dd>
           </dl>
 
-          <ul role="list" class="text-sm font-medium divide-y divide-white divide-opacity-10">
-            <li v-for="product in cartItems" :key="product.id" class="flex items-start py-6 space-x-4">
-              <img :src="product.imageSrc" :alt="product.imageAlt" class="flex-none w-20 h-20 rounded-md object-center object-cover" />
+          <ul
+            role="list"
+            class="text-sm font-medium divide-y divide-white divide-opacity-10"
+          >
+            <li
+              v-for="product in cartItems"
+              :key="product.id"
+              class="flex items-start py-6 space-x-4"
+            >
+              <img
+                :src="product.imageSrc"
+                :alt="product.imageAlt"
+                class="flex-none w-20 h-20 rounded-md object-center object-cover"
+              />
               <div class="flex-auto space-y-1">
                 <h3 class="text-white">{{ product.name }}</h3>
                 <!-- <p>{{ product.color }}</p>
                 <p>{{ product.size }}</p> -->
               </div>
-              <p class="flex-none text-base font-medium text-white"> 
-                {{product.quantity}} X
-                {{currencySign}}{{ product.price }}</p>
+              <p class="flex-none text-base font-medium text-white">
+                {{ product.quantity }} X {{ currencySign }}{{ product.price }}
+              </p>
             </li>
           </ul>
 
-          <dl class="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
+          <dl
+            class="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6"
+          >
             <div class="flex items-center justify-between">
               <dt>Subtotal</dt>
-              <dd>{{currencySign}}{{totalAmountInCart}}</dd>
+              <dd>{{ currencySign }}{{ totalAmountInCart }}</dd>
             </div>
 
             <div class="flex items-center justify-between">
               <dt>Shipping</dt>
-              <dd>{{currencySign}}{{shippingCost}}</dd>
+              <dd>{{ currencySign }}{{ shippingCost }}</dd>
             </div>
 
             <div class="flex items-center justify-between">
-              <dt>Taxes: </dt>
-              <dd>{{currencySign}} {{taxCost}}</dd>
+              <dt>Taxes:</dt>
+              <dd>{{ currencySign }} {{ taxCost }}</dd>
             </div>
 
-            <div class="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6">
+            <div
+              class="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6"
+            >
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{currencySign}}{{finalCost}}</dd>
+              <dd class="text-base">{{ currencySign }}{{ finalCost }}</dd>
             </div>
           </dl>
         </div>
       </section>
 
-      <section aria-labelledby="payment-and-shipping-heading" class="py-16 lg:max-w-lg lg:w-full lg:mx-auto lg:pt-0 lg:pb-24 lg:row-start-1 lg:col-start-1">
-        <h2 id="payment-and-shipping-heading" class="sr-only">Payment and shipping details</h2>
+      <section
+        aria-labelledby="payment-and-shipping-heading"
+        class="py-16 lg:max-w-lg lg:w-full lg:mx-auto lg:pt-0 lg:pb-24 lg:row-start-1 lg:col-start-1"
+      >
+        <h2 id="payment-and-shipping-heading" class="sr-only">
+          Payment and shipping details
+        </h2>
 
         <form @submit.prevent>
           <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
             <div>
-              <h3 id="contact-info-heading" class="text-lg font-medium text-gray-900">Contact information</h3>
+              <h3
+                id="contact-info-heading"
+                class="text-lg font-medium text-gray-900"
+              >
+                Contact information
+              </h3>
 
-<!-- email field -->
+              <!-- email field -->
               <EmailField v-model="email" />
             </div>
 
             <div class="mt-10">
-              <h3 class="text-lg font-medium text-gray-900">Delivery details</h3>
+              <h3 class="text-lg font-medium text-gray-900">
+                Delivery details
+              </h3>
               <!-- Shipping Method  -->
-                <shipping-method> </shipping-method>
+              <shipping-method> </shipping-method>
               <!--  -->
-            <!-- Shipping Address -->
-            <shipping-address
-            @disablePayment="updateDisableStatus"
-            > </shipping-address>
+              <!-- Shipping Address -->
+              <shipping-address @disablePayment="updateDisableStatus">
+              </shipping-address>
             </div>
 
-<!-- Same as Shipping -->
+            <!-- Same as Shipping -->
             <div class="mt-10">
-              <h3 class="text-lg font-medium text-gray-900">Billing information</h3>
+              <h3 class="text-lg font-medium text-gray-900">
+                Billing information
+              </h3>
 
               <div class="mt-6 flex items-center">
                 <input
-                v-model="billingAsShipping"
-                 id="same-as-shipping" name="same-as-shipping" 
-                 type="checkbox" checked 
-                 class="h-4 w-4 border-gray-300 rounded text-secondary-600 focus:ring-secondary-500" />
+                  v-model="billingAsShipping"
+                  id="same-as-shipping"
+                  name="same-as-shipping"
+                  type="checkbox"
+                  checked
+                  class="h-4 w-4 border-gray-300 rounded text-secondary-600 focus:ring-secondary-500"
+                />
                 <div class="ml-2">
-                  <label for="same-as-shipping" class="text-sm font-medium text-gray-900">Same as shipping information</label>
+                  <label
+                    for="same-as-shipping"
+                    class="text-sm font-medium text-gray-900"
+                    >Same as shipping information</label
+                  >
                 </div>
               </div>
 
               <!-- <div v-if="!billingAsShipping"> -->
               <div>
-                <billing-address :sameAsShipping="billingAsShipping"></billing-address>
+                <billing-address
+                  :sameAsShipping="billingAsShipping"
+                ></billing-address>
               </div>
             </div>
 
-
-            <div class="mt-10 flex justify-end pt-6 ">
+            <div class="mt-10 flex justify-end pt-6">
               <!-- <button type="submit" class="bg-secondary-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-secondary-500">Pay now</button> -->
             </div>
           </div>
         </form>
         <div>
-
-       <paypalButton  v-show="!disablePaymentButton"
-       :finalCost="finalCost"
-       @paymentProcess="postCheckout"
-       > 
-       </paypalButton>
-       <div v-if="postCheckoutMessage" class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0 bg-green-400 rounded-lg">
-         <div class="block w-full  ">
-        <p class="p-4  text-center text-2xl ">{{postCheckoutMessage}}</p> 
-        <p class="p-4  text-left italic text-xl ">{{postCheckoutMessage2}}</p> 
-         </div>
-       </div>
+          <paypalButton
+            v-show="!disablePaymentButton"
+            :finalCost="finalCost"
+            @paymentProcess="postCheckout"
+          >
+          </paypalButton>
+          <div
+            v-if="postCheckoutMessage"
+            class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0 bg-green-400 rounded-lg"
+          >
+            <div class="block w-full">
+              <p class="p-4 text-center text-2xl">{{ postCheckoutMessage }}</p>
+              <p class="p-4 text-left italic text-xl">
+                {{ postCheckoutMessage2 }}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -126,97 +178,99 @@
 </template>
 
 <script>
-import {useStore} from 'vuex';
-  
-import {ref, computed, inject} from 'vue';
-import paypalButton from '../components/PaypalButton/PaypalButton.vue'
-import shippingMethod from '../components/checkout/shippingMethod.vue'
-import shippingAddress from '../components/checkout/shippingAddress.vue'
-import billingAddress from '../components/checkout/billingAddress.vue'
-// Form fields
-import EmailField from '../components/formFields/EmailField.vue'
+  import { useStore } from 'vuex';
 
+  import { ref, computed, inject } from 'vue';
+  import paypalButton from '../components/PaypalButton/PaypalButton.vue';
+  import shippingMethod from '../components/checkout/shippingMethod.vue';
+  import shippingAddress from '../components/checkout/shippingAddress.vue';
+  import billingAddress from '../components/checkout/billingAddress.vue';
+  // Form fields
+  import EmailField from '../components/formFields/EmailField.vue';
 
-export default {
-  components: {
-    paypalButton,
-    shippingMethod,
-    shippingAddress,
-    billingAddress,
-    // form fields
-    EmailField    
+  export default {
+    components: {
+      paypalButton,
+      shippingMethod,
+      shippingAddress,
+      billingAddress,
+      // form fields
+      EmailField,
     },
-  setup() {
-      const store = useStore()
-        const disablePaymentButton = ref(true)
+    setup() {
+      const store = useStore();
+      const disablePaymentButton = ref(true);
 
-      const email = ref('')
-      const billingAsShipping = ref(true)
+      const email = ref('');
+      const billingAsShipping = ref(true);
 
-      const currencySign = store.getters['general/getCurrencySign']
-      const totalAmountInCart = computed(() => store.getters['cart/totalAmountInCart'])
-      const freeShippingAmount = store.getters['general/getFreeShippingAmount']
-      const cartShippingCost = computed(() => store.getters['cart/getShippingCost'])
+      const currencySign = store.getters['general/getCurrencySign'];
+      const totalAmountInCart = computed(
+        () => store.getters['cart/totalAmountInCart']
+      );
+      const freeShippingAmount = store.getters['general/getFreeShippingAmount'];
+      const cartShippingCost = computed(
+        () => store.getters['cart/getShippingCost']
+      );
 
-    let cartItems = ref(store.getters['cart/cartItems'])
+      let cartItems = ref(store.getters['cart/cartItems']);
 
-      const eventBus = inject('eventBus')
+      const eventBus = inject('eventBus');
       eventBus.on('cartUpdate', () => {
-        cartItems.value = store.getters['cart/cartItems']
-    })
+        cartItems.value = store.getters['cart/cartItems'];
+      });
 
       //shippingCost logic:
-      //If amount of products > freeShippingAmount then shipping cost is 0, 
+      //If amount of products > freeShippingAmount then shipping cost is 0,
       //  else shipping cost depends on shipping method (standard, express, etc)
-      const shippingCost = computed( () => {
+      const shippingCost = computed(() => {
         {
-        if (totalAmountInCart.value > freeShippingAmount) {
-          return 0;
-        } else {
-          return cartShippingCost.value
+          if (totalAmountInCart.value > freeShippingAmount) {
+            return 0;
+          } else {
+            return cartShippingCost.value;
+          }
         }
-        } 
-      })     
-      const taxCost = computed( () => {
+      });
+      const taxCost = computed(() => {
         let tax = (totalAmountInCart.value + shippingCost.value) * 0.17;
         return +tax.toFixed(2);
-      })
-      const finalCost = computed ( () => {
+      });
+      const finalCost = computed(() => {
         let finalCost =
           totalAmountInCart.value + shippingCost.value + taxCost.value;
         return +finalCost.toFixed(2);
-      })
-    const updateDisableStatus = (event) => {
-      disablePaymentButton.value = event
-    }
+      });
+      const updateDisableStatus = (event) => {
+        disablePaymentButton.value = event;
+      };
 
-    const postCheckoutMessage = ref('')
-    const postCheckoutMessage2 = ref('')
-    const postCheckout = (event) => {
-      postCheckoutMessage.value =  store.getters['general/getafterSaleMessage']
-      postCheckoutMessage2.value = `Your orderId is ${event}`
-    }
+      const postCheckoutMessage = ref('');
+      const postCheckoutMessage2 = ref('');
+      const postCheckout = (event) => {
+        postCheckoutMessage.value =
+          store.getters['general/getafterSaleMessage'];
+        postCheckoutMessage2.value = `Your orderId is ${event}`;
+      };
 
-
-    return {
-      cartItems,
-      priceByProduct :computed(() => store.getters['cart/priceByProduct']),
-      cartQuantity :computed(() => store.getters['cart/cartQuantity']),
-      // Trigger mutation directly
-      updateEmail: () => store.commit('cart/setOrderEmail',email.value),
-      billingAsShipping,
-      totalAmountInCart,
-      shippingCost,
-      taxCost,
-      finalCost,
-      currencySign,
-      email,
-      disablePaymentButton,
-      updateDisableStatus,
-      postCheckout,
-      postCheckoutMessage,
-      postCheckoutMessage2
-    }
-  }
-} 
+      return {
+        cartItems,
+        priceByProduct: computed(() => store.getters['cart/priceByProduct']),
+        // Trigger mutation directly
+        updateEmail: () => store.commit('cart/setOrderEmail', email.value),
+        billingAsShipping,
+        totalAmountInCart,
+        shippingCost,
+        taxCost,
+        finalCost,
+        currencySign,
+        email,
+        disablePaymentButton,
+        updateDisableStatus,
+        postCheckout,
+        postCheckoutMessage,
+        postCheckoutMessage2,
+      };
+    },
+  };
 </script>

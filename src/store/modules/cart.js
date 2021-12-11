@@ -54,7 +54,7 @@ const getters = {
     let cartQuantity =
       JSON.parse(localStorage.getItem('customerCartQuantity')) || 0;
 
-    state.cartQuantity = cartQuantity;
+    state.cartQuantity = Number(cartQuantity);
     return state.cartQuantity;
   },
   getOrder(state) {
@@ -187,6 +187,7 @@ const mutations = {
     }
   },
   modifyQuantity(state, { id, quantity }) {
+    console.log('inside modifyQuantity ', id + '<>' , quantity  );
     return state.added.map((p) => {
       if (p.id === id) {
         p.quantity = quantity;
@@ -200,14 +201,16 @@ const mutations = {
   //  on the cart
   totalQuantity(state) {
     const quantities = state.added.map((p) => {
-      return p.quantity;
-    });
+      return Number(p.quantity);
+    })
+    console.log("totalQuantities: ",  quantities)
     let cartQuantity = 0;
     if (quantities.length) {
       cartQuantity = quantities.reduce((total, p) => {
         return Number(total + p);
       });
     }
+    console.log('cartQuantity: ', cartQuantity);
     state.cartQuantity = cartQuantity;
     localStorage.setItem(
       'customerCartQuantity',

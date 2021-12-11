@@ -12,6 +12,23 @@ v-if="$slots['list-header']"
   let storyapi = new StoryblokClient({
     accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,
   });
+--------------------------------------------------------------------------------------
+Global event bus:
+//npm install --save mitt
+App.vue:
+// Setup Global Eventbus as global variable
+    const eventBus = mitt();
+    provide('eventBus',eventBus)
+someComponent.vue:
+//Emit:
+// eventBus.emit('cartUpdate');
+//Listen:
+// const eventBus = inject('eventBus');
+// eventBus.on('cartUpdate', () => {
+//   cartItems.value = store.getters['cart/cartItems'];
+// });
+
+
 
 --------------------------------------------------------------------------------------
       searchField() {

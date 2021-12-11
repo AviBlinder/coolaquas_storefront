@@ -168,7 +168,9 @@ export default {
 
     const blokProp = reactive(props.blok);
 
-    const addToCart =  (payload) => store.dispatch('cart/addToCart',payload)
+    const addToCart =  (payload) => {
+      store.dispatch('cart/addToCart',payload)
+    } 
 
     const addToCartLocal = () => {
       // console.log("props: ",blokProp)

@@ -92,7 +92,7 @@
                     v-if="totalAmountInCart > 0"
                     class="text-xs mt-3 mb-1 text-left italic"
                   >
-                    {{ taxesAndShipping }}
+                    {{ taxesAndShippingDisclaimer }}
                   </p>
                 </div>
 
@@ -124,9 +124,10 @@
 <script>
   import { ShoppingBagIcon, PlusIcon, MinusIcon } from '@heroicons/vue/outline';
   import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
-  import { useStore } from 'vuex';  
-  import { computed , ref, inject} from 'vue';
+  import { computed } from 'vue';
+  import { useStore } from 'vuex';
 
+  import useCheckout from '@/composition/useCheckout';
   export default {
     components: {
       Popover,
@@ -138,40 +139,22 @@
     },
 
     setup() {
-      const store = useStore()
-      const eventBus = inject('eventBus')
+      const { taxesAndShippingDisclaimer, totalAmountInCart, modifyQuantity ,cartItems} = useCheckout();
 
-      const taxesAndShipping = 'Taxes and shipping are calculated at checkout';
-      const totalAmountInCart = computed( () => store.getters['cart/totalAmountInCart'])
-      let cartItems =    ref(store.getters['cart/cartItems'])
+      const store = useStore();
       const cartQuantity = computed( () => store.getters['cart/cartQuantity'])
 
-      const modifyQuantity =  (payload) => {
-        store.dispatch('cart/modifyQuantity',payload)
-          cartItems.value = store.getters['cart/cartItems']
-          eventBus.emit('cartUpdate')          
-        } 
-
-      // const cartQuantity =  computed({
-      //   get() {
-      //     return store.getters['cart/cartQuantity']
-      //   },
-      //   set(payload) {
-      //     store.dispatch('cart/modifyQuantity',payload)
-      //   },
-      // });
+      
       return {
-        taxesAndShipping,
+        taxesAndShippingDisclaimer,
         totalAmountInCart,
         cartItems,
         cartQuantity,
         modifyQuantity,
-        // products,
         accept: async (close) => {
           close()
         },
-
-      };
-    },
-  };
+      }
+  }
+  }
 </script>

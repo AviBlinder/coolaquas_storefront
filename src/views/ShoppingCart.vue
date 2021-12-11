@@ -11,7 +11,6 @@
               <h2 id="cart-heading" class="sr-only">
                 Items in your shopping cart
               </h2>
-
               <ul
                 role="list"
                 class="border-t border-b border-gray-200 divide-y divide-gray-200"
@@ -58,11 +57,9 @@
                         <label :for="`quantity-${productIdx}`" class="sr-only"
                           >Quantity, {{ product.name }}</label
                         >
-                        <!-- <input :value="message" @input="updateMessage"> -->
-
                         <input
                           :value="product.quantity"
-                          @input="modifyQuantityMethod"
+                          @input="modifyQuantityWrapper"
                           :id="`quantity-${productIdx}`"
                           :name="`quantity-${productIdx}`"
                           :data-id="product.id"
@@ -127,7 +124,7 @@
                     </div>
                     <div class="py-4 flex items-center justify-between">
                       <dt class="text-sm italic font-medium text-gray-700">
-                        * {{taxesAndShipping}}
+                        * {{taxesAndShippingDisclaimer}}
                       </dt>
                       <dd class="hidden text-base font-medium text-gray-900">                       
                      </dd>
@@ -169,9 +166,10 @@
 <script>
   import {useStore} from 'vuex';
   
-  import { ref,computed } from 'vue';
+  import { computed} from 'vue';
 
   import { CheckIcon, ClockIcon } from '@heroicons/vue/solid';
+  import useCheckout from '@/composition/useCheckout';
 
   export default {
     components: {
@@ -181,45 +179,19 @@
 
     setup() {
       const store = useStore()
-      const open = ref(false);
-      const taxesAndShipping = 'Taxes and shipping are calculated at checkout';
 
-      const totalAmountInCart = computed(() => store.getters['cart/totalAmountInCart'])
-      const shippingCost = computed( () => {
-        {
-        if (totalAmountInCart.value > 100) {
-          return 0;
-        } else {
-          let shippingCost = totalAmountInCart.value * 0.1;
-          return +shippingCost.toFixed(2);
-        }
-        } 
-      })     
-      // const taxCost = computed( () => {
-      //   let tax = (totalAmountInCart.value + shippingCost.value) * 0.17;
-      //   return +tax.toFixed(2);
-      // })
-      // const finalCost = computed ( () => {
-      //   let finalCost =
-      //     totalAmountInCart.value + shippingCost.value + taxCost.value;
-      //   return +finalCost.toFixed(2);
-      // })
-
-      const modifyQuantityMethod = (e) => { 
-        store.dispatch('cart/modifyQuantity', {id:e.target.dataset.id,quantity: e.target.value}) 
+      const { taxesAndShippingDisclaimer, totalAmountInCart, cartItems, modifyQuantity, removeItem} = useCheckout();
+      const modifyQuantityWrapper = (e) => {
+        modifyQuantity({id:e.target.dataset.id,quantity: e.target.value})
       }
+
       return {
-      open,
-      taxesAndShipping,
-      cartItems :computed(() => store.getters['cart/cartItems']),
+      taxesAndShippingDisclaimer,
+      cartItems,
       priceByProduct :computed(() => store.getters['cart/priceByProduct']),
-      cartQuantity :computed(() => store.getters['cart/cartQuantity']),
       totalAmountInCart,
-      shippingCost,
-      // taxCost,
-      // finalCost,
-      removeItem: (payload) => store.dispatch('cart/removeItem',payload),
-      modifyQuantityMethod,
+      removeItem,
+      modifyQuantityWrapper,
       };
     },
   };

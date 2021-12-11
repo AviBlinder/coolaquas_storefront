@@ -191,8 +191,7 @@
   // import { SearchIcon } from '@heroicons/vue/solid'
   import { MenuIcon, XIcon } from '@heroicons/vue/outline';
 
-  import { computed, ref, inject } from 'vue';
-  import { useStore } from 'vuex';
+  import {ref, inject } from 'vue';
   import Cart from './Cart/Cart.vue';
 
   import search from './fields/search.vue';
@@ -232,9 +231,7 @@
       // const navigation = {
       //   pages: [{ name: 'About', description: 'Company' }],
       // };
-      const store = useStore();
       const storyapi = inject('storyapi');
-      const cartQuantity = computed(() => store.getters['cart/cartQuantity']);
       const slug = 'collections/';
       const isLoading = ref(false);
 
@@ -277,7 +274,6 @@
         user,
         navigation,
         userNavigation,
-        cartQuantity,
         collections,
         isLoading,
         cartState: (e) => console.log('inside cart ', e),

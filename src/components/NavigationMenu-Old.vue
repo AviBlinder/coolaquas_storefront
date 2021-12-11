@@ -157,9 +157,7 @@
 </template>
 
 <script>
-  import { computed, ref, inject } from 'vue';
-
-  import { useStore } from 'vuex';
+  import {ref, inject } from 'vue';
 
   import search from './fields/search.vue';
   import {
@@ -187,11 +185,8 @@
       const navigation = {
         pages: [{ name: 'About', description: 'Company' }],
       };
-      const store = useStore();
 
       const storyapi = inject('storyapi');
-
-      const cartQuantity = computed(() => store.getters['cart/cartQuantity']);
 
       const open = ref(false);
       const slug = 'collections/';
@@ -234,7 +229,6 @@
       return {
         collections,
         isLoading,
-        cartQuantity,
         navigation,
         open,
         slug,
