@@ -189,7 +189,7 @@ const mutations = {
   modifyQuantity(state, { id, quantity }) {
     return state.added.map((p) => {
       if (p.id === id) {
-        p.quantity = quantity;
+        p.quantity = Number(quantity);
         // update the current state of the cart as 'customerCart' locatStorage item
         localStorage.setItem('customerCart', JSON.stringify(state.added));
       }

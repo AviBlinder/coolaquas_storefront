@@ -4,7 +4,8 @@ import { computed, ref, reactive } from 'vue';
 export default function () {
   const store = useStore();
   // const eventBus = inject('eventBus');
-  const temp = ref(0);
+  const currencySign = store.getters['general/getCurrencySign'];
+
   const taxesAndShippingDisclaimer =
     'Taxes and shipping are calculated at checkout';
 
@@ -32,6 +33,6 @@ export default function () {
     cartItems,
     modifyQuantity,
     removeItem,
-    temp,
+    currencySign,
   };
 }
