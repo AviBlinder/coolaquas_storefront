@@ -187,7 +187,6 @@ const mutations = {
     }
   },
   modifyQuantity(state, { id, quantity }) {
-    console.log('inside modifyQuantity ', id + '<>' , quantity  );
     return state.added.map((p) => {
       if (p.id === id) {
         p.quantity = quantity;
@@ -203,14 +202,12 @@ const mutations = {
     const quantities = state.added.map((p) => {
       return Number(p.quantity);
     })
-    console.log("totalQuantities: ",  quantities)
     let cartQuantity = 0;
     if (quantities.length) {
       cartQuantity = quantities.reduce((total, p) => {
         return Number(total + p);
       });
     }
-    console.log('cartQuantity: ', cartQuantity);
     state.cartQuantity = cartQuantity;
     localStorage.setItem(
       'customerCartQuantity',

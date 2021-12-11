@@ -1,39 +1,37 @@
 import { useStore } from 'vuex';
-import { computed, ref, reactive} from 'vue';
+import { computed, ref, reactive } from 'vue';
 
-export default function(){
-        const store = useStore();
-        // const eventBus = inject('eventBus');
-        const temp = ref(0)
-        const taxesAndShippingDisclaimer =
-          'Taxes and shipping are calculated at checkout';
+export default function () {
+  const store = useStore();
+  // const eventBus = inject('eventBus');
+  const temp = ref(0);
+  const taxesAndShippingDisclaimer =
+    'Taxes and shipping are calculated at checkout';
 
-        const totalAmountInCart = computed(
-          () => store.getters['cart/totalAmountInCart']
-        );
-        
-        // const cartItems = ref(store.getters['cart/cartItems'])
-        let cartItems = computed( () => 
-        {
-          console.log("computed cartItems ")
-          return reactive(store.getters['cart/cartItems'])
-        })
+  const totalAmountInCart = computed(
+    () => ref(store.getters['cart/totalAmountInCart'])
+  );
 
-        const modifyQuantity = (payload) => {
-          console.log("inside modifyQuantity func ", payload)
-          store.dispatch('cart/modifyQuantity', payload);
-        }; 
+  // const cartItems = ref(store.getters['cart/cartItems'])
+  let cartItems = computed(() => {
+    // console.log('computed cartItems ', cartItems.value);
+    return reactive(store.getters['cart/cartItems']);
+  });
 
-        const removeItem = (payload) => {
-            store.dispatch('cart/removeItem', payload);
-        };
+  const modifyQuantity = (payload) => {
+    store.dispatch('cart/modifyQuantity', payload);
+  };
 
-         return {
-          taxesAndShippingDisclaimer,
-          totalAmountInCart,
-          cartItems,
-          modifyQuantity,
-          removeItem,
-          temp,
-        };
+  const removeItem = (payload) => {
+    store.dispatch('cart/removeItem', payload);
+  };
+
+  return {
+    taxesAndShippingDisclaimer,
+    totalAmountInCart,
+    cartItems,
+    modifyQuantity,
+    removeItem,
+    temp,
+  };
 }

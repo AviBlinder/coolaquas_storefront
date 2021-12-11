@@ -3,6 +3,7 @@
     <!-- Cart -->
         <Popover class="ml-4 flow-root text-sm lg:mr-4 ">
           <PopoverButton 
+          :disabled="disableCart"
           class="group -m-2 p-2 flex flex-row items-center">
             <ShoppingBagIcon
               class="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
@@ -41,7 +42,7 @@
               <form class="max-w-2xl mx-auto px-4">
                 <ul role="list" class="divide-y divide-gray-200">
                   <li
-                    v-for="product in cartItems"
+                    v-for="(product,productIdx) in cartItems"
                     :key="product.id"
                     class="py-6 flex items-center"
                   >
@@ -60,7 +61,7 @@
                           <div class="flex align-middle justify-center" >
                             <PlusIcon
                               @click="
-                                modifyQuantity({ id: product.id, quantity: product.quantity + 1 })
+                                modifyQuantityWrapper({ id: product.id, quantity: product.quantity,sign:'+' })
                               "
                               class="flex-shrink-0 h-3 w-3 text-gray-400"
                             >
@@ -68,13 +69,14 @@
                           </div>
                           <div class="my-2">
                             <p class="text-sm">
+                              <span class="sr-only" :id="`quantity-${productIdx}`"></span>
                               {{ product.quantity }}
                             </p>
                           </div>
                           <div class="flex align-middle justify-center">
                             <MinusIcon
                               @click="
-                                modifyQuantity({ id: product.id, quantity: product.quantity - 1 })
+                                modifyQuantityWrapper({ id: product.id, quantity: product.quantity,sign: '-' })
                               "
                               class="flex-shrink-0 h-3 w-3 text-gray-400"
                             >
@@ -124,8 +126,9 @@
 <script>
   import { ShoppingBagIcon, PlusIcon, MinusIcon } from '@heroicons/vue/outline';
   import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
-  import { computed } from 'vue';
+  import { computed, watch, ref } from 'vue';
   import { useStore } from 'vuex';
+  import {useRoute} from 'vue-router'
 
   import useCheckout from '@/composition/useCheckout';
   export default {
@@ -140,17 +143,44 @@
 
     setup() {
       const { taxesAndShippingDisclaimer, totalAmountInCart, modifyQuantity ,cartItems} = useCheckout();
+      const route = useRoute();
+
+      const disableCart = ref(false)
+    watch( () => route.fullPath,
+      async newValue => {
+        if(newValue.includes("/checkout") || newValue.includes("/cart")) {
+            disableCart.value = true
+        } else {
+          disableCart.value = false
+        }
+      }
+    )
+
+
+      const modifyQuantityWrapper = (e) => {
+        console.log("modifyQuantityWrapper :", e.quantity)
+        if (e.sign === '+'){
+          Number(e.quantity += 1)
+        } else {
+          if (e.quantity >= 1) {
+            Number(e.quantity -= 1)
+          } else {
+            e.quantity = 1
+          }
+        }
+        modifyQuantity({id:e.id,quantity: e.quantity})
+      }
 
       const store = useStore();
       const cartQuantity = computed( () => store.getters['cart/cartQuantity'])
-
       
       return {
         taxesAndShippingDisclaimer,
         totalAmountInCart,
         cartItems,
         cartQuantity,
-        modifyQuantity,
+        disableCart,
+        modifyQuantityWrapper,
         accept: async (close) => {
           close()
         },

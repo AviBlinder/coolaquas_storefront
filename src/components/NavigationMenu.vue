@@ -38,7 +38,7 @@
         <!-- Hamburger menu sm + md -->
         <div class="relative z-10 flex items-center lg:hidden">
           <div class="flex justify-between">
-            <div class="relative z-10 flex items-center lg:hidden">
+            <div class="relative z-40 flex items-center lg:hidden">
               <Cart></Cart>
             </div>
             <div>
@@ -58,7 +58,7 @@
           </div>
         </div>
         <!-- lg screens: Cart + User Menu -->
-        <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+        <div class="hidden lg:relative lg:z-40 lg:ml-4 lg:flex lg:items-center">
           <Cart></Cart>
           <!-- Profile dropdown -->
             <div v-if="userAuthenticated">
