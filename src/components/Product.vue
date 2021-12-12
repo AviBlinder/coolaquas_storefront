@@ -128,7 +128,7 @@ const product = {
 }
 
 import {useStore} from 'vuex';
-import { ref, reactive } from 'vue'
+import { ref, reactive , inject} from 'vue'
 
 export default {
     props: {
@@ -165,11 +165,13 @@ export default {
   setup(props) {
     const selectedColor = ref(product.colors[0])
     const store = useStore()
-
+    const eventBus = inject('eventBus');
+    
     const blokProp = reactive(props.blok);
 
     const addToCart =  (payload) => {
       store.dispatch('cart/addToCart',payload)
+      eventBus.emit('cartUpdate');
     } 
 
 

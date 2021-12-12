@@ -21,6 +21,7 @@ App.vue:
     provide('eventBus',eventBus)
 someComponent.vue:
 //Emit:
+// const eventBus = inject('eventBus');
 // eventBus.emit('cartUpdate');
 //Listen:
 // const eventBus = inject('eventBus');

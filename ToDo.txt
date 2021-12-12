@@ -1,3 +1,7 @@
+Bugs: 
+1. Cart: alignment issues
+2. open Popover on product add?
+
 User Authentication:
 - Account: Login/Signin/Logout
 

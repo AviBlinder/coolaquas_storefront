@@ -1,7 +1,9 @@
 <template>
   <div class="px-4 sm:px-0">
     <!-- Cart -->
-    <Popover class="ml-4 flow-root text-sm lg:mr-4">
+    <!-- :open="productAdded" -->
+    <Popover class="ml-4 flow-root text-sm lg:mr-4"
+    >
       <PopoverButton
         :disabled="disableCart"
         class="group -m-2 p-2 flex flex-row items-center"
@@ -46,17 +48,20 @@
               <li
                 v-for="(product, productIdx) in cartItems"
                 :key="product.id"
-                class="py-6 flex  items-center justify-evenly"
+                class="py-6 flex  items-center "
               >
+                <!-- justify-evenly -->
                 <div class="grid grid-cols-12">
-                  <div class="lg:ml-4 col-span-3 justify-items-start">
+                  <div class="lg:ml-4 col-span-3">
+                    <div class="flex justify-start">
                     <img
+                      class="sm:w-16 sm:h-16 
+                       md:w-24 md:h-24
+                       rounded-md border border-gray-200"
                       :src="product.imageSrc"
                       :alt="product.imageAlt"
-                      class="flex-none sm:w-16 sm:h-16 
-                      md:w-24 md:h-24
-                       rounded-md border border-gray-200"
                     />
+                      </div>
                   </div>
                   <div class="ml-4 col-span-3 flex items-center">
                     <h3 class="font-medium text-gray-900">
@@ -153,7 +158,7 @@
 <script>
   import { ShoppingBagIcon, PlusIcon, MinusIcon } from '@heroicons/vue/outline';
   import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
-  import { computed, watch, ref } from 'vue';
+  import { computed, watch, ref, inject } from 'vue';
   import { useStore } from 'vuex';
   import { useRoute } from 'vue-router';
 
@@ -169,6 +174,10 @@
     },
 
     setup() {
+      const route = useRoute();
+      const eventBus = inject('eventBus');
+      const productAdded = ref(false)
+      
       const {
         taxesAndShippingDisclaimer,
         totalAmountInCart,
@@ -176,7 +185,12 @@
         cartItems,
         currencySign,
       } = useCheckout();
-      const route = useRoute();
+      
+// cartUpdate event listener
+eventBus.on('cartUpdate', () => {
+  console.log("cart updated")
+  productAdded.value=true
+})
 
       const disableCart = ref(false);
       watch(
@@ -215,7 +229,9 @@
         disableCart,
         currencySign,
         modifyQuantityWrapper,
+        productAdded,
         accept: async (close) => {
+          productAdded.value = false
           close();
         },
       };
