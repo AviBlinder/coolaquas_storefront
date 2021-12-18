@@ -1,6 +1,5 @@
 Auth todo:
 - Password auto-complete not working? 
-- Pass 'company' as identification field
 - Style code verification/password rec. mails
 
 //Work with Git branche
