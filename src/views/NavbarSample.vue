@@ -76,7 +76,10 @@
 <!-- DisclosurePanel Start: lg:hidden: Used only for small screens -->
     <DisclosurePanel as="nav" class="lg:hidden" aria-label="Global">
       <div class="pt-2 pb-3 px-2 space-y-1">
-        <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'block rounded-md py-2 px-3 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
+        <DisclosureButton 
+        v-for="item in navigation" :key="item.name" as="a" 
+        :href="item.href" 
+        :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-900 hover:bg-gray-50 hover:text-gray-900', 'block rounded-md py-2 px-3 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
       </div>
       <div class="border-t border-gray-200 pt-4 pb-3">
         <div class="px-4 flex items-center">

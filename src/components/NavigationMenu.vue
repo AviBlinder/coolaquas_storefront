@@ -172,6 +172,8 @@
 
       <!-- User Sub-menu -->
       <div class="border-t border-gray-200 pt-4 pb-3">
+        <div class="">
+          <div >
         <div v-if="loggedInUser">
          <div class="mt-3 px-2 space-y-1">
                  <DisclosureButton
@@ -180,22 +182,27 @@
                  </DisclosureButton>           
         </div>
         </div>
-        <div v-else class="text-base font-medium text-gray-800 hover:cursor-pointer">
-          <DisclosureButton>
+        <div v-else>
+          <DisclosureButton
+          as="router-link" 
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                hover:cursor-pointer"
+          >
               <router-link :to="{name: 'Signup'}">SignUp</router-link>
-           </DisclosureButton>   
-            <DisclosureButton>           
+        </DisclosureButton>   
+            <DisclosureButton
+            as="router-link" 
+                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                hover:cursor-pointer"
+            >           
               <router-link class="ml-2" :to="{name: 'Signin'}">Login</router-link>
             </DisclosureButton>
-               <div v-if="!loggedInUser">
-                 <DisclosureButton
-                  @click="signOutUser">
-                 Sign Out
-                 </DisclosureButton>
-              </div>
-
+          </div>
+          </div>
         </div>
       </div>
+
+      <!-- User Sub-menu end -->
     </DisclosurePanel>
   </Disclosure>
 </template>
@@ -208,9 +215,10 @@
     MenuButton,
     MenuItem,
     MenuItems,
+
   } from '@headlessui/vue';
   // import { SearchIcon } from '@heroicons/vue/solid'
-  import { MenuIcon, XIcon, UserIcon } from '@heroicons/vue/outline';
+  import { MenuIcon, XIcon, UserIcon, } from '@heroicons/vue/outline';
 
   import {ref, inject , computed} from 'vue';
   import {useStore} from 'vuex'
@@ -231,6 +239,7 @@
     { name: 'Calendar', href: '#', current: false },
   ];
   const userNavigation = [
+    { name: 'Profile', href: '/Profile' },
     { name: 'Sign out', href: '/Signout' },
   ];
 
@@ -252,6 +261,7 @@ import router from '@/router';
       XIcon,
       search,
       Cart,
+      // BellIcon      
     },
     setup() {
       // const navigation = {
