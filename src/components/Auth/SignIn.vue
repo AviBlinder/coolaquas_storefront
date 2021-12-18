@@ -81,7 +81,7 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
   export default {
-    name: 'Login',
+    name: 'SignIn',
     setup() {
       const { form, error, state, user, signIn} = useAuth()
       return {

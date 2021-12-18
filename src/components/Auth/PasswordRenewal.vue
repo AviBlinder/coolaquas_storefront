@@ -62,13 +62,13 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
   export default {
-    name: 'Login',
+    name: 'PasswordRenewal',
     setup(_,{emit}) {
       const { form, error, state, user, forgotPassword} = useAuth()
 
-      const forgotPasswordFunc = () => {
+      const forgotPasswordFunc = async () => {
         console.log("inside forgotPasswordFunc")
-        forgotPassword()
+        await forgotPassword()
         if(!error.value){
           emit('changeComponent', 'PasswordRenewalSubmit')
           console.log('after forgotPassword ')

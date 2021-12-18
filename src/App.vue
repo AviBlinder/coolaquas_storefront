@@ -48,19 +48,13 @@
         .then( (user) => {
           console.log("user: ",user)
           if (user && user.attributes.email_verified) {
-            localStorage.setItem('loggedIn', JSON.stringify(true));
-            localStorage.setItem('user', JSON.stringify(user.attributes.email));
             store.dispatch('general/setLoggedInUser',user.attributes.email)
           } else {
-            localStorage.setItem('loggedIn', JSON.stringify(false));
-            localStorage.removeItem('user');
             store.dispatch('general/setLoggedInUser','')          }
           // return Auth.changePassword(user, 'oldPassword', 'newPassword');
         })
         .catch( (err) => {
           console.log('currentAuthenticatedUser error: ', err)
-          localStorage.setItem('loggedIn', JSON.stringify(false));
-          localStorage.removeItem('user');
           store.dispatch('general/setLoggedInUser','')
         });
 
@@ -69,16 +63,11 @@
           case 'signIn':
             console.log(
               'event: user signed in', data );
-            localStorage.setItem('loggedIn', JSON.stringify(true));
-            localStorage.setItem(
-              'user',
-              JSON.stringify(data.payload.data.attributes.email)
-            );
             store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email)            
             break;
           case 'signUp':
             console.log('event: user signed up', data);
-            localStorage.setItem('loggedIn', JSON.stringify(true));
+            store.dispatch('general/setLoggedInUser','')            
             break;
           case 'signOut':
             console.log(' event: user signed out');

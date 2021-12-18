@@ -1,8 +1,6 @@
 Auth todo:
-- Password auto-complete not working
-- Make sure user is logedIn + verified
+- Password auto-complete not working? 
 - Pass 'company' as identification field
-- Sign Up --> redirect to 'code verification'
 - Style code verification/password rec. mails
 
 //Work with Git branche
@@ -10,9 +8,9 @@ Auth todo:
 Bugs: 
 1. Cart: alignment issues
 2. open Popover on product add?
+3. Cart: Add user + show cart only of relevant user
 
-User Authentication:
-- Account: Login/Signin/Logout
+4. Remove console.log()
 
 ---> Build New clean storefront (based on TS + Componsition APIs)
 ---> Add Jest/Cypress tests

@@ -2,8 +2,11 @@ import { Auth } from 'aws-amplify';
 import { reactive, ref, } from 'vue';
 // provide
 import router from '@/router';
+import {useStore} from 'vuex';
 
 export default function () {
+  const store = useStore();
+
   const error = ref('');
   const state = ref('');
   const user = ref('');
@@ -23,6 +26,7 @@ export default function () {
       const { email, password } = form;
       const loginAuth = await Auth.signIn(email, password);
       console.log('success! :', loginAuth.attributes.email);
+      store.dispatch('general/setLoggedInUser',loginAuth.attributes.email)
       router.push({ name: 'Home' });
     } catch (err) {
       error.value = err.message;
@@ -32,31 +36,24 @@ export default function () {
   //Sign Up
   const signUp = async () => {
     error.value = '';
-    localStorage.setItem('loggedIn', JSON.stringify(false));
-    localStorage.removeItem('user');
     try {
       // company? 
-      const { email, password,} = form;
-      await Auth.signUp(email, password, ).then((res) => {
-        // username = res.user.username;
-        // userConfirmed = res.userConfirmed
+      const { email, password, company} = form;
+      await Auth.signUp({
+        'username': email,
+        'password':password,
+        'attributes': { 'custom:company':company },
+      }).then((res) => {
         console.log('res user: ', res.user.username);
         console.log('res :', res);
-        // localStorage.setItem('user', JSON.stringify(res.user.username));
-        // provide('logedInUser', res.user.username);
         if (res.userSub) {
           form.email = '';
           form.password = '';
         }
       });
-      // router.push({ name: 'Home' });
-      // 
-      // redirect to Verify Code component!
-      // 
     } catch (err) {
+      console.log("signUp error ",err)
       error.value = err.message;
-      console.log('error! :', err.message);
-      console.log('error 2! :', error.value);
     }
   };
 
@@ -67,7 +64,6 @@ export default function () {
       const { email, code } = form;
       await Auth.confirmSignUp(email, code);      
       router.push({ name: 'Signin' });
-      // router.push({ name: 'Home' })
     } catch (err) {
       error.value = err.message;
     }
@@ -90,6 +86,7 @@ export default function () {
     error.value = ''
     try {
        await Auth.signOut() 
+      store.dispatch('general/setLoggedInUser', '');       
     } catch (err) {
       error.value = err.message
     }
@@ -110,6 +107,7 @@ export default function () {
     try {
       const { email,code,password } = form;
       await Auth.forgotPasswordSubmit(email,code,password);
+      router.push({ name: 'Signin' });
     } catch (err) {
       error.value = err.message;
     }

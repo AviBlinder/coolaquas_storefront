@@ -63,7 +63,7 @@
               type="submit"
               class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary-600 hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500"
             >
-              Send Code
+              Create New Password
             </button>
           </div>
           <div class="flex items-center justify-between">
@@ -73,12 +73,12 @@
             >
               Sign In
             </button>
-              <router-link
-                :to="{ name: 'Signup' }"
+              <button
               class="auth-bottom-links"
+              @click="$emit('changeComponent', 'PasswordRenewal')"
               >
-                Create Account
-              </router-link>
+                Generate New Code
+              </button>
           </div>          
         </form>
       </div>
@@ -89,12 +89,12 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
   export default {
-    name: 'Login',
+    name: 'PasswordRenewalSubmit',
     setup(_,{emit}) {
       const { form, error, state, user, forgotPasswordSubmit} = useAuth()
 
-            const SubmitforgotPassword = () => {
-            forgotPasswordSubmit()
+            const SubmitforgotPassword = async () => {
+            await forgotPasswordSubmit()
             if(!error.value)
             {
               emit('SignIn')

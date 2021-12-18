@@ -61,11 +61,11 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
   export default {
-    name: 'Login',
+    name: 'ResendSignUp',
     setup(_,{emit}) {
       const { form, error, state, user, resendSignUp} = useAuth()
-      const ReSendCode = () => {
-            resendSignUp()
+      const ReSendCode = async () => {
+            await resendSignUp()
             if(!error.value){
               emit('changeComponent', 'CodeVerification')            
             }

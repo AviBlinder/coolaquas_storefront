@@ -77,11 +77,12 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
 export default {
+    name: 'CreateAccount',
     setup(_,{emit}) {
       const { form, error, state, user, signUp} = useAuth()
 
-      const createAccount = () => {
-        signUp()
+      const createAccount = async () => {
+        await signUp()
             if(!error.value){
               emit('changeComponent', 'CodeVerification')            
             }

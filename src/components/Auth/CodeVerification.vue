@@ -79,6 +79,7 @@
   import useAuth from '@/composition/useAuth';
   import { toRefs } from 'vue';
   export default {
+    name: 'CodeVerification',
     setup() {
       const { form, error, state, user, confirmSignUp } = useAuth();
       return {
