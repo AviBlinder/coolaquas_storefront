@@ -5,13 +5,7 @@ Auth todo:
 - Sign Up --> redirect to 'code verification'
 - Style code verification/password rec. mails
 
-
-Components:
-1. Sign In/Password recover  --> dynamic component?
-2. Sign Up/Code verification --> dynamic component?
-3. Sign out (remove from localStorage...)
-
-
+//Work with Git branche
 
 Bugs: 
 1. Cart: alignment issues

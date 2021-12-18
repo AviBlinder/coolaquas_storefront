@@ -92,19 +92,27 @@
             leave-active-class="transition ease-in duration-75" 
             leave-from-class="transform opacity-100 scale-100" 
             leave-to-class="transform opacity-0 scale-95">
+
               <MenuItems 
               class="origin-top-right absolute 
-              right-0 mt-2 w-48 rounded-md shadow-lg 
-              bg-white ring-1 
-              hover:bg-gray-100
-              ring-black ring-opacity-5 py-1 
+              right-0 mt-2 w-56 rounded-md shadow-lg 
               focus:outline-none">
                 <!-- <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                   <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
                 </MenuItem> -->
+
                 <MenuItem 
                 as="div"
                  v-slot="{ active }"
+                :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']"                
+                class="mb-2 bg-white  hover:bg-gray-100 hover:cursor-pointer" 
+                >
+                 {{loggedInUser}}
+                </MenuItem>
+                <MenuItem 
+                as="div"
+                 v-slot="{ active }"
+                class="mb-2 bg-white  hover:bg-gray-100 hover:cursor-pointer	"
                 :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']"                
                 @click="signOutUser"
                 >
@@ -113,14 +121,7 @@
               </MenuItems>
             </transition>
           </Menu>
-
-<!--  -->
-          <!-- <DisclosureButton 
-          @click="signOutUser"
-          class="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-          Sign Out
-          </DisclosureButton>         -->
-          </div>
+         </div>
           <div v-else class="text-sm font-medium text-gray-800 border-l-2">
             <div class="flex justify-between ">
               <div class="mx-2">
@@ -175,6 +176,9 @@
         <div class="">
           <div >
         <div v-if="loggedInUser">
+          <div>
+            {{loggedInUser}}
+          </div>
          <div class="mt-3 px-2 space-y-1">
                  <DisclosureButton
                   @click="signOutUser">
