@@ -21,13 +21,19 @@
         </div>
         <!-- Search Bar sm:absolute + inset-0 -->
         <div
-          class="relative z-10 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0 lg:relative"
+          class="relative z-10 flex-1 px-2 
+          
+          flex items-center justify-center sm:absolute sm:inset-0 lg:relative"
         >
-          <div class="w-full sm:max-w-xs">
+          <div class="
+          lg:w-3/5 
+          sm:max-w-xs 
+          lg:max-w-lg">
             <label for="search" class="sr-only">Search</label>
             <div class="relative">
               <div
-                class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center"
+                class="pointer-events-none absolute 
+                inset-y-0 left-0 pl-3 flex items-center"
               >
                 <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
               </div>
@@ -40,7 +46,6 @@
           <div class="flex justify-between">
             <div class="relative z-40 flex items-center lg:hidden">
               <Cart></Cart> 
-              <p>(1)</p>
             </div>
             <div class="ml-2 p-1 flex items-center  justify-center" >
               <!-- Mobile menu hamburger button -->

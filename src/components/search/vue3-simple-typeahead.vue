@@ -253,7 +253,7 @@
               focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm    
   }
   .simple-typeahead .simple-typeahead-list {
-    @apply absolute top-11 ml-12 md:ml-8 z-40 
+    @apply absolute top-11 lg:w-3/4 lg:ml-6 z-40 
   }
     /* w-1/3  */
     /* max-h-80  */

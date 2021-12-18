@@ -72,8 +72,6 @@ setup(){
           })
       }
 },
-methods: {
-}
 }
 </script>
 
