@@ -17,3 +17,7 @@
 .fieldErrorMessage {
   @apply text-red-500 text-left text-sm font-extralight tracking-wide italic
 }
+
+.auth-bottom-links {
+  @apply m-2 font-medium text-blue-500 hover:text-blue-600
+}

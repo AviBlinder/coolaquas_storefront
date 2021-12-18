@@ -1,7 +1,7 @@
 import {ref,onMounted, computed} from 'vue'
 import { useStore } from 'vuex';
 
-import SubmitButtonState from '@/utils/checkout/SubmitButtonState';
+import SubmitButtonState from '@/utils/checkout/SubmitButtonState.js'
 
 
 export default {

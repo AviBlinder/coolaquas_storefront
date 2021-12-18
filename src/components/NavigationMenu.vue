@@ -35,24 +35,30 @@
             </div>
           </div>
         </div>
-        <!-- Hamburger menu sm + md -->
+        <!-- Cart + Hamburger menu sm + md -->
         <div class="relative z-10 flex items-center lg:hidden">
           <div class="flex justify-between">
             <div class="relative z-40 flex items-center lg:hidden">
-              <Cart></Cart>
+              <Cart></Cart> 
+              <p>(1)</p>
             </div>
-            <div>
+            <div class="ml-2 p-1 flex items-center  justify-center" >
               <!-- Mobile menu hamburger button -->
+                 <!-- focus:outline-none focus:ring-2 focus:ring-secondary-500" -->
               <DisclosureButton
-                class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-              >
+                class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 
+                hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 
+                focus:ring-inset "
+                    :class="[
+                      open ? 'ring-secondary-500' : 'ring-transparent' ]"                
+                >
                 <span class="sr-only">Open menu</span>
                 <MenuIcon
                   v-if="!open"
-                  class="block h-6 w-6"
+                  class="block h-6 w-6 "
                   aria-hidden="true"
                 />
-                <XIcon v-else class="block h-6 w-6" aria-hidden="true" />
+                <XIcon v-else class="block h-6 w-6 " aria-hidden="true" />
               </DisclosureButton>
             </div>
           </div>
@@ -61,49 +67,68 @@
         <div class="hidden lg:relative lg:z-40 lg:ml-4 lg:flex lg:items-center">
           <Cart></Cart>
           <!-- Profile dropdown -->
-            <div v-if="userAuthenticated">
+          <div v-if="loggedInUser">
+          <!-- v-for="item in userNavigation" :key="item.name" 
+          as="a" :href="item.href"  -->
+
+<!--  -->
+
           <Menu as="div" class="flex-shrink-0 relative ml-4">
             <div>
-              <MenuButton
-                class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
+              <!-- focus:ring-2 focus:ring-offset-2  -->
+              <MenuButton class="bg-white rounded-full flex 
+              focus:outline-none 
+              focus:ring-secondary-500
+              ">
                 <span class="sr-only">Open user menu</span>
-                <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
+                <UserIcon class="h-6 w-6 text-secondary-600" aria-hidden="true" />
+                <!-- <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" /> -->
               </MenuButton>
             </div>
-            <transition
-              enter-active-class="transition ease-out duration-100"
-              enter-from-class="transform opacity-0 scale-95"
-              enter-to-class="transform opacity-100 scale-100"
-              leave-active-class="transition ease-in duration-75"
-              leave-from-class="transform opacity-100 scale-100"
-              leave-to-class="transform opacity-0 scale-95"
-            >
-              <MenuItems
-                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
-              >
-                <MenuItem
-                  v-for="item in userNavigation"
-                  :key="item.name"
-                  v-slot="{ active }"
-                  class="hover:cursor-pointer"
+            <transition 
+            enter-active-class="transition ease-out duration-100" 
+            enter-from-class="transform opacity-0 scale-95" 
+            enter-to-class="transform opacity-100 scale-100" 
+            leave-active-class="transition ease-in duration-75" 
+            leave-from-class="transform opacity-100 scale-100" 
+            leave-to-class="transform opacity-0 scale-95">
+              <MenuItems 
+              class="origin-top-right absolute 
+              right-0 mt-2 w-48 rounded-md shadow-lg 
+              bg-white ring-1 
+              hover:bg-gray-100
+              ring-black ring-opacity-5 py-1 
+              focus:outline-none">
+                <!-- <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
+                  <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
+                </MenuItem> -->
+                <MenuItem 
+                as="div"
+                 v-slot="{ active }"
+                :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']"                
+                @click="signOutUser"
                 >
-                  <a
-                    :href="item.href"                    
-                    :class="[
-                      active ? 'bg-gray-100' : '',
-                      'block py-2 px-4 text-sm text-gray-700',
-                    ]"
-                    >{{ item.name }}</a
-                  >
+                  Sign Out
                 </MenuItem>
               </MenuItems>
             </transition>
           </Menu>
+
+<!--  -->
+          <!-- <DisclosureButton 
+          @click="signOutUser"
+          class="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+          Sign Out
+          </DisclosureButton>         -->
           </div>
           <div v-else class="text-sm font-medium text-gray-800 border-l-2">
-            <div class="ml-2">
-              <p >Sign In</p>            
+            <div class="flex justify-between ">
+              <div class="mx-2">
+              <router-link :to="{name: 'Signin'}">Login</router-link>
+              </div>
+              <div class="mx-2">
+              <router-link :to="{name: 'Signup'}">Signup</router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -147,32 +172,28 @@
 
       <!-- User Sub-menu -->
       <div class="border-t border-gray-200 pt-4 pb-3">
-        <div v-if="userAuthenticated">
-        <div  class="px-4 flex items-center">
-          <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
-          </div>
-          <div class="ml-3">
-            <div class="text-base font-medium text-gray-800">
-             {{ user.name }}
-            </div>
-            <div class="text-sm font-medium text-gray-500">
-              {{ user.email }}
-            </div>
-          </div>
-        </div>
-        <div class="mt-3 px-2 space-y-1">
-          <DisclosureButton
-            v-for="item in userNavigation"
-            :key="item.name"
-            as="a"
-            :href="item.href"
-            class="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-            >{{ item.name }}</DisclosureButton>
+        <div v-if="loggedInUser">
+         <div class="mt-3 px-2 space-y-1">
+                 <DisclosureButton
+                  @click="signOutUser">
+                 Sign Out
+                 </DisclosureButton>           
         </div>
         </div>
         <div v-else class="text-base font-medium text-gray-800 hover:cursor-pointer">
-            <p>Sign In</p>
+          <DisclosureButton>
+              <router-link :to="{name: 'Signup'}">SignUp</router-link>
+           </DisclosureButton>   
+            <DisclosureButton>           
+              <router-link class="ml-2" :to="{name: 'Signin'}">Login</router-link>
+            </DisclosureButton>
+               <div v-if="!loggedInUser">
+                 <DisclosureButton
+                  @click="signOutUser">
+                 Sign Out
+                 </DisclosureButton>
+              </div>
+
         </div>
       </div>
     </DisclosurePanel>
@@ -189,14 +210,15 @@
     MenuItems,
   } from '@headlessui/vue';
   // import { SearchIcon } from '@heroicons/vue/solid'
-  import { MenuIcon, XIcon } from '@heroicons/vue/outline';
+  import { MenuIcon, XIcon, UserIcon } from '@heroicons/vue/outline';
 
-  import {ref, inject } from 'vue';
+  import {ref, inject , computed} from 'vue';
+  import {useStore} from 'vuex'
   import Cart from './Cart/Cart.vue';
 
   import search from './fields/search.vue';
 
-  const user = {
+  const SampleUser = {
     name: 'Tom Cook',
     email: 'tom@example.com',
     imageUrl:
@@ -209,8 +231,11 @@
     { name: 'Calendar', href: '#', current: false },
   ];
   const userNavigation = [
-    { name: 'Sign out', href: '#' },
+    { name: 'Sign out', href: '/Signout' },
   ];
+
+import useAuth from '@/composition/useAuth';
+import router from '@/router';
 
   export default {
     components: {
@@ -222,6 +247,7 @@
       MenuItem,
       MenuItems,
       MenuIcon,
+      UserIcon,
       // SearchIcon,
       XIcon,
       search,
@@ -231,11 +257,15 @@
       // const navigation = {
       //   pages: [{ name: 'About', description: 'Company' }],
       // };
+      
+      // Auth
+      const store = useStore()
+      const loggedInUser =  computed( () => store.getters['general/getLoggedInUser'])
       const storyapi = inject('storyapi');
+      
+      
       const slug = 'collections/';
       const isLoading = ref(false);
-
-      const userAuthenticated = ref(false)
 
       const getCollections = async (slug, version) => {
         try {
@@ -270,16 +300,26 @@
         collections.value = res;
       });
 
+      const {  signOut } = useAuth();
+
+      const signOutUser = () => {
+          signOut()
+          router.push({name: 'Home'})      
+
+      }
+
       return {
-        user,
+        loggedInUser,
+        SampleUser,
         navigation,
         userNavigation,
         collections,
         isLoading,
         cartState: (e) => console.log('inside cart ', e),
-        userAuthenticated
-      };
+        signOutUser
+        };
     },
+    // 
   };
 </script>
 

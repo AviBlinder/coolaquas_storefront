@@ -3,6 +3,9 @@ const state = {
     currency: 'USD',
     currencySign: '$'
   },
+
+loggedInUser : '',
+
 freeShippingAmount: 0,
 deliveryMethods : [
   { id: 1, title: 'Pickup from store', turnaround: '1 business day ', 
@@ -140,6 +143,10 @@ countries : [
 ]
 }
 const getters = {
+  getLoggedInUser(state){
+    return state.loggedInUser
+  },
+
   getCurrency(state) {
     return state.settings.currency;
   },
@@ -161,6 +168,9 @@ const getters = {
   }
 };
 const actions = {
+  setLoggedInUser( {commit},payload){
+    commit('setLoggedInUser',payload);
+  },
   setFreeShippingAmount({ commit }, payload) {
     commit('setFreeShippingAmount', payload);
   },
@@ -173,6 +183,10 @@ const actions = {
 };
 
 const mutations = {
+  setLoggedInUser(state,payload) {
+    state.loggedInUser = payload
+  },
+
   setFreeShippingAmount(state, payload) {
     state.freeShippingAmount = Number(payload);
   },

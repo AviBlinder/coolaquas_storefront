@@ -8,6 +8,21 @@ const routes = [
     component: Home,
   },
   {
+    path: '/account/register',
+    name: 'Signup',
+    component: () =>
+      import(/* webpackChunkName: "Register" */ '../views/Auth/Signup.vue'),
+    // import(/* webpackChunkName: "Register" */ '../views/Auth1.vue'),
+  },
+  {
+    path: '/account/signin',
+    name: 'Signin',
+    component: () =>
+      import(/* webpackChunkName: "Login" */ '../views/Auth/Signin.vue'),
+    // import(/* webpackChunkName: "Login" */ '../views//Auth2.vue'),
+  },
+
+  {
     path: '/about',
     name: 'About',
     component: () =>
@@ -23,7 +38,9 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: () =>
-      import(/* webpackChunkName: "Cart" */ '../views/ShoppingCart.vue'),
+      import(
+        /* webpackChunkName: "ShoppingCart" */ '../views/ShoppingCart.vue'
+      ),
   },
   {
     path: '/checkout',
@@ -55,51 +72,6 @@ const routes = [
     props: (router) => ({ product: router.params.product }),
     component: () =>
       import(/* webpackChunkName: "Product" */ '../views/Product.vue'),
-  },
-  // Extra routes (sample routes)
-  {
-    path: '/carousel',
-    name: 'Carousel',
-    component: () =>
-      import(/* webpackChunkName: "carousel" */ '../views/Carousel.vue'),
-  },
-  {
-    path: '/CategorySample',
-    name: 'CategorySample',
-    component: () =>
-      import(
-        /* webpackChunkName: "carousel" */ '../components/category_sample.vue'
-      ),
-  },
-  {
-    path: '/transition',
-    name: 'Transition',
-    component: () =>
-      import(/* webpackChunkName: "carousel" */ '../views/Transition.vue'),
-  },
-  {
-    path: '/hero1',
-    name: 'Hero1',
-    component: () =>
-      import(/* webpackChunkName: "Hero1" */ '../views/Hero1.vue'),
-  },
-  {
-    path: '/hero2',
-    name: 'Hero2',
-    component: () =>
-      import(/* webpackChunkName: "Hero2" */ '../views/Hero2.vue'),
-  },
-  {
-    path: '/hero2',
-    name: 'Hero2',
-    component: () =>
-      import(/* webpackChunkName: "Hero2" */ '../views/Hero2.vue'),
-  },
-  {
-    path: '/hero3',
-    name: 'Hero3',
-    component: () =>
-      import(/* webpackChunkName: "Hero3" */ '../views/Hero3.vue'),
   },
 ];
 

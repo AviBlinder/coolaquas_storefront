@@ -1,5 +1,4 @@
 import { mapGetters } from "vuex";
-// import SubmitButtonState from '@/utils/checkout/submitButtonState.js'
 export default {
   props: {
     finalCost: {

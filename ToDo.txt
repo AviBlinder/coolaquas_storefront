@@ -1,3 +1,18 @@
+Auth todo:
+- Password auto-complete not working
+- Make sure user is logedIn + verified
+- Pass 'company' as identification field
+- Sign Up --> redirect to 'code verification'
+- Style code verification/password rec. mails
+
+
+Components:
+1. Sign In/Password recover  --> dynamic component?
+2. Sign Up/Code verification --> dynamic component?
+3. Sign out (remove from localStorage...)
+
+
+
 Bugs: 
 1. Cart: alignment issues
 2. open Popover on product add?
@@ -20,10 +35,8 @@ Enhancements (next epics):
 - Create new project (github backed) with 
   - clean components only
   - TS + Composition APIs
-  - JEST tests
-  - Github Actions
-- Sub-categories
-- Hero image ?
+  - Sub-categories
+  - Hero image ?
 
 
 paypal setup:

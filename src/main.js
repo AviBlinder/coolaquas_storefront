@@ -17,12 +17,24 @@ import SlideshowImage from './components/SlideshowImage.vue';
 import Collection from './components/Collection.vue';
 import CollectionFilterAndSort from './components/CollectionWIthFilterAndSort.vue';
 import Product from './components/Product.vue';
-import CategorySample from './components/category_sample.vue';
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart/Cart.vue';
 
 import marked from 'marked';
 import StoryblokClient from 'storyblok-js-client';
+
+// Amplify setup
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import {
+  applyPolyfills,
+  defineCustomElements,
+} from '@aws-amplify/ui-components/loader';
+
+Amplify.configure(aws_exports);
+applyPolyfills().then(() => {
+  defineCustomElements(window);
+});
 
 
 const markedMixin = {
@@ -34,7 +46,7 @@ const markedMixin = {
 };
 
 // 
-const app = createApp(App);
+const app = createApp(App, );
 // Global properties - Vue 2:
 //app.config.globalProperties.propertyName ==> access it on components via: this.propertyName 
   app.config.globalProperties.storyapi = new StoryblokClient({
@@ -56,6 +68,5 @@ app.component('slideshow-image', SlideshowImage);
 app.component('collection', Collection);
 app.component('CollectionFilterAndSort', CollectionFilterAndSort);
 app.component('Product', Product);
-app.component('CategorySample', CategorySample);
 app.component('Footer', Footer);
 app.component('Footer', Cart);
