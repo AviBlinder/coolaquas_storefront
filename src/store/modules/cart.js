@@ -3,6 +3,7 @@ const state = {
   cartQuantity: 0,
   //
   order: {
+    username: '',
     orderId: '',
     email: '',
     shippingCost: 0,
@@ -69,6 +70,9 @@ const getters = {
   },
   getOrderTotal(state){
     return state.order.total;
+  },
+  getUsername(state){
+    return state.order.username;
   }
 };
 
@@ -95,7 +99,10 @@ const actions = {
     commit('totalQuantity');
   },
   setOrderEmail({ commit }, payload) {
-    commit('setOrderEmail ', payload);
+    commit('setOrderEmail', payload);
+  },
+  setOrderUsername({commit}, username) {
+    commit('setOrderUsername',username)
   },
 
   setOrderShippingDetails({ commit,dispatch }, payload) {
@@ -121,6 +128,9 @@ const mutations = {
     state.order.email = payload;
   },
 
+  setOrderUsername(state,username){
+    state.order.username = username;
+  },
   setShippingCost(state, amount) {
     state.order.shippingCost = Number(amount);
   },

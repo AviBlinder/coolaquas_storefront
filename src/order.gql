@@ -1,0 +1,50 @@
+  type User @model {
+    id: ID!,
+    username: String!
+    order: Order @hasMany(fields: ["orderID"])
+  }
+  
+  type Order  @model {
+    id: ID!  @primaryKey
+    username: User  @index(name: "byUsername")
+    orderId: String
+    email: String
+    shippingCost: Number
+    shippingType: String!,
+    total: Total
+    shippingDetails: ShippingDetails
+    billingDetails: BillingDetails
+    products: [Products]!
+  }
+
+type Total {
+      amount: Number!
+      currency: String!
+}
+
+type ShippingDetails {
+      firstName: String!
+      lastName: String!
+      company: String
+      country: String!
+      city: String!
+      address: String!
+      postalCode: String!
+    }
+  type BillingDetails {
+      firstName: String!
+      lastName: String!
+      company: String
+      country: String!
+      city: String!
+      address: String!
+      postalCode: String!
+
+  }
+
+  type Products {
+    id: String!
+    price: Number!
+    currency: String!
+    quantity: Number!
+  }
