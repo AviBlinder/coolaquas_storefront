@@ -25,6 +25,8 @@ import StoryblokClient from 'storyblok-js-client';
 
 // Amplify setup
 import Amplify from 'aws-amplify';
+// import Amplify, { API, graphqlOperation } from 'aws-amplify';
+
 import aws_exports from './aws-exports';
 import {
   applyPolyfills,
