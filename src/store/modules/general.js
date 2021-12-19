@@ -168,8 +168,9 @@ const getters = {
   }
 };
 const actions = {
-  setLoggedInUser( {commit},payload){
+  setLoggedInUser( {commit,dispatch},payload){
     commit('setLoggedInUser',payload);
+    dispatch('cart/setOrderUsername', payload, { root: true });
   },
   setFreeShippingAmount({ commit }, payload) {
     commit('setFreeShippingAmount', payload);

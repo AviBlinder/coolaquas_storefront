@@ -101,7 +101,9 @@
               </h3>
 
               <!-- email field -->
-              <EmailField v-model="email" />
+              <EmailField 
+              @update:modelValue="updateEmail"
+              v-model="email" />
             </div>
 
             <div class="mt-10">
@@ -253,11 +255,15 @@
         postCheckoutMessage2.value = `Your orderId is ${event}`;
       };
 
+      const updateEmail =  () => {
+        store.dispatch('cart/setOrderEmail', email.value)
+      }
+
       return {
         cartItems,
         priceByProduct: computed(() => store.getters['cart/priceByProduct']),
         // Trigger mutation directly
-        updateEmail: () => store.commit('cart/setOrderEmail', email.value),
+        updateEmail,
         billingAsShipping,
         totalAmountInCart,
         shippingCost,
