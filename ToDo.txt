@@ -1,7 +1,7 @@
 API Todo:
-1. Add email to order info (based on loggedIn=username + "contact info" = email)
-2. Write Cart + Order + Email to GraphQL after checkout
-3. Configure a secondary index
+1. Write Cart + Order + Email to GraphQL after checkout
+2. Configure a secondary index
+
 https://docs.amplify.aws/cli/graphql/data-modeling/#configure-a-secondary-index
 DynamoDB query operations may use at most two attributes to efficiently query data. 
 The first query argument passed to a query (the hash key) must use strict equality 

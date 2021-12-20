@@ -8,6 +8,7 @@ const state = {
     email: '',
     shippingCost: 0,
     shippingType: '',
+    status: 'new',
     // products: [],
     total: {
       amount: 0,
@@ -158,6 +159,7 @@ const mutations = {
         quantity: 1,
         name: blok.name,
         price: blok.price,
+        status: 'new',
         currency: blok.currency,
         imageSrc: blok.images[0].filename,
         imageAlt: blok.images[0].alt,

@@ -1,16 +1,17 @@
   type User @model {
-    id: ID!,
+    id: ID!
     username: String!
     order: Order @hasMany(fields: ["orderID"])
   }
   
   type Order  @model {
-    id: ID!  @primaryKey
-    username: User  @index(name: "byUsername")
-    orderId: String
+    id: ID!  
+    username: User  @primaryKey(sortKeyFields: ["orderId"])
+    orderId: String 
     email: String
     shippingCost: Number
-    shippingType: String!,
+    shippingType: String!
+    status: String!
     total: Total
     shippingDetails: ShippingDetails
     billingDetails: BillingDetails
