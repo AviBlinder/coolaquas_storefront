@@ -1,0 +1,45 @@
+Deployment from Amplify Console/Studio
+amplify pull --appId d3rnnmlf1d46yc --envName staging
+
+Code:
+Create
+import { DataStore } from '@aws-amplify/datastore';
+import { Order } from './models';
+...
+await DataStore.save(
+    new Order({
+		"orderId": "Lorem ipsum dolor sit amet",
+		"email": "Lorem ipsum dolor sit amet",
+		"shippingCost": 123.45,
+		"shippingType": "Lorem ipsum dolor sit amet",
+		"status": "Lorem ipsum dolor sit amet",
+		"total": /* Provide a Total instance here */,
+		"shippingDetails": /* Provide a ShippingDetails instance here */,
+		"billingDetails": /* Provide a BillingDetails instance here */,
+		"products": /* Provide a Products instance here */,
+		"User": /* Provide a User instance here */
+	})
+);
+
+Update
+import { DataStore } from '@aws-amplify/datastore';
+import { Order } from './models';
+/* Models in DataStore are immutable. To update a record you must use the copyOf function
+ to apply updates to the item’s fields rather than mutating the instance directly */
+await DataStore.save(Order.copyOf(CURRENT_ITEM, item => {
+    // Update the values on {item} variable to update DataStore entry
+}));
+
+Delete
+import { DataStore } from '@aws-amplify/datastore';
+import { Order } from './models';
+
+const modelToDelete = await DataStore.query(Order, 123456789);
+DataStore.delete(modelToDelete);
+
+Query
+import { DataStore } from '@aws-amplify/datastore';
+import { Order } from './models';
+
+const models = await DataStore.query(Order);
+console.log(models);

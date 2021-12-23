@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "coolaquas",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Projects\\Coolaquas-Store\\coolaquas-storyblok-vue3-auth-api\\amplify\\backend\\api\\coolaquas\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}

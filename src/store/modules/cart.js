@@ -125,11 +125,15 @@ const actions = {
 };
 
 const mutations = {
+  setOrderProperty(state, {property,value}) {
+    state.order[property] = value;
+  },
+
   setOrderEmail(state, payload) {
     state.order.email = payload;
   },
 
-  setOrderUsername(state,username){
+  setOrderUsername(state, username) {
     state.order.username = username;
   },
   setShippingCost(state, amount) {
@@ -213,7 +217,7 @@ const mutations = {
   totalQuantity(state) {
     const quantities = state.added.map((p) => {
       return Number(p.quantity);
-    })
+    });
     let cartQuantity = 0;
     if (quantities.length) {
       cartQuantity = quantities.reduce((total, p) => {

@@ -101,9 +101,7 @@
               </h3>
 
               <!-- email field -->
-              <EmailField 
-              @update:modelValue="updateEmail"
-              v-model="email" />
+              <EmailField @update:modelValue="updateEmail" v-model="email" />
             </div>
 
             <div class="mt-10">
@@ -162,6 +160,14 @@
             @paymentProcess="postCheckout"
           >
           </paypalButton>
+          <div v-show="!disablePaymentButton">
+            <button
+              @click="CreateOrder"
+              class="bg-secondary-500 m-2 p-2 rounded-full"
+            >
+              Create Order
+            </button>
+          </div>
           <div
             v-if="postCheckoutMessage"
             class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0 bg-green-400 rounded-lg"
@@ -189,6 +195,11 @@
   import billingAddress from '../components/checkout/billingAddress.vue';
   // Form fields
   import EmailField from '../components/formFields/EmailField.vue';
+  // Amplify
+  // import { DataStore } from '@aws-amplify/datastore';
+  // import { Order } from './models';
+  import { API } from 'aws-amplify';
+  import { createUser } from '@/graphql/mutations';
 
   export default {
     components: {
@@ -250,15 +261,38 @@
       const postCheckoutMessage = ref('');
       const postCheckoutMessage2 = ref('');
       const postCheckout = (event) => {
+        // Set the orderId as the Paypal OrderId
+        const payload = {}
+        payload.propery = 'orderId'
+        payload.value = event
+        store.dispatch('cart/setOrderProperty',payload)
+
         postCheckoutMessage.value =
           store.getters['general/getafterSaleMessage'];
         postCheckoutMessage2.value = `Your orderId is ${event}`;
       };
 
-      const updateEmail =  () => {
-        store.dispatch('cart/setOrderEmail', email.value)
-      }
+      const updateEmail = () => {
+        store.dispatch('cart/setOrderEmail', email.value);
+      };
 
+      // Amplify API
+      const CreateOrder = async () => {
+        console.log('CreateOrder ', cartItems.value);
+        const user = { username: email.value };
+
+        try {
+          const createUserVar = await API.graphql({
+            query: createUser,
+            variables: { input: user },
+          });
+          console.log('createUser: ', createUserVar.data.createUser.id);
+          console.log('createUser: ', createUserVar.data.createUser.createdAt);
+        } catch (err) {
+          console.log('error: ', err);
+        }
+      };
+      //
       return {
         cartItems,
         priceByProduct: computed(() => store.getters['cart/priceByProduct']),
@@ -276,6 +310,7 @@
         postCheckout,
         postCheckoutMessage,
         postCheckoutMessage2,
+        CreateOrder,
       };
     },
   };

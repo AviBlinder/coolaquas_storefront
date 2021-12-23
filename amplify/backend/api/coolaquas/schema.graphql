@@ -1,0 +1,52 @@
+type Products {
+  id: String!
+  price: Float!
+  currency: String!
+  quantity: Int!
+}
+
+type BillingDetails {
+  firstName: String!
+  lastName: String!
+  company: String
+  country: String!
+  city: String!
+  address: String!
+  postalCode: String!
+}
+
+type Order @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  orderId: String
+  email: String
+  shippingCost: Float
+  shippingType: String!
+  status: String!
+  total: Total!
+  shippingDetails: ShippingDetails!
+  billingDetails: BillingDetails!
+  products: Products
+  User: User @hasOne
+}
+
+type ShippingDetails {
+  firstName: String!
+  lastName: String!
+  company: String
+  country: String!
+  city: String!
+  address: String!
+  postalCode: String!
+}
+
+type Total {
+  amount: Float!
+  currency: String!
+}
+
+type User @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  username: String!
+  shippingDetails: ShippingDetails
+  billingDetails: BillingDetails
+}

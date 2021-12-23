@@ -1,3 +1,7 @@
+amplify console --> aws console --> View in AppSync
+amplify pull --appId d2y3vkpu71zou2 --envName dev
+amplify update api
+
 API Todo:
 1. Write Cart + Order + Email to GraphQL after checkout
 2. Configure a secondary index

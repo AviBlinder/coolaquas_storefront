@@ -33,7 +33,9 @@
   // @ts-ignore
   import FormValidation from '@/utils/checkout/FormValidations.js';
   export default {
-    setup() {
+
+  setup() {
+      
       let input = ref('');
       let fieldError = ref(false);
 
