@@ -1,7 +1,6 @@
 API Todo:
 //Query + Update (or just Update) not working!
 //User Model: no ID but username = PK/Unique
-1. Write Cart + Order + Email to GraphQL after checkout
 2. Auth: make sure only User or Admin have access to record
 https://docs.amplify.aws/lib/datastore/setup-auth-rules/q/platform/js/#static-group-authorization
 3. Configure a secondary index

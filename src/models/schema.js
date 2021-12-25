@@ -99,6 +99,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "userId": {
+                    "name": "userId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "email": {
                     "name": "email",
                     "isArray": false,
@@ -442,5 +449,5 @@ export const schema = {
             }
         }
     },
-    "version": "1e4d06b355e47c89163eb4c015438e3b"
+    "version": "37c2d57542ca5ca0d7df66b455f2c377"
 };

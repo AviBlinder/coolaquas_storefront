@@ -258,6 +258,7 @@
         const order = store.getters['cart/getOrder']
         let payload = order
         payload.paypalOrderId = paypalOrderId
+        payload.userId = store.getters['general/getDynamoDbUserId']
         // const {amount, currency} = store.getters['cart/getOrderTotal']
         const amount = finalCostAmount.value
         const currency = store.getters['general/getCurrency']

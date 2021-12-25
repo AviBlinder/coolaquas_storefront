@@ -66,6 +66,7 @@ export const createOrder = /* GraphQL */ `
     createOrder(input: $input, condition: $condition) {
       id
       username
+      userId
       email
       paypalOrderId
       status
@@ -119,6 +120,7 @@ export const updateOrder = /* GraphQL */ `
     updateOrder(input: $input, condition: $condition) {
       id
       username
+      userId
       email
       paypalOrderId
       status
@@ -172,6 +174,7 @@ export const deleteOrder = /* GraphQL */ `
     deleteOrder(input: $input, condition: $condition) {
       id
       username
+      userId
       email
       paypalOrderId
       status

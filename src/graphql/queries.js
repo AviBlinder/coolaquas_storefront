@@ -76,6 +76,7 @@ export const getOrder = /* GraphQL */ `
     getOrder(id: $id) {
       id
       username
+      userId
       email
       paypalOrderId
       status
@@ -131,6 +132,7 @@ export const listOrders = /* GraphQL */ `
       items {
         id
         username
+        userId
         email
         paypalOrderId
         status
@@ -195,6 +197,7 @@ export const syncOrders = /* GraphQL */ `
       items {
         id
         username
+        userId
         email
         paypalOrderId
         status

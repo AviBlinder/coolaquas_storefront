@@ -46,7 +46,7 @@
       //Auth start       
         Auth.currentAuthenticatedUser({ bypassCache: false })
         .then( (user) => {
-          console.log("user: ",user)
+          // console.log("user: ",user)
           if (user && user.attributes.email_verified) {
             store.dispatch('general/setLoggedInUser',user.attributes.email)
           } else {

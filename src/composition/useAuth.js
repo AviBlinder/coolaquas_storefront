@@ -5,8 +5,8 @@ import router from '@/router';
 import {useStore} from 'vuex';
 // Amplify
 import { API } from 'aws-amplify';
-import * as mutations from '@/graphql/mutations';
 import * as queries from '@/graphql/queries';
+import * as mutations from '@/graphql/mutations';
 
 
 export default function () {

@@ -54,6 +54,7 @@ export const onCreateOrder = /* GraphQL */ `
     onCreateOrder {
       id
       username
+      userId
       email
       paypalOrderId
       status
@@ -104,6 +105,7 @@ export const onUpdateOrder = /* GraphQL */ `
     onUpdateOrder {
       id
       username
+      userId
       email
       paypalOrderId
       status
@@ -154,6 +156,7 @@ export const onDeleteOrder = /* GraphQL */ `
     onDeleteOrder {
       id
       username
+      userId
       email
       paypalOrderId
       status
