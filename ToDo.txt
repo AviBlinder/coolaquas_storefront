@@ -1,10 +1,11 @@
-amplify console --> aws console --> View in AppSync
-amplify pull --appId d2y3vkpu71zou2 --envName dev
-amplify update api
-
 API Todo:
+//Query + Update (or just Update) not working!
+//User Model: no ID but username = PK/Unique
 1. Write Cart + Order + Email to GraphQL after checkout
-2. Configure a secondary index
+2. Auth: make sure only User or Admin have access to record
+https://docs.amplify.aws/lib/datastore/setup-auth-rules/q/platform/js/#static-group-authorization
+3. Configure a secondary index
+4. Create a 'Orders History' view
 
 https://docs.amplify.aws/cli/graphql/data-modeling/#configure-a-secondary-index
 DynamoDB query operations may use at most two attributes to efficiently query data. 

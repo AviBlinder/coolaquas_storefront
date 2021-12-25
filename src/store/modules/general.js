@@ -5,15 +5,16 @@ const state = {
   },
 
 loggedInUser : '',
+dynamoDbUserId :'',
 
 freeShippingAmount: 0,
 deliveryMethods : [
   { id: 1, title: 'Pickup from store', turnaround: '1 business day ', 
-  price: 0,currency: '$',checked:false ,name: 'pickup'},
+  price: 0,currency: '$',checked:false ,name: 'PICKUP'},
   { id: 2, title: 'Standard', turnaround: '4–10 business days',
-   price: 5.00,currency: '$' ,checked:false, name: 'standard'},
+   price: 5.00,currency: '$' ,checked:false, name: 'STANDARD'},
   { id: 3, title: 'Express', turnaround: '2–5 business days',
-  price: 16.50, currency: '$',checked:false, name: 'express' },
+  price: 16.50, currency: '$',checked:false, name: 'EXPRESS' },
 ],
 afterSaleMessage: "Thanks for your purchase. \
   Your payment was successfully processed. ",
@@ -143,8 +144,11 @@ countries : [
 ]
 }
 const getters = {
-  getLoggedInUser(state){
-    return state.loggedInUser
+  getLoggedInUser(state) {
+    return state.loggedInUser;
+  },
+  getDynamoDbUserId(state) {
+    return state.dynamoDbUserId;
   },
 
   getCurrency(state) {
@@ -163,14 +167,17 @@ const getters = {
   getFreeShippingAmount(state) {
     return state.freeShippingAmount.toFixed(2);
   },
-  getafterSaleMessage(state){
+  getafterSaleMessage(state) {
     return state.afterSaleMessage;
-  }
+  },
 };
 const actions = {
-  setLoggedInUser( {commit,dispatch},payload){
-    commit('setLoggedInUser',payload);
+  setLoggedInUser({ commit, dispatch }, payload) {
+    commit('setLoggedInUser', payload);
     dispatch('cart/setOrderUsername', payload, { root: true });
+  },
+  setDynamoDbUserId({ commit }, payload) {
+    commit('setDynamoDbUserId', payload);
   },
   setFreeShippingAmount({ commit }, payload) {
     commit('setFreeShippingAmount', payload);
@@ -184,8 +191,11 @@ const actions = {
 };
 
 const mutations = {
-  setLoggedInUser(state,payload) {
-    state.loggedInUser = payload
+  setLoggedInUser(state, payload) {
+    state.loggedInUser = payload;
+  },
+  setDynamoDbUserId(state, payload) {
+    state.dynamoDbUserId = payload;
   },
 
   setFreeShippingAmount(state, payload) {

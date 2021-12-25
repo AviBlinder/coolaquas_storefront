@@ -69,4 +69,4 @@ app.component('collection', Collection);
 app.component('CollectionFilterAndSort', CollectionFilterAndSort);
 app.component('Product', Product);
 app.component('Footer', Footer);
-app.component('Footer', Cart);
+app.component('Cart', Cart);

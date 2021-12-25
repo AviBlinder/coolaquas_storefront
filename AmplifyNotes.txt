@@ -1,6 +1,17 @@
 Deployment from Amplify Console/Studio
-amplify pull --appId d3rnnmlf1d46yc --envName staging
+//amplify pull --appId d3rnnmlf1d46yc --envName staging
 
+Amplify project/env: coolaquas>dev
+``` bash
+amplify pull --appId d2y3vkpu71zou2 --envName dev
+```
+//---> Edit your schema at 
+//C:\Projects\Coolaquas-Store\coolaquas-storyblok-vue3-auth-api\amplify\backend\api\coolaquas\schema.graphql 
+// or place .graphql files in a directory at C:\Projects\Coolaquas-Store\coolaquas-storyblok-vue3-auth-api\amplify\backend\api\coolaquas\schema
+```
+amplify push
+//Will create/update the src/models folder
+```
 Code:
 Create
 import { DataStore } from '@aws-amplify/datastore';
@@ -43,3 +54,19 @@ import { Order } from './models';
 
 const models = await DataStore.query(Order);
 console.log(models);
+
+
+
+      // Amplify
+      const original = await DataStore.query(User, (data) =>
+        data.id('eq', 'b57cc586-4a0c-4703-9381-1d35cf34807c')
+      );
+      console.log('original =', original);
+      // id: "b57cc586-4a0c-4703-9381-1d35cf34807c"
+      const updated = await DataStore.save(
+        User.copyOf(original, (updated) => {
+          // visitDateTime: '1970-01-01T12:30:23.999Z',
+          updated.visitDateTime.push = Date.now();
+        })
+      );
+      console.log('updated =', updated);

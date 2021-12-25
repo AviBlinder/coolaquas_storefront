@@ -1,19 +1,86 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      username
+      paypalOrderId
+      visitDateTime
+      device
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        username
+        paypalOrderId
+        visitDateTime
+        device
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUsers = /* GraphQL */ `
+  query SyncUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        username
+        paypalOrderId
+        visitDateTime
+        device
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getOrder = /* GraphQL */ `
   query GetOrder($id: ID!) {
     getOrder(id: $id) {
       id
-      orderId
+      username
       email
-      shippingCost
-      shippingType
+      paypalOrderId
       status
-      total {
-        amount
-        currency
-      }
+      shippingType
+      shippingCost
       shippingDetails {
         firstName
         lastName
@@ -21,6 +88,8 @@ export const getOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       billingDetails {
@@ -30,41 +99,25 @@ export const getOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       products {
-        id
+        productId
         price
         currency
         quantity
       }
-      User {
-        id
-        username
-        shippingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        billingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        createdAt
-        updatedAt
+      total {
+        amount
+        currency
       }
       createdAt
       updatedAt
-      orderUserId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -77,15 +130,12 @@ export const listOrders = /* GraphQL */ `
     listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        orderId
+        username
         email
-        shippingCost
-        shippingType
+        paypalOrderId
         status
-        total {
-          amount
-          currency
-        }
+        shippingType
+        shippingCost
         shippingDetails {
           firstName
           lastName
@@ -93,6 +143,8 @@ export const listOrders = /* GraphQL */ `
           country
           city
           address
+          address2
+          phone
           postalCode
         }
         billingDetails {
@@ -102,66 +154,52 @@ export const listOrders = /* GraphQL */ `
           country
           city
           address
+          address2
+          phone
           postalCode
         }
         products {
-          id
+          productId
           price
           currency
           quantity
         }
-        User {
-          id
-          username
-          createdAt
-          updatedAt
+        total {
+          amount
+          currency
         }
         createdAt
         updatedAt
-        orderUserId
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
     }
   }
 `;
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      username
-      shippingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      billingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
+export const syncOrders = /* GraphQL */ `
+  query SyncOrders(
+    $filter: ModelOrderFilterInput
     $limit: Int
     $nextToken: String
+    $lastSync: AWSTimestamp
   ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    syncOrders(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
       items {
         id
         username
+        email
+        paypalOrderId
+        status
+        shippingType
+        shippingCost
         shippingDetails {
           firstName
           lastName
@@ -169,6 +207,8 @@ export const listUsers = /* GraphQL */ `
           country
           city
           address
+          address2
+          phone
           postalCode
         }
         billingDetails {
@@ -178,12 +218,28 @@ export const listUsers = /* GraphQL */ `
           country
           city
           address
+          address2
+          phone
           postalCode
+        }
+        products {
+          productId
+          price
+          currency
+          quantity
+        }
+        total {
+          amount
+          currency
         }
         createdAt
         updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
+      startedAt
     }
   }
 `;

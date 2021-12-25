@@ -226,7 +226,7 @@
     MenuItems,
 
   } from '@headlessui/vue';
-  // import { SearchIcon } from '@heroicons/vue/solid'
+  import { SearchIcon } from '@heroicons/vue/solid'
   import { MenuIcon, XIcon, UserIcon, } from '@heroicons/vue/outline';
 
   import {ref, inject , computed} from 'vue';
@@ -266,7 +266,7 @@ import router from '@/router';
       MenuItems,
       MenuIcon,
       UserIcon,
-      // SearchIcon,
+      SearchIcon,
       XIcon,
       search,
       Cart,

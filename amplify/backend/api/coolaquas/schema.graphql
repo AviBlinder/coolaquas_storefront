@@ -1,8 +1,44 @@
-type Products {
-  id: String!
-  price: Float!
-  currency: String!
-  quantity: Int!
+enum OrderStatus {
+  NEW
+  IN_PROGRESS
+  SHIPPED
+  DELIVERED
+}
+
+enum ShippingType {
+  PICKUP
+  STANDARD
+  EXPRESS
+}
+
+enum Currencies {
+  USD
+  ILS
+  EUR
+  CAD
+  JPY
+  AUD
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  username: AWSEmail!
+  paypalOrderId: [String]
+  visitDateTime: [AWSDateTime]
+  device: String
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: AWSEmail
+  email: String!
+  paypalOrderId: String!
+  status: OrderStatus!
+  shippingType: ShippingType!
+  shippingCost: Float
+  shippingDetails: ShippingDetails!
+  billingDetails: BillingDetails!
+  products: [Products!]
+  total: Total!
 }
 
 type BillingDetails {
@@ -12,21 +48,9 @@ type BillingDetails {
   country: String!
   city: String!
   address: String!
+  address2: String
+  phone: String  
   postalCode: String!
-}
-
-type Order @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  orderId: String
-  email: String
-  shippingCost: Float
-  shippingType: String!
-  status: String!
-  total: Total!
-  shippingDetails: ShippingDetails!
-  billingDetails: BillingDetails!
-  products: Products
-  User: User @hasOne
 }
 
 type ShippingDetails {
@@ -36,17 +60,20 @@ type ShippingDetails {
   country: String!
   city: String!
   address: String!
+  address2: String
+  phone: String
   postalCode: String!
+}
+
+type Products {
+  productId: String!
+  price: Float!
+  currency: Currencies!
+  quantity: Int!
 }
 
 type Total {
   amount: Float!
-  currency: String!
+  currency: Currencies!
 }
-
-type User @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  username: String!
-  shippingDetails: ShippingDetails
-  billingDetails: BillingDetails
-}
+ 

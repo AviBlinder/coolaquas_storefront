@@ -25,7 +25,7 @@
           <dl>
             <dt class="text-sm font-medium">Amount due</dt>
             <dd class="mt-1 text-3xl font-extrabold text-white">
-              {{ currencySign }}{{ finalCost }}
+              {{ currencySign }}{{ finalCostAmount }}
             </dd>
           </dl>
 
@@ -76,7 +76,7 @@
               class="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6"
             >
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{ currencySign }}{{ finalCost }}</dd>
+              <dd class="text-base">{{ currencySign }}{{ finalCostAmount }}</dd>
             </div>
           </dl>
         </div>
@@ -101,7 +101,9 @@
               </h3>
 
               <!-- email field -->
-              <EmailField @update:modelValue="updateEmail" v-model="email" />
+              <EmailField 
+              @update:modelValue="updateEmail" 
+              v-model="email" />
             </div>
 
             <div class="mt-10">
@@ -156,7 +158,7 @@
         <div>
           <paypalButton
             v-show="!disablePaymentButton"
-            :finalCost="finalCost"
+            :finalCost="finalCostAmount"
             @paymentProcess="postCheckout"
           >
           </paypalButton>
@@ -199,7 +201,7 @@
   // import { DataStore } from '@aws-amplify/datastore';
   // import { Order } from './models';
   import { API } from 'aws-amplify';
-  import { createUser } from '@/graphql/mutations';
+  import { createOrder } from '@/graphql/mutations';
 
   export default {
     components: {
@@ -217,6 +219,7 @@
       const email = ref('');
       const billingAsShipping = ref(true);
 
+      const currency = store.getters['general/getCurrency']
       const currencySign = store.getters['general/getCurrencySign'];
       const totalAmountInCart = computed(
         () => store.getters['cart/totalAmountInCart']
@@ -249,10 +252,13 @@
         let tax = (totalAmountInCart.value + shippingCost.value) * 0.17;
         return +tax.toFixed(2);
       });
-      const finalCost = computed(() => {
+      const finalCostAmount = computed(() => {
         let finalCost =
           totalAmountInCart.value + shippingCost.value + taxCost.value;
-        return +finalCost.toFixed(2);
+          const finalCostValue = +finalCost.toFixed(2)
+          const payload = {amount: finalCostValue, currency: currency}
+          store.dispatch('cart/setOrderTotal',payload)
+        return finalCostValue
       });
       const updateDisableStatus = (event) => {
         disablePaymentButton.value = event;
@@ -263,7 +269,7 @@
       const postCheckout = (event) => {
         // Set the orderId as the Paypal OrderId
         const payload = {}
-        payload.propery = 'orderId'
+        payload.property = 'paypalOrderId'
         payload.value = event
         store.dispatch('cart/setOrderProperty',payload)
 
@@ -277,17 +283,36 @@
       };
 
       // Amplify API
+      // Bugs:
+      //1. Phone not populated (x2)
+      //2. Totals not populated
       const CreateOrder = async () => {
         console.log('CreateOrder ', cartItems.value);
-        const user = { username: email.value };
+        const order = store.getters['cart/getOrder']
+        console.log("order: ",order)
+        let payload = order
+        const {amount, currency} = store.getters['cart/getOrderTotal']
+        payload.total = {amount: amount,currency: currency}
 
+        payload.products = []       
+        const products = store.getters['cart/cartItems']
+
+        products.map( product => {
+          payload.products.push({
+          productId: product.id, 
+          price: product.price,
+          currency:  product.currency ,
+          quantity: product.quantity
+          })
+        })
+        
+        console.log("payload: ", payload)
         try {
-          const createUserVar = await API.graphql({
-            query: createUser,
-            variables: { input: user },
-          });
-          console.log('createUser: ', createUserVar.data.createUser.id);
-          console.log('createUser: ', createUserVar.data.createUser.createdAt);
+          const createOrderVar = await API.graphql({
+            query: createOrder,
+            variables: { input: payload },
+          })
+          console.log("createOrderVar: ", createOrderVar)
         } catch (err) {
           console.log('error: ', err);
         }
@@ -302,7 +327,7 @@
         totalAmountInCart,
         shippingCost,
         taxCost,
-        finalCost,
+        finalCostAmount,
         currencySign,
         email,
         disablePaymentButton,

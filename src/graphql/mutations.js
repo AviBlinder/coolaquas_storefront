@@ -1,6 +1,63 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      username
+      paypalOrderId
+      visitDateTime
+      device
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      username
+      paypalOrderId
+      visitDateTime
+      device
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      username
+      paypalOrderId
+      visitDateTime
+      device
+      id
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createOrder = /* GraphQL */ `
   mutation CreateOrder(
     $input: CreateOrderInput!
@@ -8,15 +65,12 @@ export const createOrder = /* GraphQL */ `
   ) {
     createOrder(input: $input, condition: $condition) {
       id
-      orderId
+      username
       email
-      shippingCost
-      shippingType
+      paypalOrderId
       status
-      total {
-        amount
-        currency
-      }
+      shippingType
+      shippingCost
       shippingDetails {
         firstName
         lastName
@@ -24,6 +78,8 @@ export const createOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       billingDetails {
@@ -33,41 +89,25 @@ export const createOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       products {
-        id
+        productId
         price
         currency
         quantity
       }
-      User {
-        id
-        username
-        shippingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        billingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        createdAt
-        updatedAt
+      total {
+        amount
+        currency
       }
       createdAt
       updatedAt
-      orderUserId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -78,15 +118,12 @@ export const updateOrder = /* GraphQL */ `
   ) {
     updateOrder(input: $input, condition: $condition) {
       id
-      orderId
+      username
       email
-      shippingCost
-      shippingType
+      paypalOrderId
       status
-      total {
-        amount
-        currency
-      }
+      shippingType
+      shippingCost
       shippingDetails {
         firstName
         lastName
@@ -94,6 +131,8 @@ export const updateOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       billingDetails {
@@ -103,41 +142,25 @@ export const updateOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       products {
-        id
+        productId
         price
         currency
         quantity
       }
-      User {
-        id
-        username
-        shippingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        billingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        createdAt
-        updatedAt
+      total {
+        amount
+        currency
       }
       createdAt
       updatedAt
-      orderUserId
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -148,15 +171,12 @@ export const deleteOrder = /* GraphQL */ `
   ) {
     deleteOrder(input: $input, condition: $condition) {
       id
-      orderId
+      username
       email
-      shippingCost
-      shippingType
+      paypalOrderId
       status
-      total {
-        amount
-        currency
-      }
+      shippingType
+      shippingCost
       shippingDetails {
         firstName
         lastName
@@ -164,6 +184,8 @@ export const deleteOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       billingDetails {
@@ -173,134 +195,25 @@ export const deleteOrder = /* GraphQL */ `
         country
         city
         address
+        address2
+        phone
         postalCode
       }
       products {
-        id
+        productId
         price
         currency
         quantity
       }
-      User {
-        id
-        username
-        shippingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        billingDetails {
-          firstName
-          lastName
-          company
-          country
-          city
-          address
-          postalCode
-        }
-        createdAt
-        updatedAt
+      total {
+        amount
+        currency
       }
       createdAt
       updatedAt
-      orderUserId
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      username
-      shippingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      billingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      username
-      shippingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      billingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      username
-      shippingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      billingDetails {
-        firstName
-        lastName
-        company
-        country
-        city
-        address
-        postalCode
-      }
-      createdAt
-      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

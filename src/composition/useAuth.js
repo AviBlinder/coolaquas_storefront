@@ -3,6 +3,11 @@ import { reactive, ref, } from 'vue';
 // provide
 import router from '@/router';
 import {useStore} from 'vuex';
+// Amplify
+import { API } from 'aws-amplify';
+import * as mutations from '@/graphql/mutations';
+import * as queries from '@/graphql/queries';
+
 
 export default function () {
   const store = useStore();
@@ -25,9 +30,27 @@ export default function () {
     try {
       const { email, password } = form;
       const loginAuth = await Auth.signIn(email, password);
-      console.log('success! :', loginAuth.attributes.email);
-      store.dispatch('general/setLoggedInUser',loginAuth.attributes.email)
-      router.push({ name: 'Home' });
+      store.dispatch('general/setLoggedInUser', 
+      loginAuth.attributes.email);
+      
+      // Get User details
+      let filter = {
+        username: {
+          eq: email, // filter priority = 1
+        },
+      };
+      // console.log('fiter: ',filter)
+      const userData = await API.graphql({
+        query: queries.listUsers,
+        variables: { filter: filter },
+      });
+      
+      const userId = userData.data.listUsers.items[0].id;
+      store.dispatch('general/setDynamoDbUserId', userId);
+
+      router.push({ name: 'Home' })    
+
+      // 
     } catch (err) {
       error.value = err.message;
     }
@@ -40,9 +63,9 @@ export default function () {
       // company? 
       const { email, password, company} = form;
       await Auth.signUp({
-        'username': email,
-        'password':password,
-        'attributes': { 'custom:company':company },
+        username: email,
+        password: password,
+        attributes: { 'custom:company': company },
       }).then((res) => {
         console.log('res user: ', res.user.username);
         console.log('res :', res);
@@ -62,7 +85,17 @@ export default function () {
     error.value = '';
     try {
       const { email, code } = form;
-      await Auth.confirmSignUp(email, code);      
+      await Auth.confirmSignUp(email, code);     
+      //Amplify - Write user on DB
+        const userDetails = {
+          username: email,
+        };
+      const newUser = await API.graphql({
+        query: mutations.createUser,
+        variables: { input: userDetails },
+      });
+      console.log('after mutation ', newUser);      
+      // 
       router.push({ name: 'Signin' });
     } catch (err) {
       error.value = err.message;

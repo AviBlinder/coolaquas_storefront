@@ -1,28 +1,25 @@
 <template>
-  <label for="city" class="block text-sm font-medium text-gray-700"></label>
-  <div class="mt-1">
-    <input
-      placeholder="City"
-      type="text"
-      name="city"
-      id="city"
-      autocomplete="address-level2"
-      class="block w-full border-gray-300 rounded-md shadow-sm 
-      focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
+  <div>
+    <label for="city" class="block text-sm font-medium text-gray-700"></label>
+    <div class="mt-1">
+      <input
+        placeholder="City"
+        type="text"
+        name="city"
+        id="city"
+        autocomplete="address-level2"
+        class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
         v-model="input"
         @keyup="validateInput"
         @blur="validateInput"
         @input="$emit('update:modelValue', $event.target.value)"
         :class="{ fieldErrorBorder: fieldError }"
-    />
-  </div>
-      <div
-      class="fieldErrorMessage"
-      v-if="error.City"
-    >
+      />
+    </div>
+    <div class="fieldErrorMessage" v-if="error.City">
       {{ error.City }}
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -34,8 +31,8 @@
       isRequired: {
         type: Boolean,
         required: true,
-        default: false
-        }
+        default: false,
+      },
     },
 
     setup() {
@@ -55,9 +52,7 @@
       // }
       return { input, error, validateInput, fieldError };
     },
-  }
-
-
+  };
 </script>
 
 <style></style>

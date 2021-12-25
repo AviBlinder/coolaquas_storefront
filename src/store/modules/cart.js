@@ -4,11 +4,11 @@ const state = {
   //
   order: {
     username: '',
-    orderId: '',
+    paypalOrderId: '',
     email: '',
     shippingCost: 0,
     shippingType: '',
-    status: 'new',
+    status: 'NEW',
     // products: [],
     total: {
       amount: 0,
@@ -163,7 +163,7 @@ const mutations = {
         quantity: 1,
         name: blok.name,
         price: blok.price,
-        status: 'new',
+        status: 'NEW',
         currency: blok.currency,
         imageSrc: blok.images[0].filename,
         imageAlt: blok.images[0].alt,
