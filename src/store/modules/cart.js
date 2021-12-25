@@ -21,6 +21,7 @@ const state = {
       country: '',
       city: '',
       address: '',
+      phone: '',
       postalCode: '',
     },
     billingDetails: {
@@ -30,6 +31,7 @@ const state = {
       country: '',
       city: '',
       address: '',
+      phone: '',
       postalCode: '',
     },
   },

@@ -7,6 +7,8 @@ https://docs.amplify.aws/lib/datastore/setup-auth-rules/q/platform/js/#static-gr
 3. Configure a secondary index
 4. Create a 'Orders History' view
 
+--> Document flow (pull/push API + backend/model updates --> push)
+
 https://docs.amplify.aws/cli/graphql/data-modeling/#configure-a-secondary-index
 DynamoDB query operations may use at most two attributes to efficiently query data. 
 The first query argument passed to a query (the hash key) must use strict equality 

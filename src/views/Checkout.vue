@@ -219,7 +219,6 @@
       const email = ref('');
       const billingAsShipping = ref(true);
 
-      const currency = store.getters['general/getCurrency']
       const currencySign = store.getters['general/getCurrencySign'];
       const totalAmountInCart = computed(
         () => store.getters['cart/totalAmountInCart']
@@ -256,8 +255,6 @@
         let finalCost =
           totalAmountInCart.value + shippingCost.value + taxCost.value;
           const finalCostValue = +finalCost.toFixed(2)
-          const payload = {amount: finalCostValue, currency: currency}
-          store.dispatch('cart/setOrderTotal',payload)
         return finalCostValue
       });
       const updateDisableStatus = (event) => {
@@ -291,7 +288,9 @@
         const order = store.getters['cart/getOrder']
         console.log("order: ",order)
         let payload = order
-        const {amount, currency} = store.getters['cart/getOrderTotal']
+        // const {amount, currency} = store.getters['cart/getOrderTotal']
+        const amount = finalCostAmount.value
+        const currency = store.getters['general/getCurrency']
         payload.total = {amount: amount,currency: currency}
 
         payload.products = []       
