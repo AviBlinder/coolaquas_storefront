@@ -162,14 +162,6 @@
             @paymentProcess="postCheckout"
           >
           </paypalButton>
-          <div v-show="!disablePaymentButton">
-            <button
-              @click="CreateOrder"
-              class="bg-secondary-500 m-2 p-2 rounded-full"
-            >
-              Create Order
-            </button>
-          </div>
           <div
             v-if="postCheckoutMessage"
             class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0 bg-green-400 rounded-lg"
@@ -261,33 +253,11 @@
         disablePaymentButton.value = event;
       };
 
-      const postCheckoutMessage = ref('');
-      const postCheckoutMessage2 = ref('');
-      const postCheckout = (event) => {
-        // Set the orderId as the Paypal OrderId
-        const payload = {}
-        payload.property = 'paypalOrderId'
-        payload.value = event
-        store.dispatch('cart/setOrderProperty',payload)
-
-        postCheckoutMessage.value =
-          store.getters['general/getafterSaleMessage'];
-        postCheckoutMessage2.value = `Your orderId is ${event}`;
-      };
-
-      const updateEmail = () => {
-        store.dispatch('cart/setOrderEmail', email.value);
-      };
-
       // Amplify API
-      // Bugs:
-      //1. Phone not populated (x2)
-      //2. Totals not populated
-      const CreateOrder = async () => {
-        console.log('CreateOrder ', cartItems.value);
+      const CreateOrder = async (paypalOrderId) => {
         const order = store.getters['cart/getOrder']
-        console.log("order: ",order)
         let payload = order
+        payload.paypalOrderId = paypalOrderId
         // const {amount, currency} = store.getters['cart/getOrderTotal']
         const amount = finalCostAmount.value
         const currency = store.getters['general/getCurrency']
@@ -303,20 +273,40 @@
           currency:  product.currency ,
           quantity: product.quantity
           })
-        })
-        
-        console.log("payload: ", payload)
+        })      
         try {
-          const createOrderVar = await API.graphql({
+           await API.graphql({
             query: createOrder,
             variables: { input: payload },
           })
-          console.log("createOrderVar: ", createOrderVar)
         } catch (err) {
           console.log('error: ', err);
         }
       };
       //
+
+      const postCheckoutMessage = ref('');
+      const postCheckoutMessage2 = ref('');
+      const postCheckout = async (event) => {
+        // Set the orderId as the Paypal OrderId
+        const payload = {}
+        const paypalOrderId = event
+        payload.property = 'paypalOrderId'
+        payload.value = paypalOrderId
+        await store.dispatch('cart/setOrderProperty',payload)
+
+        postCheckoutMessage.value =
+          store.getters['general/getafterSaleMessage'];
+        postCheckoutMessage2.value = `Your orderId is ${event}`;
+
+        // Amplify
+        await CreateOrder(paypalOrderId)
+      };
+
+      const updateEmail = () => {
+        store.dispatch('cart/setOrderEmail', email.value);
+      };
+
       return {
         cartItems,
         priceByProduct: computed(() => store.getters['cart/priceByProduct']),

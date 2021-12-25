@@ -128,6 +128,7 @@ const actions = {
 
 const mutations = {
   setOrderProperty(state, {property,value}) {
+    console.log(`inside setOrderProperty : ${property} and ${value}` );
     state.order[property] = value;
   },
 
