@@ -14,7 +14,6 @@
       class="relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 lg:pt-16"
     >
       <h1 class="sr-only">Checkout</h1>
-
       <section
         aria-labelledby="summary-heading"
         class="bg-gray-500 rounded-md text-secondary-400 py-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
@@ -89,6 +88,11 @@
         <h2 id="payment-and-shipping-heading" class="sr-only">
           Payment and shipping details
         </h2>
+<!--  -->
+        <!-- <button @click="CreateOrder('abc123456')"
+        class="m-2 p-2 bg-secondary-500 rounded-full"
+        >CreateOrder</button> -->
+<!--  -->
 
         <form @submit.prevent>
           <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
