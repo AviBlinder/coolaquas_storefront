@@ -25,7 +25,6 @@ import {ref} from 'vue'
         const currentComponentUpdate = (e) => {
           currentComponent.value = e
         }
-        console.log("currentComponent = ",currentComponent.value)
         return {
           currentComponent,
           currentComponentUpdate

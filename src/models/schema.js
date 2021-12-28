@@ -17,6 +17,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "paypalOrderId": {
                     "name": "paypalOrderId",
                     "isArray": true,
@@ -32,13 +39,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
-                },
-                "device": {
-                    "name": "device",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -72,11 +72,19 @@ export const schema = {
                                 "provider": "userPools",
                                 "ownerField": "owner",
                                 "allow": "owner",
-                                "identityClaim": "cognito:username",
                                 "operations": [
                                     "create",
                                     "update",
                                     "delete",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "apiKey",
+                                "operations": [
+                                    "create",
                                     "read"
                                 ]
                             },
@@ -112,15 +120,15 @@ export const schema = {
                 "username": {
                     "name": "username",
                     "isArray": false,
-                    "type": "AWSEmail",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "userId": {
-                    "name": "userId",
+                "owner": {
+                    "name": "owner",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "email": {
@@ -231,11 +239,19 @@ export const schema = {
                                 "provider": "userPools",
                                 "ownerField": "owner",
                                 "allow": "owner",
-                                "identityClaim": "cognito:username",
                                 "operations": [
                                     "create",
                                     "update",
                                     "delete",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
+                                "allow": "public",
+                                "provider": "apiKey",
+                                "operations": [
+                                    "create",
                                     "read"
                                 ]
                             },
@@ -436,6 +452,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "price": {
                     "name": "price",
                     "isArray": false,
@@ -483,5 +506,5 @@ export const schema = {
             }
         }
     },
-    "version": "37c2d57542ca5ca0d7df66b455f2c377"
+    "version": "d23b55e7da571e102e452c97b59324cf"
 };

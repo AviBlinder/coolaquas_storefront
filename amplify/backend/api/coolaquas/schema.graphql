@@ -20,21 +20,40 @@ enum Currencies {
   AUD
 }
 
-type User @model 
-@auth(rules: [{allow: owner},{allow: groups, groups: ["Admin"]}]) 
- {
+type User
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner,
+        provider: userPools,
+        operations: [create, update, delete, read]
+      }
+      { allow: public, provider: apiKey, operations: [create, read] }
+      { allow: groups, provider: userPools, groups: ["Admin"] }
+    ]
+  ) {
   username: AWSEmail!
+  owner: String!
   paypalOrderId: [String]
   visitDateTime: [AWSDateTime]
-  device: String
 }
 
 type Order
   @model
-  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["Admin"] }]) {
+  @auth(
+    rules: [
+      {
+        allow: owner, provider: userPools, 
+        operations: [create, update, delete, read]
+      }
+      { allow: public, provider: apiKey, operations: [create, read] }
+      { allow: groups, provider: userPools, groups: ["Admin"] }
+    ]
+  ) {
   id: ID!
-  username: AWSEmail
-  userId: String
+  username: String
+  owner: String!
   email: String!
   paypalOrderId: String!
   status: OrderStatus!
@@ -72,6 +91,7 @@ type ShippingDetails {
 
 type Products {
   productId: String!
+  name: String
   price: Float!
   currency: Currencies!
   quantity: Int!

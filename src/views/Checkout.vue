@@ -91,7 +91,10 @@
 <!--  -->
         <!-- <button @click="CreateOrder('abc123456')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
-        >CreateOrder</button> -->
+        >CreateOrder</button>
+        <button @click="CreateUser"
+        class="m-2 p-2 bg-secondary-500 rounded-full"
+        >CreateUser</button> -->
 <!--  -->
 
         <form @submit.prevent>
@@ -196,8 +199,11 @@
   // Amplify
   // import { DataStore } from '@aws-amplify/datastore';
   // import { Order } from './models';
+  import { Auth } from 'aws-amplify';
   import { API } from 'aws-amplify';
   import { createOrder } from '@/graphql/mutations';
+  import * as mutations from '@/graphql/mutations';
+
 
   export default {
     components: {
@@ -256,13 +262,55 @@
       const updateDisableStatus = (event) => {
         disablePaymentButton.value = event;
       };
+      const findUser = async () => {
+        let currentUser = {} 
+        
+        try{
+          currentUser = await Auth.currentAuthenticatedUser();
+          let currentSession = await Auth.currentSession()
+          let currentUserInfo = await Auth.currentUserInfo()
+          console.log('currentUser',currentUser)
+          console.log('currentSession',currentSession)
+          console.log('currentUserInfo',currentUserInfo)
+        } catch (e) {
+            console.log("error: ",e)
 
-      // Amplify API
+        }
+        finally {
+          if(currentUser.username === undefined){
+            currentUser.username = ''
+          }
+        }        
+          return currentUser
+      }
+      // Amplify API   
+      const CreateUser = async () => {    
+        const currentUser = await findUser()
+        const loggedInUser =   store.getters['general/getLoggedInUser']
+        try{
+        const userDetails = {
+          username: loggedInUser,
+          owner: currentUser.username          
+        }
+        const newUser = await API.graphql({
+          query: mutations.createUser,
+          variables: { input: userDetails },
+      })
+      console.log('after mutation ', newUser);
+      } catch (e) {
+        console.log("createUser error : " + JSON.stringify(e) )
+       }
+      }
+
       const CreateOrder = async (paypalOrderId) => {
+        const currentUser = await findUser()
+        // const loggedInUser =   store.getters['general/getLoggedInUser']
+
         const order = store.getters['cart/getOrder']
         let payload = order
+        payload.owner = currentUser.username          
+
         payload.paypalOrderId = paypalOrderId
-        payload.userId = store.getters['general/getDynamoDbUserId']
         // const {amount, currency} = store.getters['cart/getOrderTotal']
         const amount = finalCostAmount.value
         const currency = store.getters['general/getCurrency']
@@ -275,6 +323,7 @@
           payload.products.push({
           productId: product.id, 
           price: product.price,
+          name: product.name,
           currency:  product.currency ,
           quantity: product.quantity
           })
@@ -285,7 +334,7 @@
             variables: { input: payload },
           })
         } catch (err) {
-          console.log('error: ', err);
+          console.log('CreateOrder - error: ', err);
         }
       };
       //
@@ -330,6 +379,7 @@
         postCheckoutMessage,
         postCheckoutMessage2,
         CreateOrder,
+        CreateUser        
       };
     },
   };

@@ -1,0 +1,10 @@
+{
+  "resourceName": "CoolaquasUsers",
+  "tableName": "CoolaquasUsers",
+  "partitionKey": {
+    "fieldName": "username",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

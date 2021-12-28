@@ -90,3 +90,4 @@ type Employee @model @auth(rules: [
 Review and print access control matrix
 amplify status api -acm Blog
 
+amplify console api

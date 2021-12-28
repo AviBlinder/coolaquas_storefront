@@ -53,37 +53,35 @@
             store.dispatch('general/setLoggedInUser','')          }
           // return Auth.changePassword(user, 'oldPassword', 'newPassword');
         })
-        .catch( (err) => {
-          console.log('currentAuthenticatedUser error: ', err)
+        .catch( () => {
           store.dispatch('general/setLoggedInUser','')
         });
 
       Hub.listen('auth', (data) => {
         switch (data.payload.event) {
           case 'signIn':
-            console.log(
-              'event: user signed in', data );
+            // console.log('event: user signed in', data );
             store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email)            
             break;
           case 'signUp':
-            console.log('event: user signed up', data);
+            // console.log('event: user signed up', data);
             store.dispatch('general/setLoggedInUser','')            
             break;
           case 'signOut':
-            console.log(' event: user signed out');
+            // console.log(' event: user signed out');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
             store.dispatch('general/setLoggedInUser','')            
                     
             break;
           case 'signIn_failure':
-            console.log('event: user sign in failed');
+            // console.log('event: user sign in failed');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
             store.dispatch('general/setLoggedInUser','')              
             break;
           case 'configured':
-            console.log('event: the Auth module is configured');
+            // console.log('event: the Auth module is configured');
         }
       });
 

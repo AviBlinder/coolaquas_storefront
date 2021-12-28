@@ -5,16 +5,15 @@ export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser($owner: String) {
     onCreateUser(owner: $owner) {
       username
+      owner
       paypalOrderId
       visitDateTime
-      device
       id
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -22,16 +21,15 @@ export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser($owner: String) {
     onUpdateUser(owner: $owner) {
       username
+      owner
       paypalOrderId
       visitDateTime
-      device
       id
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -39,16 +37,15 @@ export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser($owner: String) {
     onDeleteUser(owner: $owner) {
       username
+      owner
       paypalOrderId
       visitDateTime
-      device
       id
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -57,7 +54,7 @@ export const onCreateOrder = /* GraphQL */ `
     onCreateOrder(owner: $owner) {
       id
       username
-      userId
+      owner
       email
       paypalOrderId
       status
@@ -87,6 +84,7 @@ export const onCreateOrder = /* GraphQL */ `
       }
       products {
         productId
+        name
         price
         currency
         quantity
@@ -100,7 +98,6 @@ export const onCreateOrder = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -109,7 +106,7 @@ export const onUpdateOrder = /* GraphQL */ `
     onUpdateOrder(owner: $owner) {
       id
       username
-      userId
+      owner
       email
       paypalOrderId
       status
@@ -139,6 +136,7 @@ export const onUpdateOrder = /* GraphQL */ `
       }
       products {
         productId
+        name
         price
         currency
         quantity
@@ -152,7 +150,6 @@ export const onUpdateOrder = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -161,7 +158,7 @@ export const onDeleteOrder = /* GraphQL */ `
     onDeleteOrder(owner: $owner) {
       id
       username
-      userId
+      owner
       email
       paypalOrderId
       status
@@ -191,6 +188,7 @@ export const onDeleteOrder = /* GraphQL */ `
       }
       products {
         productId
+        name
         price
         currency
         quantity
@@ -204,7 +202,6 @@ export const onDeleteOrder = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;

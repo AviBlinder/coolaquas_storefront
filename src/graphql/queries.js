@@ -5,16 +5,15 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       username
+      owner
       paypalOrderId
       visitDateTime
-      device
       id
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -27,16 +26,15 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         username
+        owner
         paypalOrderId
         visitDateTime
-        device
         id
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -58,16 +56,15 @@ export const syncUsers = /* GraphQL */ `
     ) {
       items {
         username
+        owner
         paypalOrderId
         visitDateTime
-        device
         id
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -79,7 +76,7 @@ export const getOrder = /* GraphQL */ `
     getOrder(id: $id) {
       id
       username
-      userId
+      owner
       email
       paypalOrderId
       status
@@ -109,6 +106,7 @@ export const getOrder = /* GraphQL */ `
       }
       products {
         productId
+        name
         price
         currency
         quantity
@@ -122,7 +120,6 @@ export const getOrder = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -136,7 +133,7 @@ export const listOrders = /* GraphQL */ `
       items {
         id
         username
-        userId
+        owner
         email
         paypalOrderId
         status
@@ -166,6 +163,7 @@ export const listOrders = /* GraphQL */ `
         }
         products {
           productId
+          name
           price
           currency
           quantity
@@ -179,7 +177,6 @@ export const listOrders = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -202,7 +199,7 @@ export const syncOrders = /* GraphQL */ `
       items {
         id
         username
-        userId
+        owner
         email
         paypalOrderId
         status
@@ -232,6 +229,7 @@ export const syncOrders = /* GraphQL */ `
         }
         products {
           productId
+          name
           price
           currency
           quantity
@@ -245,7 +243,6 @@ export const syncOrders = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt

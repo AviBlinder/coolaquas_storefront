@@ -5,7 +5,7 @@ import router from '@/router';
 import {useStore} from 'vuex';
 // Amplify
 import { API } from 'aws-amplify';
-import * as queries from '@/graphql/queries';
+// import * as queries from '@/graphql/queries';
 import * as mutations from '@/graphql/mutations';
 
 
@@ -33,21 +33,6 @@ export default function () {
       store.dispatch('general/setLoggedInUser', 
       loginAuth.attributes.email);
       
-      // Get User details
-      let filter = {
-        username: {
-          eq: email, // filter priority = 1
-        },
-      };
-      // console.log('fiter: ',filter)
-      const userData = await API.graphql({
-        query: queries.listUsers,
-        variables: { filter: filter },
-      });
-      
-      const userId = userData.data.listUsers.items[0].id;
-      store.dispatch('general/setDynamoDbUserId', userId);
-
       router.push({ name: 'Home' })    
 
       // 
@@ -67,8 +52,7 @@ export default function () {
         password: password,
         attributes: { 'custom:company': company },
       }).then((res) => {
-        console.log('res user: ', res.user.username);
-        console.log('res :', res);
+        // console.log('res user: ', res.user.username);
         if (res.userSub) {
           form.email = '';
           form.password = '';
@@ -80,28 +64,47 @@ export default function () {
     }
   };
 
+  const createNewUser = async (res,userDetails) => {
+    // let currentUser = {}
+    try {
+      // currentUser = await Auth.currentUserInfo();
+      // userDetails.owner = currentUser.username;
+    userDetails.owner = 'temp';
+    if(res === 'SUCCESS'){
+      const newUser =  API.graphql({
+        query: mutations.createUser,
+        variables: { input: userDetails },
+      })
+      await newUser
+    }
+      else {
+        throw new Error('Error in validation process')
+      }
+    }
+    catch (error) {
+      console.log('Auth.currentAuthenticatedUser error: ', error);
+    }
+  }
+  
   //  Confirm Sign Up
   const confirmSignUp = async () => {
     error.value = '';
+    const { email, code } = form;
+    const userDetails = {
+      username: email,
+    };
     try {
-      const { email, code } = form;
-      await Auth.confirmSignUp(email, code);     
-      //Amplify - Write user on DB
-        const userDetails = {
-          username: email,
-        };
-      const newUser = await API.graphql({
-        query: mutations.createUser,
-        variables: { input: userDetails },
-      });
-      console.log('after mutation ', newUser);      
-      // 
-      router.push({ name: 'Signin' });
+      const confirmedUser = await Auth.confirmSignUp(email, code)
+      console.log('confirmedUser : ', confirmedUser); 
+      await createNewUser(confirmedUser, userDetails).then( () => {
+        console.log('after createNewUser');
+        router.push({ name: 'Signin' })
+      })
     } catch (err) {
       error.value = err.message;
     }
   };
-
+  
   //Resend verification code
   const resendSignUp = async () => {
     error.value = ''

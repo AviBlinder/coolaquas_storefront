@@ -1,14 +1,16 @@
-
+Bugs:
+1. Navigation from Cart to Checkout not working
+2. @auth problem (can not create users/...) --> After signIn --> Implement Lambda?
+3. After SignInVerification -> not redirecting in case of error --> Implement Lambda?
 
 API Todo:
 //Query + Update (or just Update) not working!
-//User Model: no ID but username = PK/Unique
-2. Auth: make sure only User or Admin have access to record
-https://docs.amplify.aws/lib/datastore/setup-auth-rules/q/platform/js/#static-group-authorization
-3. Configure a secondary index
-4. Create a 'Orders History' view
+1. Create a 'Orders History' view
 
---> Document flow (pull/push API + backend/model updates --> push)
+--> Document workflow (pull/push API + backend/model updates --> push)
+
+amplify codegen types  ==> Only re-generates schema.graphql code
+amplify status api -acm User  ==> checkes Authorization
 
 https://docs.amplify.aws/cli/graphql/data-modeling/#configure-a-secondary-index
 DynamoDB query operations may use at most two attributes to efficiently query data. 

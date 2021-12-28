@@ -50,6 +50,7 @@ export declare class BillingDetails {
 
 export declare class Products {
   readonly productId: string;
+  readonly name?: string;
   readonly price: number;
   readonly currency: Currencies | keyof typeof Currencies;
   readonly quantity: number;
@@ -73,9 +74,9 @@ type OrderMetaData = {
 export declare class User {
   readonly id: string;
   readonly username: string;
+  readonly owner: string;
   readonly paypalOrderId?: (string | null)[];
   readonly visitDateTime?: (string | null)[];
-  readonly device?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -85,7 +86,7 @@ export declare class User {
 export declare class Order {
   readonly id: string;
   readonly username?: string;
-  readonly userId?: string;
+  readonly owner: string;
   readonly email: string;
   readonly paypalOrderId: string;
   readonly status: OrderStatus | keyof typeof OrderStatus;
