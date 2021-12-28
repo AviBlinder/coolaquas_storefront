@@ -106,7 +106,6 @@
               >
                 Contact information
               </h3>
-
               <!-- email field -->
               <EmailField 
               @update:modelValue="updateEmail" 
