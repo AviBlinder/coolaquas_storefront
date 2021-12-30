@@ -1,31 +1,14 @@
-Bugs:
-1. Navigation from Cart to Checkout not working
-2. @auth problem (can not create users/...) --> After signIn --> Implement Lambda?
-3. After SignInVerification -> not redirecting in case of error --> Implement Lambda?
-
 API Todo:
-//Query + Update (or just Update) not working!
 1. Create a 'Orders History' view
 
---> Document workflow (pull/push API + backend/model updates --> push)
+2. Launch a Lambda function to send a Verification account's email
+(https://medium.com/craftsmenltd/customizing-aws-cognito-verification-emails-with-html-using-aws-lambda-379b584d2112)
+(https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-custom-message.html)
+3. Create clean repo and foldel + deploy to Production (Netlify)
+---> Build New clean storefront (based on TS + Componsition APIs)
+Remove console.log()
 
-amplify codegen types  ==> Only re-generates schema.graphql code
-amplify status api -acm User  ==> checkes Authorization
-
-https://docs.amplify.aws/cli/graphql/data-modeling/#configure-a-secondary-index
-DynamoDB query operations may use at most two attributes to efficiently query data. 
-The first query argument passed to a query (the hash key) must use strict equality 
-and the second attribute (the sort key) may use gt, ge, lt, le, eq, beginsWith, 
-and between. DynamoDB can effectively implement a wide variety of access patterns 
-that are powerful enough for the majority of applications.
-A **secondary index** consists of a "hash key" and, optionally, a "sort key". 
-Use the "hash key" to perform strict equality and the "sort key" for greater than 
-(gt), greater than or equal to (ge), less than (lt), less than or equal to (le),
- equals (eq), begins with, and between operations.
-
-Example defintion:
-  name: String! @index(name: "byNameAndPhoneNumber", sortKeyFields: ["phoneNumber"], queryField: "customerByNameAndPhone")
-  phoneNumber: String
+4. Launch a Lambda function from Cognito (when user verifies her account)
 
 -------------------------------------------------------------------------------------
 Auth todo:
@@ -35,9 +18,6 @@ Auth todo:
 Bugs: 
 2. open Popover on product add?
 
-4. Remove console.log()
-
----> Build New clean storefront (based on TS + Componsition APIs)
 ---> Add Jest/Cypress tests
 ---> Add Github Actions
 

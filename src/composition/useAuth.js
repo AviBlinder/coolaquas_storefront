@@ -52,7 +52,6 @@ export default function () {
         password: password,
         attributes: { 'custom:company': company },
       }).then((res) => {
-        // console.log('res user: ', res.user.username);
         if (res.userSub) {
           form.email = '';
           form.password = '';
@@ -82,7 +81,7 @@ export default function () {
       }
     }
     catch (error) {
-      console.log('Auth.currentAuthenticatedUser error: ', error);
+      console.log('error: ', error);
     }
   }
   
@@ -94,10 +93,8 @@ export default function () {
       username: email,
     };
     try {
-      const confirmedUser = await Auth.confirmSignUp(email, code)
-      console.log('confirmedUser : ', confirmedUser); 
+      const confirmedUser = await Auth.confirmSignUp(email, code)      
       await createNewUser(confirmedUser, userDetails).then( () => {
-        console.log('after createNewUser');
         router.push({ name: 'Signin' })
       })
     } catch (err) {
@@ -142,8 +139,7 @@ export default function () {
     error.value = '';
     try {
       const { email,code,password } = form;
-      await Auth.forgotPasswordSubmit(email,code,password);
-      router.push({ name: 'Signin' });
+      await Auth.forgotPasswordSubmit(email,code,password)
     } catch (err) {
       error.value = err.message;
     }

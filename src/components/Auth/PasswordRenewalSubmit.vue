@@ -97,7 +97,7 @@
             await forgotPasswordSubmit()
             if(!error.value)
             {
-              emit('SignIn')
+              emit('changeComponent', 'SignIn')
             }
       }
 
