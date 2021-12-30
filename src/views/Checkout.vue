@@ -297,7 +297,7 @@
           productId: product.id, 
           price: product.price,
           name: product.name,
-          image: product.CreateOrder,
+          image: product.imageSrc,
           slug : product.slug,
           currency:  product.currency ,
           quantity: product.quantity
