@@ -4,9 +4,9 @@ import { reactive, ref, } from 'vue';
 import router from '@/router';
 import {useStore} from 'vuex';
 // Amplify
-import { API } from 'aws-amplify';
+// import { API } from 'aws-amplify';
 // import * as queries from '@/graphql/queries';
-import * as mutations from '@/graphql/mutations';
+// import * as mutations from '@/graphql/mutations';
 
 
 export default function () {
@@ -63,41 +63,47 @@ export default function () {
     }
   };
 
-  const createNewUser = async (res,userDetails) => {
-    // let currentUser = {}
-    try {
-      // currentUser = await Auth.currentUserInfo();
-      // userDetails.owner = currentUser.username;
-    userDetails.owner = 'temp';
-    if(res === 'SUCCESS'){
-      const newUser =  API.graphql({
-        query: mutations.createUser,
-        variables: { input: userDetails },
-      })
-      await newUser
-    }
-      else {
-        throw new Error('Error in validation process')
-      }
-    }
-    catch (error) {
-      console.log('error: ', error);
-    }
-  }
+  // const createNewUser = async (res,userDetails) => {
+  //   // let currentUser = {}
+  //   try {
+  //     // currentUser = await Auth.currentUserInfo();
+  //     // userDetails.owner = currentUser.username;
+  //   userDetails.owner = 'temp';
+  //   if(res === 'SUCCESS'){
+  //     const newUser =  API.graphql({
+  //       query: mutations.createUser,
+  //       variables: { input: userDetails },
+  //     })
+  //     await newUser
+  //   }
+  //     else {
+  //       throw new Error('Error in validation process')
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.log('error: ', error);
+  //   }
+  // }
   
   //  Confirm Sign Up
   const confirmSignUp = async () => {
     error.value = '';
     const { email, code } = form;
-    const userDetails = {
-      username: email,
-    };
+    // const userDetails = {
+    //   username: email,
+    // };
     try {
-      const confirmedUser = await Auth.confirmSignUp(email, code)      
-      await createNewUser(confirmedUser, userDetails).then( () => {
+      await Auth.confirmSignUp(email, code)      
+       .then( () => {
         router.push({ name: 'Signin' })
       })
-    } catch (err) {
+      // there is no need to execute the mutation for User Insert since
+      // it is done thru a Lambda function triggered by Cognito
+      // await createNewUser(confirmedUser, userDetails).then( () => {
+      //   router.push({ name: 'Signin' })
+      // })
+    } 
+    catch (err) {
       error.value = err.message;
     }
   };
