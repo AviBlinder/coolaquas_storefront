@@ -97,6 +97,8 @@ export const createOrder = /* GraphQL */ `
       products {
         productId
         name
+        image
+        slug
         price
         currency
         quantity
@@ -152,6 +154,8 @@ export const updateOrder = /* GraphQL */ `
       products {
         productId
         name
+        image
+        slug
         price
         currency
         quantity
@@ -207,6 +211,8 @@ export const deleteOrder = /* GraphQL */ `
       products {
         productId
         name
+        image
+        slug
         price
         currency
         quantity

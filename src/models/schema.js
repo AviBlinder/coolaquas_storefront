@@ -459,6 +459,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "slug": {
+                    "name": "slug",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "price": {
                     "name": "price",
                     "isArray": false,
@@ -506,5 +520,5 @@ export const schema = {
             }
         }
     },
-    "version": "d23b55e7da571e102e452c97b59324cf"
+    "version": "7d6bfbe8760a218f8f2537fa1f435bd9"
 };

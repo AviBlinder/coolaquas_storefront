@@ -61,7 +61,6 @@
             username: this.email,
             password: this.password,
           }).then((res) => {
-            // console.log("res:",res)
             this.username = res.user.username;
             this.userConfirmed = res.userConfirmed;
             if (res.userSub) {

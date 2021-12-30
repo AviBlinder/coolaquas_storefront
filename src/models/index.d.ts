@@ -51,6 +51,8 @@ export declare class BillingDetails {
 export declare class Products {
   readonly productId: string;
   readonly name?: string;
+  readonly image?: string;
+  readonly slug?: string;
   readonly price: number;
   readonly currency: Currencies | keyof typeof Currencies;
   readonly quantity: number;

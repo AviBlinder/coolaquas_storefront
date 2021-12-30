@@ -23,7 +23,6 @@ import {ref} from 'vue'
     setup() {
         const currentComponent = ref('CreateAccount')
         const currentComponentUpdate = (e) => {
-          // console.log("currentComponentUpdate ",e)
           currentComponent.value = e
         }        
         return {

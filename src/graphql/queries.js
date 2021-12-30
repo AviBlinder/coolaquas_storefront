@@ -107,6 +107,8 @@ export const getOrder = /* GraphQL */ `
       products {
         productId
         name
+        image
+        slug
         price
         currency
         quantity
@@ -164,6 +166,8 @@ export const listOrders = /* GraphQL */ `
         products {
           productId
           name
+          image
+          slug
           price
           currency
           quantity
@@ -230,6 +234,8 @@ export const syncOrders = /* GraphQL */ `
         products {
           productId
           name
+          image
+          slug
           price
           currency
           quantity

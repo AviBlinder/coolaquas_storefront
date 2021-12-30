@@ -1,19 +1,11 @@
 API Todo:
 1. Create a 'Orders History' view
 
-2. Launch a Lambda function to send a Verification account's email
-(https://medium.com/craftsmenltd/customizing-aws-cognito-verification-emails-with-html-using-aws-lambda-379b584d2112)
-(https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-custom-message.html)
-3. Create clean repo and foldel + deploy to Production (Netlify)
+2. Create clean repo and foldel + deploy to Production (Netlify)
 ---> Build New clean storefront (based on TS + Componsition APIs)
-Remove console.log()
-
-4. Launch a Lambda function from Cognito (when user verifies her account)
-
 -------------------------------------------------------------------------------------
 Auth todo:
 - Password auto-complete not working? 
-- Style code verification/password rec. mails
 
 Bugs: 
 2. open Popover on product add?

@@ -334,7 +334,6 @@ import router from '@/router';
         userNavigation,
         collections,
         isLoading,
-        cartState: (e) => console.log('inside cart ', e),
         signOutUser
         };
     },

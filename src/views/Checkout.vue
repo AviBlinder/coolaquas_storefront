@@ -89,12 +89,12 @@
           Payment and shipping details
         </h2>
 <!--  -->
-        <!-- <button @click="CreateOrder('abc123456')"
+        <button @click="CreateOrder('1234567890abc')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateOrder</button>
         <button @click="CreateUser"
         class="m-2 p-2 bg-secondary-500 rounded-full"
-        >CreateUser</button> -->
+        >CreateUser</button>
 <!--  -->
 
         <form @submit.prevent>
@@ -201,9 +201,7 @@
   import { Auth } from 'aws-amplify';
   import { API } from 'aws-amplify';
   import { createOrder } from '@/graphql/mutations';
-  import * as mutations from '@/graphql/mutations';
-
-
+  
   export default {
     components: {
       paypalButton,
@@ -266,14 +264,8 @@
         
         try{
           currentUser = await Auth.currentAuthenticatedUser();
-          let currentSession = await Auth.currentSession()
-          let currentUserInfo = await Auth.currentUserInfo()
-          console.log('currentUser',currentUser)
-          console.log('currentSession',currentSession)
-          console.log('currentUserInfo',currentUserInfo)
         } catch (e) {
-            console.log("error: ",e)
-
+            console.log(e)
         }
         finally {
           if(currentUser.username === undefined){
@@ -283,24 +275,6 @@
           return currentUser
       }
       // Amplify API   
-      const CreateUser = async () => {    
-        const currentUser = await findUser()
-        const loggedInUser =   store.getters['general/getLoggedInUser']
-        try{
-        const userDetails = {
-          username: loggedInUser,
-          owner: currentUser.username          
-        }
-        const newUser = await API.graphql({
-          query: mutations.createUser,
-          variables: { input: userDetails },
-      })
-      console.log('after mutation ', newUser);
-      } catch (e) {
-        console.log("createUser error : " + JSON.stringify(e) )
-       }
-      }
-
       const CreateOrder = async (paypalOrderId) => {
         const currentUser = await findUser()
         // const loggedInUser =   store.getters['general/getLoggedInUser']
@@ -323,6 +297,8 @@
           productId: product.id, 
           price: product.price,
           name: product.name,
+          image: product.CreateOrder,
+          slug : product.slug,
           currency:  product.currency ,
           quantity: product.quantity
           })
@@ -378,7 +354,6 @@
         postCheckoutMessage,
         postCheckoutMessage2,
         CreateOrder,
-        CreateUser        
       };
     },
   };

@@ -208,7 +208,6 @@ eventBus.on('cartUpdate', () => {
       );
 
       const modifyQuantityWrapper = (e) => {
-        // console.log("modifyQuantityWrapper :", e.quantity)
         if (e.sign === '+') {
           Number((e.quantity += 1));
         } else {

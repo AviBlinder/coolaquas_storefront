@@ -46,10 +46,6 @@
           ? (fieldError.value = false)
           : (fieldError.value = true);
       };
-
-      // if(!props.isRequired){
-      //   console.log("props",props.isRequired)
-      // }
       return { input, error, validateInput, fieldError };
     },
   };
