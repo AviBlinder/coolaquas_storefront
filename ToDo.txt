@@ -1,8 +1,10 @@
 API Todo:
-1. Create a 'Orders History' view
-
-2. Create clean repo and foldel + deploy to Production (Netlify)
+1. Create clean repo and foldel + deploy to Production (Netlify)
 ---> Build New clean storefront (based on TS + Componsition APIs)
+
+2. Change Backend: (??)
+Create Order: 
+API -> Lambda -> SQS -> Lambda -> DynamoDB
 -------------------------------------------------------------------------------------
 Auth todo:
 - Password auto-complete not working? 

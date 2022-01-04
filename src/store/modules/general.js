@@ -1,4 +1,5 @@
 const state = {
+  contactEmail: 'coolaquas@gmail.com',
   settings: {
     currency: 'USD',
     currencySign: '$',
@@ -166,6 +167,9 @@ const state = {
   ],
 };
 const getters = {
+  getContactEmail(state) {
+    return state.contactEmail;
+  },
   getLoggedInUser(state) {
     return state.loggedInUser;
   },
@@ -198,6 +202,9 @@ const actions = {
     commit('setLoggedInUser', payload);
     dispatch('cart/setOrderUsername', payload, { root: true });
   },
+  setContactEmail({ commit }, payload) {
+    commit('setContactEmail', payload);
+  },
   setDynamoDbUserId({ commit }, payload) {
     commit('setDynamoDbUserId', payload);
   },
@@ -213,9 +220,11 @@ const actions = {
 };
 
 const mutations = {
-
   setLoggedInUser(state, payload) {
     state.loggedInUser = payload;
+  },
+  setContactEmail(state, payload) {
+    state.contactEmail = payload;
   },
   setDynamoDbUserId(state, payload) {
     state.dynamoDbUserId = payload;

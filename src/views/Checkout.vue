@@ -89,12 +89,12 @@
           Payment and shipping details
         </h2>
 <!--  -->
-        <button @click="CreateOrder('1234567890abc')"
+        <!-- <button @click="CreateOrder('1234567890abc')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateOrder</button>
         <button @click="CreateUser"
         class="m-2 p-2 bg-secondary-500 rounded-full"
-        >CreateUser</button>
+        >CreateUser</button> -->
 <!--  -->
 
         <form @submit.prevent>
@@ -215,6 +215,9 @@
       const store = useStore();
       const disablePaymentButton = ref(true);
 
+      const postCheckoutMessage = ref('');
+      const postCheckoutMessage2 = ref('');
+      const contactEmail = computed( () => store.getters['general/getContactEmail'])
       const email = ref('');
       const billingAsShipping = ref(true);
 
@@ -311,12 +314,11 @@
           })
         } catch (err) {
           console.log('CreateOrder - error: ', err);
+          postCheckoutMessage.value = `There was a problem with your order. Please contact ${contactEmail.value}`
         }
       };
       //
 
-      const postCheckoutMessage = ref('');
-      const postCheckoutMessage2 = ref('');
       const postCheckout = async (event) => {
         // Set the orderId as the Paypal OrderId
         const payload = {}
