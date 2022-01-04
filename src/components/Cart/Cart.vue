@@ -138,7 +138,7 @@
               type="submit"
               class="w-full bg-amber-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-amber-500"
             >
-              <router-link @click="accept(close)" to="/checkout">
+              <router-link @click="accept(close)" :to="{name: 'Checkout'}">
                 Checkout
               </router-link>
             </button>
@@ -146,7 +146,7 @@
             <p class="mt-6 text-center">
               <router-link
                 @click="accept(close)"
-                to="/cart"
+                :to="{name: 'Cart'}"
                 class="text-sm font-medium text-amber-600 hover:text-amber-500"
                 >View Shopping Bag</router-link
               >
@@ -208,7 +208,6 @@ eventBus.on('cartUpdate', () => {
       );
 
       const modifyQuantityWrapper = (e) => {
-        // console.log("modifyQuantityWrapper :", e.quantity)
         if (e.sign === '+') {
           Number((e.quantity += 1));
         } else {

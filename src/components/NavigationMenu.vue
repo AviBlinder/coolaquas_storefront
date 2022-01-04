@@ -99,8 +99,12 @@
             leave-to-class="transform opacity-0 scale-95">
 
               <MenuItems 
-              class="origin-top-right absolute 
+              class="
+              origin-top-right 
+              absolute 
               right-0 mt-2 w-56 rounded-md shadow-lg 
+              bg-white
+               divide-y divide-solid divide-gray-300
               focus:outline-none">
                 <!-- <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                   <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
@@ -109,20 +113,30 @@
                 <MenuItem 
                 as="div"
                  v-slot="{ active }"
-                :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']"                
-                class="mb-2 bg-white  hover:bg-gray-100 hover:cursor-pointer" 
+                :class="[active ? 'bg-gray-100' : 'bg-white', 'block py-2 px-4 text-sm text-gray-700']"                
+                class="mb-2 bg-white  hover:bg-gray-200"
                 >
                  {{loggedInUser}}
                 </MenuItem>
                 <MenuItem 
                 as="div"
                  v-slot="{ active }"
-                class="mb-2 bg-white  hover:bg-gray-100 hover:cursor-pointer	"
-                :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']"                
+                class="mb-2 bg-white  hover:bg-gray-200 hover:cursor-pointer"
+                :class="[active ? 'bg-gray-100' : 'bg-white', 'block py-2 px-4 text-sm text-gray-700']"                
+                @click="OrdersHistory"
+                >
+                  Orders History
+                </MenuItem>
+                <MenuItem 
+                as="div"
+                 v-slot="{ active }"
+                class="mb-2 bg-white  hover:bg-gray-200 hover:cursor-pointer"
+                :class="[active ? 'bg-gray-100' : 'bg-white', 'block py-2 px-4 text-sm text-gray-700']"                
                 @click="signOutUser"
                 >
                   Sign Out
                 </MenuItem>
+
               </MenuItems>
             </transition>
           </Menu>
@@ -166,7 +180,8 @@
                 as="router-link"
                 v-for="collection in collections.stories"
                 @click="$router.push({name:'collection',params:{collection: collection.slug}})"
-                class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
+                class="ml-3 p-2 block font-medium text-gray-900 
+                hover:bg-gray-200 hover:rounded-md
                 hover:cursor-pointer
                 "
                 :key="collection.uuid"
@@ -184,7 +199,19 @@
           <div>
             {{loggedInUser}}
           </div>
-         <div class="mt-3 px-2 space-y-1">
+         <div class="mt-3 p-2 space-y-1
+              hover:bg-gray-200 hover:rounded-md
+                hover:cursor-pointer
+         ">
+                 <DisclosureButton
+                  @click="OrdersHistory">
+                 Orders History
+                 </DisclosureButton>    
+         </div>     
+         <div class="mt-3 p-2 space-y-1
+              hover:bg-gray-200 hover:rounded-md
+                hover:cursor-pointer
+         ">
                  <DisclosureButton
                   @click="signOutUser">
                  Sign Out
@@ -226,7 +253,7 @@
     MenuItems,
 
   } from '@headlessui/vue';
-  // import { SearchIcon } from '@heroicons/vue/solid'
+  import { SearchIcon } from '@heroicons/vue/solid'
   import { MenuIcon, XIcon, UserIcon, } from '@heroicons/vue/outline';
 
   import {ref, inject , computed} from 'vue';
@@ -249,6 +276,7 @@
   ];
   const userNavigation = [
     { name: 'Profile', href: '/Profile' },
+    { name: 'Orders', href: '/Orders' },
     { name: 'Sign out', href: '/Signout' },
   ];
 
@@ -266,7 +294,7 @@ import router from '@/router';
       MenuItems,
       MenuIcon,
       UserIcon,
-      // SearchIcon,
+      SearchIcon,
       XIcon,
       search,
       Cart,
@@ -327,6 +355,9 @@ import router from '@/router';
 
       }
 
+      const OrdersHistory = () => {
+          router.push({name: 'Orders'})      
+      }
       return {
         loggedInUser,
         SampleUser,
@@ -334,8 +365,8 @@ import router from '@/router';
         userNavigation,
         collections,
         isLoading,
-        cartState: (e) => console.log('inside cart ', e),
-        signOutUser
+        signOutUser,
+        OrdersHistory
         };
     },
     // 

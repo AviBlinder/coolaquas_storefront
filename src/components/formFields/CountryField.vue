@@ -1,4 +1,5 @@
 <template>
+<div>
   <label for="country" class="block text-sm font-medium text-gray-700"></label>
   <div class="mt-1">
     <select
@@ -17,6 +18,7 @@
         {{country.name}}
       </option>
     </select>
+  </div>
   </div>
 </template>
 <script>

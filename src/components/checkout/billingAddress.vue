@@ -45,7 +45,9 @@
 
         <!-- City -->
         <div>
-          <City @update:modelValue="updateOrderBillingDetails" v-model="city" />
+          <City 
+         :isRequired="true"
+          @update:modelValue="updateOrderBillingDetails" v-model="city" />
         </div>
         <!-- Postal Code -->
         <div>

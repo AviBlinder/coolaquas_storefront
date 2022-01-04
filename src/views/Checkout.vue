@@ -14,7 +14,6 @@
       class="relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 lg:pt-16"
     >
       <h1 class="sr-only">Checkout</h1>
-
       <section
         aria-labelledby="summary-heading"
         class="bg-gray-500 rounded-md text-secondary-400 py-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
@@ -25,7 +24,7 @@
           <dl>
             <dt class="text-sm font-medium">Amount due</dt>
             <dd class="mt-1 text-3xl font-extrabold text-white">
-              {{ currencySign }}{{ finalCost }}
+              {{ currencySign }}{{ finalCostAmount }}
             </dd>
           </dl>
 
@@ -76,7 +75,7 @@
               class="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6"
             >
               <dt class="text-base">Total</dt>
-              <dd class="text-base">{{ currencySign }}{{ finalCost }}</dd>
+              <dd class="text-base">{{ currencySign }}{{ finalCostAmount }}</dd>
             </div>
           </dl>
         </div>
@@ -89,6 +88,14 @@
         <h2 id="payment-and-shipping-heading" class="sr-only">
           Payment and shipping details
         </h2>
+<!--  -->
+        <!-- <button @click="CreateOrder('1234567890abc')"
+        class="m-2 p-2 bg-secondary-500 rounded-full"
+        >CreateOrder</button>
+        <button @click="CreateUser"
+        class="m-2 p-2 bg-secondary-500 rounded-full"
+        >CreateUser</button> -->
+<!--  -->
 
         <form @submit.prevent>
           <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
@@ -99,10 +106,9 @@
               >
                 Contact information
               </h3>
-
               <!-- email field -->
               <EmailField 
-              @update:modelValue="updateEmail"
+              @update:modelValue="updateEmail" 
               v-model="email" />
             </div>
 
@@ -158,7 +164,7 @@
         <div>
           <paypalButton
             v-show="!disablePaymentButton"
-            :finalCost="finalCost"
+            :finalCost="finalCostAmount"
             @paymentProcess="postCheckout"
           >
           </paypalButton>
@@ -189,7 +195,13 @@
   import billingAddress from '../components/checkout/billingAddress.vue';
   // Form fields
   import EmailField from '../components/formFields/EmailField.vue';
-
+  // Amplify
+  // import { DataStore } from '@aws-amplify/datastore';
+  // import { Order } from './models';
+  import { Auth } from 'aws-amplify';
+  import { API } from 'aws-amplify';
+  import { createOrder } from '@/graphql/mutations';
+  
   export default {
     components: {
       paypalButton,
@@ -203,6 +215,9 @@
       const store = useStore();
       const disablePaymentButton = ref(true);
 
+      const postCheckoutMessage = ref('');
+      const postCheckoutMessage2 = ref('');
+      const contactEmail = computed( () => store.getters['general/getContactEmail'])
       const email = ref('');
       const billingAsShipping = ref(true);
 
@@ -238,26 +253,91 @@
         let tax = (totalAmountInCart.value + shippingCost.value) * 0.17;
         return +tax.toFixed(2);
       });
-      const finalCost = computed(() => {
+      const finalCostAmount = computed(() => {
         let finalCost =
           totalAmountInCart.value + shippingCost.value + taxCost.value;
-        return +finalCost.toFixed(2);
+          const finalCostValue = +finalCost.toFixed(2)
+        return finalCostValue
       });
       const updateDisableStatus = (event) => {
         disablePaymentButton.value = event;
       };
+      const findUser = async () => {
+        let currentUser = {} 
+        
+        try{
+          currentUser = await Auth.currentAuthenticatedUser();
+        } catch (e) {
+            console.log(e)
+        }
+        finally {
+          if(currentUser.username === undefined){
+            currentUser.username = ''
+          }
+        }        
+          return currentUser
+      }
+      // Amplify API   
+      const CreateOrder = async (paypalOrderId) => {
+        const currentUser = await findUser()
+        // const loggedInUser =   store.getters['general/getLoggedInUser']
 
-      const postCheckoutMessage = ref('');
-      const postCheckoutMessage2 = ref('');
-      const postCheckout = (event) => {
+        const order = store.getters['cart/getOrder']
+        let payload = order
+        payload.owner = currentUser.username          
+
+        payload.paypalOrderId = paypalOrderId
+        // const {amount, currency} = store.getters['cart/getOrderTotal']
+        const amount = finalCostAmount.value
+        const currency = store.getters['general/getCurrency']
+        payload.total = {amount: amount,currency: currency}
+        payload.createdAt =  new Date()
+
+        payload.products = []       
+        const products = store.getters['cart/cartItems']
+
+        products.map( product => {
+          payload.products.push({
+          productId: product.id, 
+          price: product.price,
+          name: product.name,
+          image: product.imageSrc,
+          slug : product.slug,
+          currency:  product.currency ,
+          quantity: product.quantity
+          })
+        })      
+        try {
+           await API.graphql({
+            query: createOrder,
+            variables: { input: payload },
+          })
+        } catch (err) {
+          console.log('CreateOrder - error: ', err);
+          postCheckoutMessage.value = `There was a problem with your order. Please contact ${contactEmail.value}`
+        }
+      };
+      //
+
+      const postCheckout = async (event) => {
+        // Set the orderId as the Paypal OrderId
+        const payload = {}
+        const paypalOrderId = event
+        payload.property = 'paypalOrderId'
+        payload.value = paypalOrderId
+        await store.dispatch('cart/setOrderProperty',payload)
+
         postCheckoutMessage.value =
           store.getters['general/getafterSaleMessage'];
         postCheckoutMessage2.value = `Your orderId is ${event}`;
+
+        // Amplify
+        await CreateOrder(paypalOrderId)
       };
 
-      const updateEmail =  () => {
-        store.dispatch('cart/setOrderEmail', email.value)
-      }
+      const updateEmail = () => {
+        store.dispatch('cart/setOrderEmail', email.value);
+      };
 
       return {
         cartItems,
@@ -268,7 +348,7 @@
         totalAmountInCart,
         shippingCost,
         taxCost,
-        finalCost,
+        finalCostAmount,
         currencySign,
         email,
         disablePaymentButton,
@@ -276,6 +356,7 @@
         postCheckout,
         postCheckoutMessage,
         postCheckoutMessage2,
+        CreateOrder,
       };
     },
   };

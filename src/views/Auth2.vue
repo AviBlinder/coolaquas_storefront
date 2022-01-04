@@ -26,8 +26,6 @@ export default {
     this.unsubscribeAuth = onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
-      console.log("authState : ",this.authState)
-      console.log("user: ", {authData})
     })
   },
   beforeUnmount() {

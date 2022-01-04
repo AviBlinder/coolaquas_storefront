@@ -1,29 +1,28 @@
 <template>
-  <label for="address" class="block text-sm font-medium text-gray-700"></label>
-  <div class="mt-1">
-    <input
-      placeholder="Address"
-      type="text"
-      name="address"
-      id="address"
-      autocomplete="street-address"
-      class="block w-full border-gray-300 rounded-md shadow-sm 
-      focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
+  <div>
+    <label
+      for="address"
+      class="block text-sm font-medium text-gray-700"
+    ></label>
+    <div class="mt-1">
+      <input
+        placeholder="Address"
+        type="text"
+        name="address"
+        id="address"
+        autocomplete="street-address"
+        class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm"
         v-model="input"
         @keyup="validateInput"
         @blur="validateInput"
         @input="$emit('update:modelValue', $event.target.value)"
         :class="{ fieldErrorBorder: fieldError }"
-
-    />
-  </div>
-    <div
-      class="fieldErrorMessage"
-      v-if="error.Address"
-    >
+      />
+    </div>
+    <div class="fieldErrorMessage" v-if="error.Address">
       {{ error.Address }}
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -45,7 +44,7 @@
 
       return { input, error, validateInput, fieldError };
     },
-  }
+  };
 </script>
 
 <style></style>

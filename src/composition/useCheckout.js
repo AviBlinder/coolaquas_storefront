@@ -13,9 +13,7 @@ export default function () {
     () => ref(store.getters['cart/totalAmountInCart'])
   );
 
-  // const cartItems = ref(store.getters['cart/cartItems'])
   let cartItems = computed(() => {
-    // console.log('computed cartItems ', cartItems.value);
     return reactive(store.getters['cart/cartItems']);
   });
 

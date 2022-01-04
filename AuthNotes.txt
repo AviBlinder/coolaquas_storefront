@@ -29,7 +29,8 @@ and provision it in the cloud
 //run amplify pull to sync your aws-exports.js with your cloud backend:
 amplify pull
 -------------------------------------------------------------------------------------------
-The users are managed under a Cognito User Pool (coolaquas8c3ed8a4_userpool_8c3ed8a4-dev)
+The users are managed under a Cognito User Pool 
+(coolaquas8c3ed8a4_userpool_8c3ed8a4-dev)
 -------------------------------------------------------------------------------------------
 Frontend setup:
 1. Install Amplify Libraries - We need to install the Amplify dependencies in our Vue application. 

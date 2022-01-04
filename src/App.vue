@@ -46,47 +46,43 @@
       //Auth start       
         Auth.currentAuthenticatedUser({ bypassCache: false })
         .then( (user) => {
-          console.log("user: ",user)
           if (user && user.attributes.email_verified) {
             store.dispatch('general/setLoggedInUser',user.attributes.email)
+            store.dispatch('general/setDynamoDbUserId',user.username) 
           } else {
             store.dispatch('general/setLoggedInUser','')          }
-          // return Auth.changePassword(user, 'oldPassword', 'newPassword');
+            // store.dispatch('general/setDynamoDbUserId','')     
         })
-        .catch( (err) => {
-          console.log('currentAuthenticatedUser error: ', err)
+        .catch( () => {
           store.dispatch('general/setLoggedInUser','')
+          store.dispatch('general/setDynamoDbUserId','')     
         });
 
       Hub.listen('auth', (data) => {
         switch (data.payload.event) {
           case 'signIn':
-            console.log(
-              'event: user signed in', data );
-            store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email)            
+            store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email) 
+            store.dispatch('general/setDynamoDbUserId',data.payload.data.username)
             break;
           case 'signUp':
-            console.log('event: user signed up', data);
             store.dispatch('general/setLoggedInUser','')            
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'signOut':
-            console.log(' event: user signed out');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')            
-                    
+            store.dispatch('general/setLoggedInUser','')          
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'signIn_failure':
-            console.log('event: user sign in failed');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')              
+            store.dispatch('general/setLoggedInUser','')         
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'configured':
-            console.log('event: the Auth module is configured');
         }
       });
-
       // Auth ends
       return {};
     },

@@ -3,6 +3,11 @@ import { reactive, ref, } from 'vue';
 // provide
 import router from '@/router';
 import {useStore} from 'vuex';
+// Amplify
+// import { API } from 'aws-amplify';
+// import * as queries from '@/graphql/queries';
+// import * as mutations from '@/graphql/mutations';
+
 
 export default function () {
   const store = useStore();
@@ -25,9 +30,12 @@ export default function () {
     try {
       const { email, password } = form;
       const loginAuth = await Auth.signIn(email, password);
-      console.log('success! :', loginAuth.attributes.email);
-      store.dispatch('general/setLoggedInUser',loginAuth.attributes.email)
-      router.push({ name: 'Home' });
+      store.dispatch('general/setLoggedInUser', 
+      loginAuth.attributes.email);
+      
+      router.push({ name: 'Home' })    
+
+      // 
     } catch (err) {
       error.value = err.message;
     }
@@ -40,12 +48,10 @@ export default function () {
       // company? 
       const { email, password, company} = form;
       await Auth.signUp({
-        'username': email,
-        'password':password,
-        'attributes': { 'custom:company':company },
+        username: email,
+        password: password,
+        attributes: { 'custom:company': company },
       }).then((res) => {
-        console.log('res user: ', res.user.username);
-        console.log('res :', res);
         if (res.userSub) {
           form.email = '';
           form.password = '';
@@ -57,18 +63,51 @@ export default function () {
     }
   };
 
+  // const createNewUser = async (res,userDetails) => {
+  //   // let currentUser = {}
+  //   try {
+  //     // currentUser = await Auth.currentUserInfo();
+  //     // userDetails.owner = currentUser.username;
+  //   userDetails.owner = 'temp';
+  //   if(res === 'SUCCESS'){
+  //     const newUser =  API.graphql({
+  //       query: mutations.createUser,
+  //       variables: { input: userDetails },
+  //     })
+  //     await newUser
+  //   }
+  //     else {
+  //       throw new Error('Error in validation process')
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.log('error: ', error);
+  //   }
+  // }
+  
   //  Confirm Sign Up
   const confirmSignUp = async () => {
     error.value = '';
+    const { email, code } = form;
+    // const userDetails = {
+    //   username: email,
+    // };
     try {
-      const { email, code } = form;
-      await Auth.confirmSignUp(email, code);      
-      router.push({ name: 'Signin' });
-    } catch (err) {
+      await Auth.confirmSignUp(email, code)      
+       .then( () => {
+        router.push({ name: 'Signin' })
+      })
+      // there is no need to execute the mutation for User Insert since
+      // it is done thru a Lambda function triggered by Cognito
+      // await createNewUser(confirmedUser, userDetails).then( () => {
+      //   router.push({ name: 'Signin' })
+      // })
+    } 
+    catch (err) {
       error.value = err.message;
     }
   };
-
+  
   //Resend verification code
   const resendSignUp = async () => {
     error.value = ''
@@ -106,8 +145,7 @@ export default function () {
     error.value = '';
     try {
       const { email,code,password } = form;
-      await Auth.forgotPasswordSubmit(email,code,password);
-      router.push({ name: 'Signin' });
+      await Auth.forgotPasswordSubmit(email,code,password)
     } catch (err) {
       error.value = err.message;
     }

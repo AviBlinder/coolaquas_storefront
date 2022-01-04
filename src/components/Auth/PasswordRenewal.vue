@@ -67,11 +67,9 @@
       const { form, error, state, user, forgotPassword} = useAuth()
 
       const forgotPasswordFunc = async () => {
-        console.log("inside forgotPasswordFunc")
         await forgotPassword()
         if(!error.value){
           emit('changeComponent', 'PasswordRenewalSubmit')
-          console.log('after forgotPassword ')
         }
 
       }

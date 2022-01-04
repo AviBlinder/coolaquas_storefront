@@ -4,10 +4,11 @@ const state = {
   //
   order: {
     username: '',
-    orderId: '',
+    paypalOrderId: '',
     email: '',
     shippingCost: 0,
     shippingType: '',
+    status: 'NEW',
     // products: [],
     total: {
       amount: 0,
@@ -20,6 +21,7 @@ const state = {
       country: '',
       city: '',
       address: '',
+      phone: '',
       postalCode: '',
     },
     billingDetails: {
@@ -29,6 +31,7 @@ const state = {
       country: '',
       city: '',
       address: '',
+      phone: '',
       postalCode: '',
     },
   },
@@ -124,11 +127,16 @@ const actions = {
 };
 
 const mutations = {
+  setOrderProperty(state, {property,value}) {
+    console.log(`inside setOrderProperty : ${property} and ${value}` );
+    state.order[property] = value;
+  },
+
   setOrderEmail(state, payload) {
     state.order.email = payload;
   },
 
-  setOrderUsername(state,username){
+  setOrderUsername(state, username) {
     state.order.username = username;
   },
   setShippingCost(state, amount) {
@@ -158,6 +166,7 @@ const mutations = {
         quantity: 1,
         name: blok.name,
         price: blok.price,
+        status: 'NEW',
         currency: blok.currency,
         imageSrc: blok.images[0].filename,
         imageAlt: blok.images[0].alt,
@@ -211,7 +220,7 @@ const mutations = {
   totalQuantity(state) {
     const quantities = state.added.map((p) => {
       return Number(p.quantity);
-    })
+    });
     let cartQuantity = 0;
     if (quantities.length) {
       cartQuantity = quantities.reduce((total, p) => {
