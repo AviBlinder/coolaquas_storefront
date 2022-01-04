@@ -54,6 +54,7 @@
                   <dt class="font-medium text-gray-900 underline">Shipping Method</dt>
                   <dd class="sm:mt-1">
                     {{ order.shippingType }}
+                    <span class="text-xs font-thin text-gray-600">({{order.shippingCost}} {{order.total.currency}})</span>
                   </dd>
                 </div>
 
