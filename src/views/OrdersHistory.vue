@@ -10,7 +10,7 @@
       <div class="mt-16">
         <h2 class="sr-only">Recent orders</h2>
         <div class="space-y-20">
-          <div v-for="order in Orders.items" :key="order.id">
+          <div v-for="(order,index) in Orders.items" :key="order.id">
             <h3 class="sr-only">
               Order placed on <time :datetime="formatDateTime(order.createdAt)">
                 {{formatDateTime(order.createdAt)}}</time>
@@ -22,6 +22,7 @@
               flex-auto sm:divide-y-0 
               sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 
               lg:w-4/5 lg:flex lg:justify-evenly lg:gap-x-8">
+              <div class="mt-4"><span >({{index +1 }})</span></div>
                 <div class="flex justify-between sm:block">
                   <dt class="font-medium text-gray-900 underline">Date placed</dt>
                   <dd class="sm:mt-1">
