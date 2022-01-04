@@ -58,44 +58,63 @@
 
               </dl>
            </div>
-
             <table class="mt-4 w-full text-gray-500 sm:mt-6">
               <caption class="sr-only">
                 Products
               </caption>
               <thead class="sr-only text-sm text-gray-500 text-left sm:not-sr-only">
                 <tr>
-                  <th scope="col" class="sm:w-2/5 lg:w-1/3 pr-8 py-3 font-normal">Product</th>
-                  <th scope="col" class="hidden w-1/5 pr-8 py-3 font-normal sm:table-cell">Price</th>
-                  <th scope="col" class="hidden pr-8 py-3 font-normal sm:table-cell">Quantity</th>
-                  <th scope="col" class="w-0 py-3 font-normal text-right">Info</th>
+                  <th scope="col" class="sm:w-2/5 lg:w-1/4 py-3 font-normal">
+                  <div class=" ml-12">
+                  Product
+                  </div>
+                  </th>
+                  <th scope="col" class="hidden w-2/5  py-3 font-normal sm:table-cell">
+                  <div class="flex justify-center mr-8">
+                  Price
+                  </div>
+                  </th>
+                  <th scope="col" class="hidden w-2/5  py-3 font-normal sm:table-cell">
+                  <div class="flex justify-center mr-8">
+                  Quantity
+                  </div>
+                  </th>
+                  <th scope="col" class="w-0 py-3 font-normal text-right">
+                    <div class="mr-6">
+                    Info
+                    </div>
+                    </th>
                 </tr>
               </thead>
               <tbody class="border-b border-gray-200 divide-y divide-gray-200 text-sm sm:border-t">
                 <tr v-for="product in order.products" :key="product.id">
-                  <td class="py-6 pr-8">
+                  <td class="py-6">
                     <div class="flex items-center">
                       <img :src="product.image" :alt="product.name" class="w-16 h-16 object-center object-cover rounded mr-6" />
                       <div>
                         <div class="font-medium text-gray-900">{{ product.name }}</div>
+                        <div class="mt-1 sm:hidden">{{ product.price }} {{order.total.currency}} X {{ product.quantity }}</div>
                       </div>
                     </div>
                   </td>
                   <td class="hidden py-6 pr-8 sm:table-cell">
-                    {{ product.price }} {{order.total.currency}} 
+                    {{ product.price }} {{order.total.currency}}
                   </td>
                   <td class="hidden py-6 pr-8 sm:table-cell">
-                    {{ product.quantity }}
+                     {{ product.quantity }}
                   </td>
                   <td class="py-6 font-medium text-right whitespace-nowrap">
-                    <!-- @click="router.push={name: product.slug}" -->
-                    <a  class="text-secondary-600" :href="product.slug"
+                    
+                    <router-link :to="product.slug" class="text-secondary-600"
                       >View<span class="hidden lg:inline"> Product</span><span class="sr-only">, {{ product.name }}</span>
-                      </a>
+                    </router-link>
+
+
                   </td>
                 </tr>
               </tbody>
             </table>
+
           </div>
         </div>
       </div>
