@@ -48,32 +48,37 @@
         .then( (user) => {
           if (user && user.attributes.email_verified) {
             store.dispatch('general/setLoggedInUser',user.attributes.email)
+            store.dispatch('general/setDynamoDbUserId',user.username) 
           } else {
             store.dispatch('general/setLoggedInUser','')          }
-          // return Auth.changePassword(user, 'oldPassword', 'newPassword');
+            // store.dispatch('general/setDynamoDbUserId','')     
         })
         .catch( () => {
           store.dispatch('general/setLoggedInUser','')
+          store.dispatch('general/setDynamoDbUserId','')     
         });
 
       Hub.listen('auth', (data) => {
         switch (data.payload.event) {
           case 'signIn':
-            store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email)            
+            store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email) 
+            store.dispatch('general/setDynamoDbUserId',data.payload.data.username)
             break;
           case 'signUp':
             store.dispatch('general/setLoggedInUser','')            
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'signOut':
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')            
-                    
+            store.dispatch('general/setLoggedInUser','')          
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'signIn_failure':
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')              
+            store.dispatch('general/setLoggedInUser','')         
+            store.dispatch('general/setDynamoDbUserId','')    
             break;
           case 'configured':
         }

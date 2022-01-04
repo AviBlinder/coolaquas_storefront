@@ -44,16 +44,18 @@ type Order
   @auth(
     rules: [
       {
-        allow: owner, provider: userPools, 
+        allow: owner
+        provider: userPools
         operations: [create, update, delete, read]
       }
       { allow: public, provider: apiKey, operations: [create, read] }
       { allow: groups, provider: userPools, groups: ["Admin"] }
     ]
   ) {
-  id: ID!
+  id: ID! @primaryKey
   username: String
-  owner: String!
+  owner: String! @index(name: "byOwnerByCreatedAt", 
+        sortKeyFields: ["createdAt"],queryField: "byOwner")
   email: String!
   paypalOrderId: String!
   status: OrderStatus!
@@ -63,6 +65,7 @@ type Order
   billingDetails: BillingDetails!
   products: [Products!]
   total: Total!
+  createdAt: AWSDateTime!
 }
 
 type BillingDetails {
@@ -104,3 +107,6 @@ type Total {
   currency: Currencies!
 }
  
+  type Query {
+    getUserByOwnerId(owner: String!):User
+  }

@@ -288,6 +288,7 @@
         const amount = finalCostAmount.value
         const currency = store.getters['general/getCurrency']
         payload.total = {amount: amount,currency: currency}
+        payload.createdAt =  new Date()
 
         payload.products = []       
         const products = store.getters['cart/cartItems']

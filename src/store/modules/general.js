@@ -1,6 +1,3 @@
-import { API } from 'aws-amplify';
-import * as queries from '@/graphql/queries';
-
 const state = {
   settings: {
     currency: 'USD',
@@ -200,10 +197,6 @@ const actions = {
   setLoggedInUser({ commit, dispatch }, payload) {
     commit('setLoggedInUser', payload);
     dispatch('cart/setOrderUsername', payload, { root: true });
-    // dispatch('setLoggedInUserId',payload);
-  },
-  setLoggedInUserId( {commit}, payload) {
-      commit('setLoggedInUserId', payload);
   },
   setDynamoDbUserId({ commit }, payload) {
     commit('setDynamoDbUserId', payload);
@@ -220,21 +213,7 @@ const actions = {
 };
 
 const mutations = {
-  async setLoggedInUserId(state,payload){
-    // Get User details
-    let filter = {
-      username: {
-        eq: payload, // filter priority = 1
-      },
-    };
-    // console.log('fiter: ',filter)
-    const userData = await API.graphql({
-      query: queries.listUsers,
-      variables: { filter: filter },
-    });
-    const userId = userData.data.listUsers.items[0].id;
-    state.dynamoDbUserId = userId;
-  },
+
   setLoggedInUser(state, payload) {
     state.loggedInUser = payload;
   },

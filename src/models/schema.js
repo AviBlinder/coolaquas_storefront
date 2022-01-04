@@ -211,9 +211,8 @@ export const schema = {
                     "name": "createdAt",
                     "isArray": false,
                     "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -230,6 +229,24 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byOwnerByCreatedAt",
+                        "fields": [
+                            "owner",
+                            "createdAt"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -520,5 +537,5 @@ export const schema = {
             }
         }
     },
-    "version": "7d6bfbe8760a218f8f2537fa1f435bd9"
+    "version": "e3c619ab10add77f8437d0ea2c031e1f"
 };
