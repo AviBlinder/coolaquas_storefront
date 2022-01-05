@@ -169,6 +169,7 @@
   import { computed} from 'vue';
 
   import { CheckIcon, ClockIcon } from '@heroicons/vue/solid';
+  // @ts-ignore
   import useCheckout from '@/composition/useCheckout';
 
   export default {

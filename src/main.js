@@ -12,10 +12,7 @@ import Storyblok from './utils/Storyblok';
 // Components
 import landingPage from './components/LandingPage.vue';
 import Hero from './components/Hero.vue';
-import Slideshow from './components/Slideshow.vue';
-import SlideshowImage from './components/SlideshowImage.vue';
 import Collection from './components/Collection.vue';
-import CollectionFilterAndSort from './components/CollectionWIthFilterAndSort.vue';
 import Product from './components/Product.vue';
 import Footer from './components/Footer.vue';
 import Cart from './components/Cart/Cart.vue';
@@ -65,10 +62,7 @@ const app = createApp(App, );
 // Global components
 app.component('Landing', landingPage);
 app.component('Hero', Hero);
-app.component('slideshow', Slideshow);
-app.component('slideshow-image', SlideshowImage);
 app.component('collection', Collection);
-app.component('CollectionFilterAndSort', CollectionFilterAndSort);
 app.component('Product', Product);
 app.component('Footer', Footer);
 app.component('Cart', Cart);
