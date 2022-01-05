@@ -1,7 +1,8 @@
-- Add real policy pages
-
 --> Netlify
 
 --> Check Prod Signup + Order Creation + Paypal
 
 --> Review 'disconnect from Shopify" + disconnect...
+
+//Shipping policy not inline with shipping calculated on Checkout
+//Bills calculated on Checkout may be inaccurate

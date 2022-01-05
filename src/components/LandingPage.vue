@@ -18,8 +18,9 @@
                   <span class="block text-gray-400 ">{{blok.title}}</span>
                   <span class="block text-amber-600 mt-2 ">{{blok.title_part2}}</span>
                 </h1>
-                <p class="mt-6 max-w-lg mx-auto text-center text-xl text-white sm:max-w-3xl">
-                  {{blok.subtitle}} 
+                <p class="mt-6 max-w-lg mx-auto text-center text-xl 
+                text-white sm:max-w-3xl">
+                  <!-- {{blok.subtitle}}  -->
                 </p>
                 <div class="mt-10 max-w-sm mx-auto sm:max-w-none flex justify-center">
                     <router-link to="/collections/featured-products " 
