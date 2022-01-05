@@ -3,15 +3,22 @@
 ### Frontend:
 - Vue 3 + Composition API
 - TailwindCSS/TailwindUI
+- Auth custom flows: new views (SingUp/SignIn) + related components 
 
-
-### Backend:
+### Backend Content:
+- Storyblok 
+### Backend Services:
 - AWS Services:
-  - Cognito
-  - Lambda
+  - Cognito (including customized emails)
+  - Lambda (triggered by Cognito events)
   - Amplify + GraphQL + DynamoDB tables (Users and Orders)
 
-
+### Configuration files:
+* Storyblok + Paypal 
+.env
+* Amplify Setup:
+src/aws-exports.js
+~~~
 ## Project setup
 ```
 npm install
