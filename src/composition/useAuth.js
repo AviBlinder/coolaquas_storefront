@@ -3,11 +3,6 @@ import { reactive, ref, } from 'vue';
 // provide
 import router from '@/router';
 import {useStore} from 'vuex';
-// Amplify
-// import { API } from 'aws-amplify';
-// import * as queries from '@/graphql/queries';
-// import * as mutations from '@/graphql/mutations';
-
 
 export default function () {
   const store = useStore();
@@ -63,35 +58,11 @@ export default function () {
     }
   };
 
-  // const createNewUser = async (res,userDetails) => {
-  //   // let currentUser = {}
-  //   try {
-  //     // currentUser = await Auth.currentUserInfo();
-  //     // userDetails.owner = currentUser.username;
-  //   userDetails.owner = 'temp';
-  //   if(res === 'SUCCESS'){
-  //     const newUser =  API.graphql({
-  //       query: mutations.createUser,
-  //       variables: { input: userDetails },
-  //     })
-  //     await newUser
-  //   }
-  //     else {
-  //       throw new Error('Error in validation process')
-  //     }
-  //   }
-  //   catch (error) {
-  //     console.log('error: ', error);
-  //   }
-  // }
   
   //  Confirm Sign Up
   const confirmSignUp = async () => {
     error.value = '';
     const { email, code } = form;
-    // const userDetails = {
-    //   username: email,
-    // };
     try {
       await Auth.confirmSignUp(email, code)      
        .then( () => {

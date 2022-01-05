@@ -9,7 +9,6 @@ const state = {
     shippingCost: 0,
     shippingType: '',
     status: 'NEW',
-    // products: [],
     total: {
       amount: 0,
       currency: '',
