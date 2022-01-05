@@ -7,11 +7,21 @@
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
             <div v-if="loaded">
-              <div class="text-2xl m-3 p-3">Featured Products</div>
+              <div class="flex justify-center items-center ">
+              <div class="text-2xl m-3 p-3 bg-secondary-200 
+              rounded-full mb-6 md:px-60
+              ">              
+              Featured Products
+              </div>
+              </div>
           <div class="grid sm-grid-cols-2 md:grid-cols-9 gap-x-3 gap-y-8">
             <!-- Product grid -->
               <div
-                class="relative grid gap-y-10 gap-x-2 md:col-span-3 md:gap-x-2 sm:grid-2 sm:border-b-2 max-w-4xl w-3/4 md:ml-6"
+                class="relative grid gap-y-10 gap-x-2 md:col-span-3 
+                md:gap-x-2 
+                sm:grid-2 sm:border-b-2 max-w-4xl w-3/4 
+                sm:ml-6 md:ml-12  pb-3
+                "
                 v-for="product in products"
                 :key="product.uuid"
               >
@@ -35,6 +45,7 @@
                       class="w-full h-full object-center object-cover"
                     />
                   </div>
+                  <div class="bg-green-100 mt-2 py-2">
                   <h3 class="mt-4 font-medium text-gray-900">
                     {{ product.name }}
                   </h3>
@@ -42,6 +53,7 @@
                     {{ product.content.price }} {{ product.content.currency }}
                   </p>
                   <p>Size: {{ product.content.size }}</p>
+                  </div>
                 </router-link>
               </div>
             </div>
