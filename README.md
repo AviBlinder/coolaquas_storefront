@@ -6,7 +6,7 @@
 - Auth custom flows: new views (SingUp/SignIn) + related components 
 
 ### Backend Content:
-- Storyblok 
+- Storyblok (Space: Coolaquas-Store)
 ### Backend Services:
 - AWS Services:
   - Cognito (including customized emails)

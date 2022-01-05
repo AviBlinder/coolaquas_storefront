@@ -33,12 +33,15 @@
           </div>
         </div>
       </div>
-<!-- Incentives -->
+<!-- Featured Products -->
+      <Featured></Featured>
 
+<!-- Incentives -->
        <component v-for="(incentives,index) in blok.incentives" :key="index"
         :blok="incentives"
         :is="incentives.component" 
       ></component>
+      
     </main>
   </div>
 
@@ -47,6 +50,7 @@
 </template>
 <script>
 import  Incentives from  './Incentives.vue'
+import  Featured from  './Featured.vue'
   export default {
     props: {
       blok: {
@@ -54,7 +58,8 @@ import  Incentives from  './Incentives.vue'
       },
     },
     components: {
-      Incentives
+      Incentives,
+      Featured
     },
     computed: {
       imageEdit() {
