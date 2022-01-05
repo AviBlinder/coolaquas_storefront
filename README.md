@@ -1,4 +1,16 @@
 # coolaquas-storyblok-vue3
+## Technology Stack:
+### Frontend:
+- Vue 3 + Composition API
+- TailwindCSS/TailwindUI
+
+
+### Backend:
+- AWS Services:
+  - Cognito
+  - Lambda
+  - Amplify + GraphQL + DynamoDB tables (Users and Orders)
+
 
 ## Project setup
 ```
