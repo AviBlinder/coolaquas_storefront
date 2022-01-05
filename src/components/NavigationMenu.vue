@@ -347,12 +347,11 @@ import router from '@/router';
         collections.value = res;
       });
 
-      const {  signOut } = useAuth();
+      const {signOut} = useAuth();
 
       const signOutUser = () => {
           signOut()
           router.push({name: 'Home'})      
-
       }
 
       const OrdersHistory = () => {
