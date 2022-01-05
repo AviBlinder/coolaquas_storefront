@@ -1,5 +1,8 @@
 - Add real policy pages
 - Add section to Landing page with selected products
-- Add env. to Amplify (PROD)
 
 --> Netlify
+
+--> Check Prod Signup + Order Creation + Paypal
+
+--> Review 'disconnect from Shopify" + disconnect...
