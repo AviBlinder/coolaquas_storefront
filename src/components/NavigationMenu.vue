@@ -71,14 +71,13 @@
         <!-- lg screens: Cart + User Menu -->
         <div class="hidden lg:relative lg:z-40 lg:ml-4 lg:flex lg:items-center">
           <!-- debug start -->
-          <button @click="$router.push({name:'Checkout'})">Checkout</button>
-
-          <button class="mx-3" @click="$router.push({name:'Cart'})">
+          <!-- <button @click="$router.push({name:'Checkout'})">Checkout</button> -->
+          <!-- <button class="mx-3" @click="$router.push({name:'Cart'})">
               <ShoppingCartIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-          </button>
+          </button> -->
           <!-- debug end -->
+          <Cart></Cart>
 
-          <!-- <Cart></Cart> -->
           <!-- Profile dropdown -->
           <div v-if="loggedInUser">
           <!-- v-for="item in userNavigation" :key="item.name" 
@@ -262,7 +261,7 @@
 
   } from '@headlessui/vue';
   import { SearchIcon } from '@heroicons/vue/solid'
-  import { MenuIcon, XIcon, UserIcon, ShoppingCartIcon} from '@heroicons/vue/outline';
+  import { MenuIcon, XIcon, UserIcon, } from '@heroicons/vue/outline';
 
   import {ref, inject , computed} from 'vue';
   import {useStore} from 'vuex'
@@ -303,17 +302,13 @@ import router from '@/router';
       MenuIcon,
       UserIcon,
       SearchIcon,
-      ShoppingCartIcon,
+      // ShoppingCartIcon,
       XIcon,
       search,
       Cart,
       // BellIcon      
     },
     setup() {
-     // debug start
-      console.log("NavigationMenu - process.env.BASE_URL: ",process.env.BASE_URL)
-      // debug end
-
       // const navigation = {
       //   pages: [{ name: 'About', description: 'Company' }],
       // };

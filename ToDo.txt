@@ -1,7 +1,7 @@
 --> AWS Deploy
 --> Add Google Analytics
 --> Check Prod Signup + Order Creation + Paypal
-
+--> Review CSS Course for cross-site styling
 --> Review 'disconnect from Shopify" + disconnect...
 
 //Shipping policy not inline with shipping calculated on Checkout

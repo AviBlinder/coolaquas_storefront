@@ -1,5 +1,5 @@
 import { useStore } from 'vuex';
-import { computed, ref, reactive } from 'vue';
+import { computed,  } from 'vue';
 
 export default function () {
   const store = useStore();
@@ -9,12 +9,16 @@ export default function () {
   const taxesAndShippingDisclaimer =
     'Taxes and shipping are calculated at checkout';
 
-  const totalAmountInCart = computed(
-    () => ref(store.getters['cart/totalAmountInCart'])
+  const totalAmountInCart = computed( () => 
+  {
+    console.log('inside totalAmountInCart');
+    return store.getters['cart/totalAmountInCart']
+  }
   );
 
   let cartItems = computed(() => {
-    return reactive(store.getters['cart/cartItems']);
+    console.log('inside cartItems');
+    return store.getters['cart/cartItems']
   });
 
   const modifyQuantity = (payload) => {

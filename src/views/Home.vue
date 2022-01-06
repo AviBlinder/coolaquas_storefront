@@ -12,9 +12,6 @@
 <script>
   export default {
     created() {
-      // debug start
-      console.log("process.env.BASE_URL: ",process.env.BASE_URL)
-      // debug end
       const slug = 'landing_page';
       window.storyblok.init({
         accessToken: process.env.VUE_APP_STORYBLOK_SPACE_KEY_PREVIEW,

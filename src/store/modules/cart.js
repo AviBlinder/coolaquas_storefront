@@ -46,9 +46,10 @@ const getters = {
     console.log('id =', id);
     return state.added[id].quantity * state.added[id].price;
   },
-  totalAmountInCart(state, getters) {
+  totalAmountInCart(state) {
     let totalAmount = 0;
-    totalAmount = getters.cartItems.reduce((total, p) => {
+    // totalAmount = getters.cartItems.reduce((total, p) => {
+    totalAmount = state.added.reduce((total, p) => {
       return total + p.price * p.quantity;
     }, 0);
     return +totalAmount.toFixed(2);

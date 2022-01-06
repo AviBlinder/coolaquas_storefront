@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "coolaquas",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/tmp/amplify-ac59d6e4-f6ed-402a-8bc5-2d5d97e5744c/amplify/backend/api/coolaquas/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "keyDescription": "api key description",
+      "expirationTime": 30
+    },
+    "conflictResolution": {
+      "defaultResolutionStrategy": {
+        "type": "AUTOMERGE"
+      }
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      },
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authcoolaquas8c3ed8a4"
+      }
+    ]
+  }
+}
