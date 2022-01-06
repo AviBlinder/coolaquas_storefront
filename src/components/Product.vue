@@ -136,12 +136,6 @@ export default {
         Type: Object,
       },
     },
-    watch: {
-      blok() {
-        // console.log("inside watch: ",this.blok)
-        // this.getProducts(this.blok.uuid,'published');
-      },
-    },
     computed: {
       richTextContent() {
         return this.storyapi.richTextResolver.render(this.blok.description);

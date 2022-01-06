@@ -70,12 +70,7 @@
         </div>
         <!-- lg screens: Cart + User Menu -->
         <div class="hidden lg:relative lg:z-40 lg:ml-4 lg:flex lg:items-center">
-          <!-- debug start -->
-          <!-- <button @click="$router.push({name:'Checkout'})">Checkout</button> -->
-          <!-- <button class="mx-3" @click="$router.push({name:'Cart'})">
-              <ShoppingCartIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-          </button> -->
-          <!-- debug end -->
+
           <Cart></Cart>
 
           <!-- Profile dropdown -->

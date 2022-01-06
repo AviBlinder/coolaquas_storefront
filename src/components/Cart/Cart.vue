@@ -171,7 +171,6 @@
     },
 
     setup() {
-      console.log("cart setup")
       const route = useRoute();
 
       const {
@@ -182,7 +181,6 @@
         currencySign,
       } = useCheckout();
 
-      console.log("cart setup 2")
       const disableCart = ref(false);
       watchEffect( () => {
         if (route.fullPath === '/checkout' || route.fullPath === '/cart' ){
@@ -192,7 +190,6 @@
           }
       } )
 
-      console.log("cart setup 3")
       const modifyQuantityWrapper = (e) => {
         if (e.sign === '+') {
           Number((e.quantity += 1));
@@ -206,10 +203,8 @@
         modifyQuantity({ id: e.id, quantity: e.quantity });
       };
 
-      console.log("cart setup 4")
       const store = useStore();
       const cartQuantity = computed( () => store.getters['cart/cartQuantity']);
-      console.log("cart setup 5")
       return {
         taxesAndShippingDisclaimer,
         totalAmountInCart,

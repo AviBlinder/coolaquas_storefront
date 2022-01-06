@@ -11,13 +11,11 @@ export default function () {
 
   const totalAmountInCart = computed( () => 
   {
-    console.log('inside totalAmountInCart');
     return store.getters['cart/totalAmountInCart']
   }
   );
 
   let cartItems = computed(() => {
-    console.log('inside cartItems');
     return store.getters['cart/cartItems']
   });
 
