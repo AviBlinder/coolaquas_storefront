@@ -1,3 +1,10 @@
+[build]
+  base    = ""
+  publish = "dist"
+  command = "amplify init"
+  command = "npm run build"
+
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
