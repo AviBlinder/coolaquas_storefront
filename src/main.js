@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// Google Analytics
+import VueGtag from 'vue-gtag-next';
+
 //Tailwind styles
 import './styles/app.css';
 
@@ -53,11 +56,16 @@ const app = createApp(App, );
   });
 
   app
-  .use(store)
-  .use(router)
-  .use(Storyblok)
-  .mixin(markedMixin)
-  .mount('#app');
+    .use(store)
+    .use(router)
+    .use(Storyblok)
+    .use(VueGtag, {
+      property: {
+        id: 'UA-57147400-4',
+      },
+    })
+    .mixin(markedMixin)
+    .mount('#app');
 
 // Global components
 app.component('Landing', landingPage);
