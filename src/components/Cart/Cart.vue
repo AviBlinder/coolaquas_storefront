@@ -199,6 +199,9 @@ eventBus.on('cartUpdate', () => {
       watch(
         () => route.fullPath,
         async (newValue) => {
+          // debug start
+          console.log("cart - watch ",newValue )
+          // debug end
           if (newValue.includes('/checkout') || newValue.includes('/cart')) {
             disableCart.value = true;
           } else {

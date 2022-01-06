@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import NotFound from '../views/404.vue';
+
 
 const routes = [
   {
@@ -50,7 +52,9 @@ const routes = [
     path: '/orders',
     name: 'Orders',
     component: () =>
-      import(/* webpackChunkName: "OrdersHistory" */ '../views/OrdersHistory.vue'),
+      import(
+        /* webpackChunkName: "OrdersHistory" */ '../views/OrdersHistory.vue'
+      ),
   },
   {
     path: '/pages/:policy',
@@ -77,6 +81,9 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "Product" */ '../views/Product.vue'),
   },
+  { path: '/404', component: NotFound },
+  // { path: '*', redirect: '/404' },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ];
 
 const router = createRouter({
