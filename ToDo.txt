@@ -1,8 +1,18 @@
+Bugs:
+sm: 
+- Move products on landing page
+- footer overlap (z-0?)
+
+- Filter by product
+
+
 --> AWS Deploy
---> Add Google Analytics
+==> Filter by color not working
+==> Favicon of Coolaqua not showing?
+
 --> Check Prod Signup + Order Creation + Paypal
+
 --> Review CSS Course for cross-site styling
---> Review 'disconnect from Shopify" + disconnect...
 
 //Shipping policy not inline with shipping calculated on Checkout
 //Bills calculated on Checkout may be inaccurate

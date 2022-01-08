@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white">
-    <div class="inset-0 mx-auto px-4 py-24 sm:px-6 lg:px-8">
+    <div class="inset-0 mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div class="bg-gray-50 rounded-2xl px-6 py-16 sm:p-16">
         <div class="max-w-xl mx-auto lg:max-w-none">
           <div class="text-center">
