@@ -2,8 +2,6 @@
   <div class="bg-white">
 
     <div>
-      <!-- Mobile filter dialog -->
-      <!-- max-w-7xl -->
       <main class=" mx-auto px-4 sm:px-6 lg:px-8">
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
@@ -153,13 +151,14 @@
           //
           // create Object of filter parameters
           //sample output format: {'size': [40,20]}
-          let filtersObject = this.reduceFilters(filters);
+          let filtersObject = this.reduceFilters(filters)
           // let filterResults = this.products;
           let filterResults = []
 
 
           for (const [key, value] of Object.entries(filtersObject)) {
             value.map( val => {
+              console.log(`key: ${key} val: ${value}`)
               this.filteredByPrice.map( (product ) => {
                   // if the product has the filtered value on 'key' property:
                   if (product.content[key] !== undefined && product.content[key].indexOf(val) !== -1 ){

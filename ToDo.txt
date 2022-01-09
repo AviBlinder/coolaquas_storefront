@@ -1,9 +1,8 @@
 Bugs:
-- Filter by product
+- Filter by colors (array)
 
 
 --> AWS Deploy
-==> Filter by color not working
 ==> Favicon of Coolaqua not showing?
 
 --> Check Prod Signup + Order Creation + Paypal

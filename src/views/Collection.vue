@@ -305,7 +305,7 @@
             </form>
 
             <div class="lg:col-span-3">
-              <div class="border-1  border-gray-400 rounded-lg h-96 lg:h-full">
+              <div class="border-1  border-gray-400 rounded-lg ">
                 <component
                   :blok="collection"
                   :is="collection.content.component"
@@ -359,9 +359,9 @@
             type: 'checkbox',
             options: [
               { value: 'white', label: 'White', checked: false },
-              { value: 'color.blue', label: 'Blue', checked: true },
-              { value: 'color.green', label: 'Green', checked: false },
-              { value: 'color.purple', label: 'Purple', checked: false },
+              { value: 'blue', label: 'Blue', checked: true },
+              { value: 'green', label: 'Green', checked: false },
+              { value: 'purple', label: 'Purple', checked: false },
             ],
           },
           {

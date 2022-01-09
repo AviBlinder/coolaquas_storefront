@@ -63,12 +63,6 @@ const routes = [
       import(/* webpackChunkName: "PolicyPage" */ '../views/PolicyPage.vue'),
   },
   {
-    path: '/collections/',
-    name: 'collections',
-    component: () =>
-      import(/* webpackChunkName: "Collections" */ '../views/Collections.vue'),
-  },
-  {
     path: '/collections/:collection',
     name: 'collection',
     component: () =>

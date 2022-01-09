@@ -3,10 +3,10 @@
     <ValueProposition></ValueProposition>
     <NavigationMenu></NavigationMenu>
 
-    <div class="h-full">
+    <div>
       <router-view :key="$route.fullPath" />
     </div>
-    <div>
+    <div class="">
       <FooterLinks> </FooterLinks>
     </div>
   </div>
