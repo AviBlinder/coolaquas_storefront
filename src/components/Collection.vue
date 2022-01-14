@@ -179,8 +179,15 @@
           // let filterResults = this.products;
           let filterResults = [];
           let productKeys = []
-
+          let currentKey = ''
+          let newKey = false
           for (const [key, value] of Object.entries(filtersObject)) {
+            if (currentKey !== key && currentKey !== ''){
+                console.log("key changed ", currentKey , key)
+                newKey = true
+            } else {
+              newKey = false
+            }
             // example values:
             //key: color
             //value = [blue,purple]
@@ -191,15 +198,28 @@
                 if (
                   product.content[key] !== undefined &&
                   product.content[key].indexOf(val) !== -1
-                ) {
                   //Product found. Make sure product is not on array
+                ) {
                   if(productKeys.indexOf(product.uuid) === -1){
                     console.log("filterResults :",filterResults)
                     productKeys.push(product.uuid)
-                    filterResults.push(product);
+                    filterResults.push(product)
                   }
+                } else {
+                  // if product not found on current key but found by prev. key,
+                  // it must be removed from results
+                  if(newKey){
+                      let ind = productKeys.indexOf(product.uuid)
+                      if(ind !== -1){
+                        filterResults.splice(ind)
+                        productKeys.splice(ind)
+                      }
+
+                    }
+
                 }
               });
+              currentKey = key
             });
           }
           this.filteredByFeature = filterResults;
