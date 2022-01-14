@@ -133,7 +133,7 @@ export default {
 
     const selected = ref("Israel")
 
-watch(() => props.sameAsShipping, (currentValue) => {
+watch( () => props.sameAsShipping, (currentValue) => {
   if(currentValue === false ){
      BillingDetails.firstName = '',
      BillingDetails.lastName = '',

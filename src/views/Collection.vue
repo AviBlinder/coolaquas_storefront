@@ -347,6 +347,8 @@
       MinusSmIcon,
       PlusSmIcon,
       ViewGridIcon,
+      CheckCircleIcon
+
     } from '@heroicons/vue/solid';
         const sortOptions = [
           { name: 'Price: Low to High', href: '#', current: false, sortName:"price.asc" },
@@ -410,6 +412,7 @@
         PlusSmIcon,
         ViewGridIcon,
         XIcon,
+        CheckCircleIcon
       },
        setup() {
         const mobileFiltersOpen = ref(false);

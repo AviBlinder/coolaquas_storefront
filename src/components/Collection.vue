@@ -48,6 +48,22 @@
                   {{ product.content.price }} {{ product.content.currency }}
                 </p>
                 <p>Size: {{ product.content.size }}</p>
+                <div
+                class="inline-block mx-1 border-gray-500"                
+                v-for="(color,index) in product.content.color" :key="index">
+               <CheckIcon v-if="color!=='white'"
+               class="w-5 h-5"
+               :style="{stroke:color}"></CheckIcon>              
+               <CheckIcon v-else
+               class="w-5 h-5"
+               style="stroke:black"
+               >
+               </CheckIcon>
+               <!-- style="stroke:black" -->
+              <p>
+                {{color}}
+              </p>
+                </div>
               </router-link>
             </div>
           </div>
@@ -58,8 +74,16 @@
 </template>
 
 <script>
+  import {
+      CheckIcon
+
+    } from '@heroicons/vue/outline'
+
   import { ref } from 'vue';
   export default {
+    components: {
+      CheckIcon
+    },
     setup() {
       const mobileMenuOpen = ref(false);
       const mobileFiltersOpen = ref(false);
