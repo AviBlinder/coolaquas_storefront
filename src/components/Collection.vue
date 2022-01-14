@@ -1,29 +1,21 @@
 <template>
   <div class="bg-white">
-
     <div>
-      <main class=" mx-auto px-4 sm:px-6 lg:px-8">
+      <main class="mx-auto px-4 sm:px-6 lg:px-8">
         <section aria-labelledby="products-heading" class="pt-6 pb-24 mx-4">
           <h2 id="products-heading" class="sr-only">Products</h2>
-          <div
-            class="grid sm-grid-cols-2 md:grid-cols-9 
-          gap-x-3 gap-y-8"
-          >
+          <div class="grid sm-grid-cols-2 md:grid-cols-9 gap-x-3 gap-y-8">
             <!-- Product grid -->
             <div
-              class="
-            relative
-            grid gap-y-10 gap-x-2  
-            md:col-span-3 md:gap-x-2
-            sm:grid-2  sm:border-b-2
-            max-w-4xl w-3/4 md:ml-6"
+              class="relative grid gap-y-10 gap-x-2 md:col-span-3 md:gap-x-2 sm:grid-2 sm:border-b-2 max-w-4xl w-3/4 md:ml-6"
               v-for="product in displayProducts"
-              :key="product.uuid">
-              <div v-if="product.content.valueProposition"
-                class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-1 rounded-full 
-                p-1 shadow-sm
-                text-center text-xs  justify-center items-center
-            "> {{ product.content.valueProposition }}
+              :key="product.uuid"
+            >
+              <div
+                v-if="product.content.valueProposition"
+                class="absolute flex w-9 h-9 top-2 right-2 bg-green-300 z-1 rounded-full p-1 shadow-sm text-center text-xs justify-center items-center"
+              >
+                {{ product.content.valueProposition }}
               </div>
 
               <router-link
@@ -31,9 +23,7 @@
                 class="group text-sm"
               >
                 <div
-                  class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100 group-hover:opacity-80
-                hover:border-gray-400	border-2 	
-                "
+                  class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden bg-gray-100 group-hover:opacity-80 hover:border-gray-400 border-2"
                 >
                   <img
                     :src="product.content.images[0].filename"
@@ -49,20 +39,21 @@
                 </p>
                 <p>Size: {{ product.content.size }}</p>
                 <div
-                class="inline-block mx-1 border-gray-500"                
-                v-for="(color,index) in product.content.color" :key="index">
-               <CheckIcon v-if="color!=='white'"
-               class="w-5 h-5"
-               :style="{stroke:color}"></CheckIcon>              
-               <CheckIcon v-else
-               class="w-5 h-5"
-               style="stroke:black"
-               >
-               </CheckIcon>
-               <!-- style="stroke:black" -->
-              <p>
-                {{color}}
-              </p>
+                  class="inline-block mx-1 border-gray-500"
+                  v-for="(color, index) in product.content.color"
+                  :key="index"
+                >
+                  <CheckIcon
+                    v-if="color !== 'white'"
+                    class="w-5 h-5"
+                    :style="{ stroke: color }"
+                  ></CheckIcon>
+                  <CheckIcon v-else class="w-5 h-5" style="stroke: black">
+                  </CheckIcon>
+                  <!-- style="stroke:black" -->
+                  <p>
+                    {{ color }}
+                  </p>
                 </div>
               </router-link>
             </div>
@@ -74,15 +65,12 @@
 </template>
 
 <script>
-  import {
-      CheckIcon
-
-    } from '@heroicons/vue/outline'
+  import { CheckIcon } from '@heroicons/vue/outline';
 
   import { ref } from 'vue';
   export default {
     components: {
-      CheckIcon
+      CheckIcon,
     },
     setup() {
       const mobileMenuOpen = ref(false);
@@ -103,8 +91,8 @@
       priceRange: {
         type: Array,
         default: function () {
-        return [0,100]
-        }
+          return [0, 100];
+        },
       },
       sortParams: {
         Type: Array,
@@ -112,21 +100,31 @@
     },
     watch: {
       blok() {
+        console.log("watch blok")
         this.getProducts(this.blok.uuid, 'published');
       },
       filterParams() {
-        this.displayProducts = this.sorted ? this.sortProducts(this.sortParams,this.filterByFeature()) : this.filterByFeature()
+        console.log("watch filterParams")
+        this.displayProducts = this.sorted
+          ? this.sortProducts(this.sortParams, this.filterByFeature())
+          : this.filterByFeature();
       },
-     priceRange: {
-      handler: function () {
-        this.displayProducts = this.sorted ? this.sortProducts(this.sortParams,this.filterByPrice()) : this.filterByPrice()
+      priceRange: {
+        handler: function () {
+          console.log("watch priceRange")
+          this.displayProducts = this.sorted
+            ? this.sortProducts(this.sortParams, this.filterByPrice())
+            : this.filterByPrice();
         },
-      deep: true
-    },
+        deep: true,
+      },
 
       sortParams() {
-        this.sorted = true
-        this.displayProducts = this.sortProducts(this.sortParams,this.displayProducts)
+        this.sorted = true;
+        this.displayProducts = this.sortProducts(
+          this.sortParams,
+          this.displayProducts
+        );
       },
     },
 
@@ -146,64 +144,76 @@
       });
     },
     methods: {
-      sortProducts(sortKey,payload){
-      const sortKeys = sortKey.split('.')
-      return [...payload].sort((a, b) => {
-        if(sortKeys[1] === 'asc'){
-          return a.content[sortKeys[0] ] > b.content[sortKeys[0]] ? 1 : -1
-        } else {        
-          return a.content[sortKeys[0] ] < b.content[sortKeys[0]] ? 1 : -1
-        }
-      })        
+      sortProducts(sortKey, payload) {
+        const sortKeys = sortKey.split('.');
+        return [...payload].sort((a, b) => {
+          if (sortKeys[1] === 'asc') {
+            return a.content[sortKeys[0]] > b.content[sortKeys[0]] ? 1 : -1;
+          } else {
+            return a.content[sortKeys[0]] < b.content[sortKeys[0]] ? 1 : -1;
+          }
+        });
       },
-      filterByPrice(){
-            let filterResults = []
-            // 
-            this.filteredByFeature.map( (product ) => {
-              if(product.content.price >= this.priceRange[0] && product.content.price <= this.priceRange[1])
-              {
-                filterResults.push(product)
-              }
-            })
-            this.filteredByPrice = filterResults
-            return filterResults 
+      filterByPrice() {
+        let filterResults = [];
+        //
+        this.filteredByFeature.map((product) => {
+          if (
+            product.content.price >= this.priceRange[0] &&
+            product.content.price <= this.priceRange[1]
+          ) {
+            filterResults.push(product);
+          }
+        });
+        this.filteredByPrice = filterResults;
+        return filterResults;
       },
       filterByFeature() {
-        const filters = this.filterParams.map( (p) => p.split('.'));
+        const filters = this.filterParams.map((p) => p.split('.'));
         //
         if (filters.length) {
           //
           // create Object of filter parameters
           //sample output format: {'size': [40,20]}
-          let filtersObject = this.reduceFilters(filters)
+          let filtersObject = this.reduceFilters(filters);
           // let filterResults = this.products;
-          let filterResults = []
-
+          let filterResults = [];
+          let productKeys = []
 
           for (const [key, value] of Object.entries(filtersObject)) {
-            value.map( val => {
-              console.log(`key: ${key} val: ${value}`)
-              this.filteredByPrice.map( (product ) => {
-                  // if the product has the filtered value on 'key' property:
-                  if (product.content[key] !== undefined && product.content[key].indexOf(val) !== -1 ){
-                      filterResults.push(product)
+            // example values:
+            //key: color
+            //value = [blue,purple]
+            value.map( (val) => {
+              console.log(`key: ${key} value: ${value} -> val: ${val} `);
+              this.filteredByPrice.map((product) => {
+                // if the product has the filtered value on 'key' property:
+                if (
+                  product.content[key] !== undefined &&
+                  product.content[key].indexOf(val) !== -1
+                ) {
+                  //Product found. Make sure product is not on array
+                  if(productKeys.indexOf(product.uuid) === -1){
+                    console.log("filterResults :",filterResults)
+                    productKeys.push(product.uuid)
+                    filterResults.push(product);
+                  }
                 }
-              })
-            })
-        }
-          this.filteredByFeature = filterResults
-          return filterResults
+              });
+            });
+          }
+          this.filteredByFeature = filterResults;
+          return filterResults;
         } else {
-          this.filteredByFeature = this.products
-          return this.products
+          this.filteredByFeature = this.products;
+          return this.products;
         }
       },
-    
-      reduceFilters(filters) {
 
+      reduceFilters(filters) {
         let reducedFilters = {};
         if (filters.length === 1) {
-          reducedFilters[ filters[0][0] ] = [ filters[0][1] ]
+          reducedFilters[filters[0][0]] = [filters[0][1]];
         } else {
           filters.reduce((prev, curr, index) => {
             // Initial setup
@@ -223,11 +233,11 @@
         }
         return reducedFilters;
       },
-      getProducts(slug, version) {
+      getProducts(uuid, version) {
         this.storyapi
           .get(
             'cdn/stories/?filter_query[Collections][in_array]=' +
-              slug +
+              uuid +
               '&starts_with=products/',
             {
               version,
@@ -235,9 +245,9 @@
           )
           .then((response) => {
             this.products = response.data.stories;
-            this.filteredByPrice = this.products
-            this.filteredByFeature = this.products
-            this.displayProducts = this.products
+            this.filteredByPrice = this.products;
+            this.filteredByFeature = this.products;
+            this.displayProducts = this.products;
           })
           .catch((error) => {
             console.log(error);
@@ -246,11 +256,11 @@
     },
     data() {
       return {
-        products: {},        
+        products: {},
         displayProducts: {},
         filteredByPrice: {},
         filteredByFeature: {},
-        sorted : false
+        sorted: false,
       };
     },
   };
