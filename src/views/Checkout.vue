@@ -88,14 +88,14 @@
         <h2 id="payment-and-shipping-heading" class="sr-only">
           Payment and shipping details
         </h2>
-<!--  -->
+        <!--  -->
         <!-- <button @click="CreateOrder('1234567890abc')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateOrder</button>
         <button @click="CreateUser"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateUser</button> -->
-<!--  -->
+        <!--  -->
 
         <form @submit.prevent>
           <div class="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
@@ -107,9 +107,7 @@
                 Contact information
               </h3>
               <!-- email field -->
-              <EmailField 
-              @update:modelValue="updateEmail" 
-              v-model="email" />
+              <EmailField @update:modelValue="updateEmail" v-model="email" />
             </div>
 
             <div class="mt-10">
@@ -201,7 +199,7 @@
   import { Auth } from 'aws-amplify';
   import { API } from 'aws-amplify';
   import { createOrder } from '@/graphql/mutations';
-  
+
   export default {
     components: {
       paypalButton,
@@ -217,7 +215,9 @@
 
       const postCheckoutMessage = ref('');
       const postCheckoutMessage2 = ref('');
-      const contactEmail = computed( () => store.getters['general/getContactEmail'])
+      const contactEmail = computed(
+        () => store.getters['general/getContactEmail']
+      );
       const email = ref('');
       const billingAsShipping = ref(true);
 
@@ -256,83 +256,88 @@
       const finalCostAmount = computed(() => {
         let finalCost =
           totalAmountInCart.value + shippingCost.value + taxCost.value;
-          const finalCostValue = +finalCost.toFixed(2)
-        return finalCostValue
+        const finalCostValue = +finalCost.toFixed(2);
+        return finalCostValue;
       });
       const updateDisableStatus = (event) => {
         disablePaymentButton.value = event;
       };
       const findUser = async () => {
-        let currentUser = {} 
-        
-        try{
+        let currentUser = {};
+
+        try {
           currentUser = await Auth.currentAuthenticatedUser();
         } catch (e) {
-            console.log(e)
-        }
-        finally {
-          if(currentUser.username === undefined){
-            currentUser.username = ''
+          console.log(e);
+        } finally {
+          if (currentUser.username === undefined) {
+            currentUser.username = '';
           }
-        }        
-          return currentUser
-      }
-      // Amplify API   
+        }
+        return currentUser;
+      };
+      // Amplify API
       const CreateOrder = async (paypalOrderId) => {
-        const currentUser = await findUser()
+        const currentUser = await findUser();
         // const loggedInUser =   store.getters['general/getLoggedInUser']
 
-        const order = store.getters['cart/getOrder']
-        let payload = order
-        payload.owner = currentUser.username          
+        const order = store.getters['cart/getOrder'];
+        let payload = order;
+        if (currentUser.username) {
+          payload.owner = currentUser.username;
+        } else {
+          payload.owner = 'annonymous';
+        }
 
-        payload.paypalOrderId = paypalOrderId
-        // const {amount, currency} = store.getters['cart/getOrderTotal']
-        const amount = finalCostAmount.value
-        const currency = store.getters['general/getCurrency']
-        payload.total = {amount: amount,currency: currency}
-        payload.createdAt =  new Date()
-
-        payload.products = []       
-        const products = store.getters['cart/cartItems']
-
-        products.map( product => {
-          payload.products.push({
-          productId: product.id, 
-          price: product.price,
-          name: product.name,
-          image: product.imageSrc,
-          slug : product.slug,
-          currency:  product.currency ,
-          quantity: product.quantity
-          })
-        })      
         try {
-           await API.graphql({
+          payload.paypalOrderId = paypalOrderId;
+          // const {amount, currency} = store.getters['cart/getOrderTotal']
+          const amount = finalCostAmount.value;
+          const currency = store.getters['general/getCurrency'];
+
+          postCheckoutMessage.value =
+            store.getters['general/getafterSaleMessage'];
+          postCheckoutMessage2.value = `Your orderId is ${paypalOrderId}`;
+
+          payload.total = { amount: amount, currency: currency };
+          payload.createdAt = new Date();
+
+          payload.products = [];
+          const products = store.getters['cart/cartItems'];
+
+          products.map((product) => {
+            payload.products.push({
+              productId: product.id,
+              price: product.price,
+              name: product.name,
+              image: product.imageSrc,
+              slug: product.slug,
+              currency: product.currency,
+              quantity: product.quantity,
+            });
+          });
+
+          await API.graphql({
             query: createOrder,
             variables: { input: payload },
-          })
+          });
         } catch (err) {
           console.log('CreateOrder - error: ', err);
-          postCheckoutMessage.value = `There was a problem with your order. Please contact ${contactEmail.value}`
+          postCheckoutMessage.value = `There was a problem with your order. Please contact ${contactEmail.value}`;
         }
       };
       //
 
       const postCheckout = async (event) => {
         // Set the orderId as the Paypal OrderId
-        const payload = {}
-        const paypalOrderId = event
-        payload.property = 'paypalOrderId'
-        payload.value = paypalOrderId
-        await store.dispatch('cart/setOrderProperty',payload)
-
-        postCheckoutMessage.value =
-          store.getters['general/getafterSaleMessage'];
-        postCheckoutMessage2.value = `Your orderId is ${event}`;
+        const payload = {};
+        const paypalOrderId = event;
+        payload.property = 'paypalOrderId';
+        payload.value = paypalOrderId;
+        await store.dispatch('cart/setOrderProperty', payload);
 
         // Amplify
-        await CreateOrder(paypalOrderId)
+        await CreateOrder(paypalOrderId);
       };
 
       const updateEmail = () => {
