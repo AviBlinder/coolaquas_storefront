@@ -40,7 +40,7 @@
                       to="/collections/featured-products"
                       class="flex items-center justify-center px-2 py-2 
                       border border-transparent text-base font-medium rounded-md 
-                      shadow-sm text-green-600 bg-secondary-300                      
+                      shadow-sm text-gray-600 bg-secondary-100                      
                       hover:bg-amber-300 sm:px-8"
                     >
                       {{ blok.CTA_1 }}
