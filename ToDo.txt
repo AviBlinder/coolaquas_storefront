@@ -1,6 +1,5 @@
-Bugs:
-- Filter by colors (array)
-
+- Send notification to seller whenever there is a purchase (triggered by DynamoDB?)
+https://aws.amazon.com/premiumsupport/knowledge-center/lambda-send-email-ses/
 
 --> AWS Deploy
 ==> Favicon of Coolaqua not showing?
