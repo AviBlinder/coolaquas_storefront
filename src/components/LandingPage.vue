@@ -37,8 +37,11 @@
                     class="mt-10 max-w-sm mx-auto sm:max-w-none flex justify-center"
                   >
                     <router-link
-                      to="/collections/featured-products "
-                      class="flex items-center justify-center px-0 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-amber-300 sm:px-8"
+                      to="/collections/featured-products"
+                      class="flex items-center justify-center px-2 py-2 
+                      border border-transparent text-base font-medium rounded-md 
+                      shadow-sm text-green-600 bg-secondary-300                      
+                      hover:bg-amber-300 sm:px-8"
                     >
                       {{ blok.CTA_1 }}
                     </router-link>
