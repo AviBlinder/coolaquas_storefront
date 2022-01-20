@@ -1,9 +1,8 @@
-- Send notification to seller whenever there is a purchase (triggered by DynamoDB?)
-https://aws.amazon.com/premiumsupport/knowledge-center/lambda-send-email-ses/
+-Add a page for handling orders:
+  - Recognize user that belongs to 'Admins' group
+  - Option in menu open only to them
+  - view similar to 'history' but with dropdown of statuses + filters
 
---> AWS Deploy
-
---> Check Prod Signup + Order Creation + Paypal
 
 --> Review CSS Course for cross-site styling
 

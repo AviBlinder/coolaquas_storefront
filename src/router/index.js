@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import NotFound from '../views/404.vue';
+// import { computed } from 'vue';
+// import { useStore } from 'vuex';
+import modules from '../store/index';
 
+
+// const store = useStore();
 
 const routes = [
   {
@@ -57,6 +62,20 @@ const routes = [
       ),
   },
   {
+    path: '/handleOrders',
+    name: 'OrdersHandle',
+    component: () =>
+      import(
+        /* webpackChunkName: "OrdersHandle" */ '../views/OrdersHandle.vue'
+      ),
+    beforeEnter: (to, from, next) => {
+      // Only staff members can navigate to OrdersHandle view
+        const isStaff = modules.state.general.staffMember;
+        if (isStaff) next()
+        else next({name: 'Home'});
+    },
+  },
+  {
     path: '/pages/:policy',
     name: 'policy-page',
     component: () =>
@@ -90,5 +109,10 @@ const router = createRouter({
 //     console.log("to params: ", to.params.product)
 //    next();
 // });
+// router.beforeEach((to, from, next) => {
+//   if (isStaff) next()
+//   else next({name: 'Home'});
+// });
+
 
 export default router

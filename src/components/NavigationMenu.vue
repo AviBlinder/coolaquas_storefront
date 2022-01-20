@@ -120,6 +120,7 @@
                 >
                  {{loggedInUser}}
                 </MenuItem>
+
                 <MenuItem 
                 as="div"
                  v-slot="{ active }"
@@ -129,6 +130,18 @@
                 >
                   Orders History
                 </MenuItem>
+                
+                <MenuItem 
+                v-if="staffMember"
+                as="div"
+                 v-slot="{ active }"
+                class="mb-2 bg-white  hover:bg-gray-200 hover:cursor-pointer"
+                :class="[active ? 'bg-gray-100' : 'bg-white', 'block py-2 px-4 text-sm text-gray-700']"                
+                @click="$router.push({name:'OrdersHandle'})"
+                >
+                  Handle Orders
+                </MenuItem>
+
                 <MenuItem 
                 as="div"
                  v-slot="{ active }"
@@ -201,6 +214,7 @@
           <div>
             {{loggedInUser}}
           </div>
+
          <div class="mt-3 p-2 space-y-1
               hover:bg-gray-200 hover:rounded-md
                 hover:cursor-pointer
@@ -210,6 +224,19 @@
                  Orders History
                  </DisclosureButton>    
          </div>     
+         <div v-if="staffMember"
+         class="mt-3 p-2 space-y-1
+              hover:bg-gray-200 hover:rounded-md
+                hover:cursor-pointer
+         ">
+                 <DisclosureButton
+                @click="$router.push({name:'OrdersHandle'})"
+
+                  >
+                 Handle Orders
+                 </DisclosureButton>    
+         </div>     
+
          <div class="mt-3 p-2 space-y-1
               hover:bg-gray-200 hover:rounded-md
                 hover:cursor-pointer
@@ -226,7 +253,7 @@
                 class="ml-3 p-2 block font-medium text-gray-900 hover:bg-gray-200 hover:rounded-md
                 hover:cursor-pointer"
           >
-              <router-link :to="{name: 'Signup'}">SignUp</router-link>
+              <router-link :to="{name: 'Signup'}">SignUp</router-link>              
         </DisclosureButton>   
             <DisclosureButton
             as="router-link" 
@@ -311,6 +338,7 @@ import router from '@/router';
       // Auth
       const store = useStore()
       const loggedInUser =  computed( () => store.getters['general/getLoggedInUser'])
+      const staffMember = computed( () => store.getters['general/isStaffMember'])
       const storyapi = inject('storyapi');
       
       
@@ -362,6 +390,7 @@ import router from '@/router';
       }
       return {
         loggedInUser,
+        staffMember,
         SampleUser,
         navigation,
         userNavigation,

@@ -25,8 +25,22 @@ export default function () {
     try {
       const { email, password } = form;
       const loginAuth = await Auth.signIn(email, password);
-      store.dispatch('general/setLoggedInUser', 
-      loginAuth.attributes.email);
+
+      const groups = 'cognito:groups'
+      let staffMember = false
+      if (
+        loginAuth.signInUserSession.idToken.payload[groups] !== undefined &&
+        loginAuth.signInUserSession.idToken.payload[groups].includes('staff')
+      ) {
+        staffMember = true;
+      } else {
+        staffMember = false;
+      }
+
+      store.dispatch('general/setLoggedInUser', {
+        email: loginAuth.attributes.email,
+        staffMember: staffMember,
+      });
       
       router.push({ name: 'Home' })    
 

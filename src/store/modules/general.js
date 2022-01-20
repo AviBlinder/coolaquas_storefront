@@ -1,11 +1,12 @@
 const state = {
-  contactEmail: 'coolaquas@gmail.com',
+  contactEmail: 'contact@coolaquas.com',
   settings: {
     currency: 'USD',
     currencySign: '$',
   },
 
   loggedInUser: '',
+  staffMember: false,
   dynamoDbUserId: '',
 
   freeShippingAmount: 0,
@@ -170,6 +171,9 @@ const getters = {
   getContactEmail(state) {
     return state.contactEmail;
   },
+  isStaffMember(state){
+    return state.staffMember;
+  },
   getLoggedInUser(state) {
     return state.loggedInUser;
   },
@@ -220,8 +224,13 @@ const actions = {
 };
 
 const mutations = {
-  setLoggedInUser(state, payload) {
-    state.loggedInUser = payload;
+  setLoggedInUser(state, { email, staffMember }) {
+    state.loggedInUser = email;
+    if (staffMember) {
+      state.staffMember = staffMember
+    } else {
+      state.staffMember = false
+    }
   },
   setContactEmail(state, payload) {
     state.contactEmail = payload;
