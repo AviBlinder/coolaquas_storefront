@@ -7,9 +7,26 @@
         </div>
       </div>
 
-      <div class="mt-16">
+    <div>
+        <label for="status" class="flex align-middle justify-start text-sm font-medium text-gray-700"
+          >Status</label
+        >
+        <select
+          id="status"
+          name="status"
+          v-model="status"
+          @click="filterOrders"
+          class="mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm rounded-md"
+        >
+          <option selected="">NEW</option>
+          <option>SHIPPED</option>
+          <option>IN_PROGRESS</option>
+          <option>DELIVERED</option>
+        </select>
+      </div>
+      <div class="mt-16" v-if="Orders.items.length">
         <h2 class="sr-only">Recent orders</h2>
-        <div class="space-y-20">
+        <div class="space-y-20" >
           <div v-for="(order,index) in Orders.items" :key="order.id">
             <h3 class="sr-only">
               Order placed on <time :datetime="formatDateTime(order.createdAt)">
@@ -119,7 +136,10 @@
 
           </div>
         </div>
-      </div>
+     </div>
+      <div v-else>
+          <p>Sorry, no order to display</p>
+        </div>
     </div>
   </div>
 </template>
@@ -135,6 +155,8 @@ export default {
   
   setup() {
   const store = useStore()
+  const status = ref('NEW');
+
   const getOrders = async ()=> {
     // Get User details
     const ownerId = computed( () => store.getters['general/getDynamoDbUserId'])
@@ -156,7 +178,9 @@ export default {
       getOrders().then(
         res => Orders.value = res
       )
-
+      const filterOrders = () => {
+        getOrders().then((res) => (Orders.value = res));
+      };
     const formatDateTime =  function(value) {
     if (value) {
       return moment(String(value)).format('MMMM Do YYYY')
@@ -167,6 +191,8 @@ export default {
     return {
       Orders,
       getOrders,
+      status,
+      filterOrders,
       formatDateTime
     }
   },

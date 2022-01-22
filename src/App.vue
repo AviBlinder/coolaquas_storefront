@@ -23,7 +23,7 @@
   import { provide } from 'vue';
   import { Auth } from 'aws-amplify';
   import { Hub } from 'aws-amplify';
-  import {useStore} from 'vuex';
+  import { useStore } from 'vuex';
 
   export default {
     setup() {
@@ -39,48 +39,101 @@
       // Setup Global Eventbus as global variable
       const eventBus = mitt();
       provide('eventBus', eventBus);
-
       provide('storyapi', storyapi);
 
-
-      //Auth start       
-        Auth.currentAuthenticatedUser({ bypassCache: false })
-        .then( (user) => {
-          if (user && user.attributes.email_verified) {
-            store.dispatch('general/setLoggedInUser',user.attributes.email)
-            store.dispatch('general/setDynamoDbUserId',user.username) 
+      //Auth start
+      Auth.currentAuthenticatedUser({ bypassCache: false })
+        .then((user) => {
+          const groups = 'cognito:groups';
+          let staffMember = false;
+          if (
+            user.signInUserSession.idToken.payload[groups] !== undefined &&
+            user.signInUserSession.idToken.payload[groups].includes('staff')
+          ) {
+            staffMember = true;
           } else {
-            store.dispatch('general/setLoggedInUser','')          }
-            // store.dispatch('general/setDynamoDbUserId','')     
+            staffMember = false;
+          }
+
+          if (user && user.attributes.email_verified) {
+            console.log('auth 1');
+            store.dispatch('general/setLoggedInUser', {
+              email: user.attributes.email,
+              staffMember: staffMember,
+            });
+            store.dispatch('general/setDynamoDbUserId', user.username);
+          } else {
+            console.log('auth 2');
+            store.dispatch('general/setLoggedInUser', {
+              email: '',
+              staffMember: false,
+            });
+          }
+          // store.dispatch('general/setDynamoDbUserId','')
         })
-        .catch( () => {
-          store.dispatch('general/setLoggedInUser','')
-          store.dispatch('general/setDynamoDbUserId','')     
+        .catch(() => {
+          store.dispatch('general/setLoggedInUser', {
+            email: '',
+            staffMember: false,
+          });
+          store.dispatch('general/setDynamoDbUserId', '');
         });
 
       Hub.listen('auth', (data) => {
+        // console.log("hub data: ",data)
+          const groups = 'cognito:groups';
+          let staffMember = false;
+          if (
+            data.payload.signInUserSession.idToken.payload[groups] !== undefined &&
+            data.payload.signInUserSession.idToken.payload[groups].includes('staff')
+          ) {
+            staffMember = true;
+          } else {
+            staffMember = false;
+          }
+
         switch (data.payload.event) {
           case 'signIn':
-            store.dispatch('general/setLoggedInUser',data.payload.data.attributes.email) 
-            store.dispatch('general/setDynamoDbUserId',data.payload.data.username)
+            console.log('listen 1');
+            store.dispatch('general/setLoggedInUser', {
+              email: data.payload.data.attributes.email,
+              staffMember: staffMember,
+            });
+            store.dispatch(
+              'general/setDynamoDbUserId',
+              data.payload.data.username
+            );
             break;
           case 'signUp':
-            store.dispatch('general/setLoggedInUser','')            
-            store.dispatch('general/setDynamoDbUserId','')    
+            console.log('listen 2');
+            store.dispatch('general/setLoggedInUser', {
+              email: '',
+              staffMember: false,
+            });
+            store.dispatch('general/setDynamoDbUserId', '');
             break;
           case 'signOut':
+            console.log('listen 3');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')          
-            store.dispatch('general/setDynamoDbUserId','')    
+            store.dispatch('general/setLoggedInUser', {
+              email: '',
+              staffMember: false,
+            });
+            store.dispatch('general/setDynamoDbUserId', '');
             break;
           case 'signIn_failure':
+            console.log('listen 4');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
-            store.dispatch('general/setLoggedInUser','')         
-            store.dispatch('general/setDynamoDbUserId','')    
+            store.dispatch('general/setLoggedInUser', {
+              email: '',
+              staffMember: false,
+            });
+            store.dispatch('general/setDynamoDbUserId', '');
             break;
           case 'configured':
+            break;
         }
       });
       // Auth ends

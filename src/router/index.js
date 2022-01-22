@@ -71,8 +71,11 @@ const routes = [
     beforeEnter: (to, from, next) => {
       // Only staff members can navigate to OrdersHandle view
         const isStaff = modules.state.general.staffMember;
-        if (isStaff) next()
-        else next({name: 'Home'});
+        if (isStaff) {
+          next()
+        } else
+        { next({name: 'Home'})
+      }
     },
   },
   {

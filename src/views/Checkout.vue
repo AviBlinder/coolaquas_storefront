@@ -89,7 +89,7 @@
           Payment and shipping details
         </h2>
         <!--  -->
-        <!-- <button @click="CreateOrder('1234567890abc')"
+        <!-- <button @click="CreateOrder(Math.round(Math.random()*10000000) + 'abcd')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateOrder</button> -->
         <!-- <button @click="CreateUser"
