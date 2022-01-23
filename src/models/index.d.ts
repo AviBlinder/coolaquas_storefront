@@ -99,6 +99,8 @@ export declare class Order {
   readonly products?: Products[];
   readonly total: Total;
   readonly createdAt: string;
+  readonly remarks?: string;
+  readonly billingAsShipping?: boolean;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Order, OrderMetaData>);
   static copyOf(source: Order, mutator: (draft: MutableModel<Order, OrderMetaData>) => MutableModel<Order, OrderMetaData> | void): Order;

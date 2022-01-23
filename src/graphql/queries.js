@@ -134,6 +134,8 @@ export const getOrder = /* GraphQL */ `
         currency
       }
       createdAt
+      remarks
+      billingAsShipping
       updatedAt
       _version
       _deleted
@@ -201,6 +203,8 @@ export const listOrders = /* GraphQL */ `
           currency
         }
         createdAt
+        remarks
+        billingAsShipping
         updatedAt
         _version
         _deleted
@@ -269,6 +273,8 @@ export const syncOrders = /* GraphQL */ `
           currency
         }
         createdAt
+        remarks
+        billingAsShipping
         updatedAt
         _version
         _deleted
@@ -341,6 +347,8 @@ export const byOwner = /* GraphQL */ `
           currency
         }
         createdAt
+        remarks
+        billingAsShipping
         updatedAt
         _version
         _deleted

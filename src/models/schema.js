@@ -214,6 +214,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "remarks": {
+                    "name": "remarks",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "billingAsShipping": {
+                    "name": "billingAsShipping",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "updatedAt": {
                     "name": "updatedAt",
                     "isArray": false,
@@ -269,7 +283,8 @@ export const schema = {
                                 "provider": "apiKey",
                                 "operations": [
                                     "create",
-                                    "read"
+                                    "read",
+                                    "update"
                                 ]
                             },
                             {
@@ -283,6 +298,18 @@ export const schema = {
                                     "create",
                                     "update",
                                     "delete",
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "staff"
+                                ],
+                                "operations": [
+                                    "update",
                                     "read"
                                 ]
                             }
@@ -537,5 +564,5 @@ export const schema = {
             }
         }
     },
-    "version": "e3c619ab10add77f8437d0ea2c031e1f"
+    "version": "7368600e2f5738cebfeddf8965823633"
 };

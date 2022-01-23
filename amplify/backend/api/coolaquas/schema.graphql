@@ -20,19 +20,7 @@ enum Currencies {
   AUD
 }
 
-type User
-  @model
-  @auth(
-    rules: [
-      {
-        allow: owner,
-        provider: userPools,
-        operations: [create, update, delete, read]
-      }
-      { allow: public, provider: apiKey, operations: [create, read] }
-      { allow: groups, provider: userPools, groups: ["Admin"] }
-    ]
-  ) {
+type User @model @auth(rules: [{allow: owner, provider: userPools, operations: [create, update, delete, read]}, {allow: public, provider: apiKey, operations: [create, read]}, {allow: groups, provider: userPools, groups: ["Admin"]}]) {
   username: AWSEmail!
   owner: String!
   paypalOrderId: [String]
@@ -48,14 +36,24 @@ type Order
         provider: userPools
         operations: [create, update, delete, read]
       }
-      { allow: public, provider: apiKey, operations: [create, read] }
+      { allow: public, provider: apiKey, operations: [create, read,update] }
       { allow: groups, provider: userPools, groups: ["Admin"] }
+      {
+        allow: groups,
+        groups: ["staff"],
+        provider: userPools,
+        operations: [update, read]
+      }
     ]
   ) {
   id: ID! @primaryKey
   username: String
-  owner: String! @index(name: "byOwnerByCreatedAt", 
-        sortKeyFields: ["createdAt"],queryField: "byOwner")
+  owner: String!
+    @index(
+      name: "byOwnerByCreatedAt"
+      sortKeyFields: ["createdAt"]
+      queryField: "byOwner"
+    )
   email: String!
   paypalOrderId: String!
   status: OrderStatus!
@@ -66,6 +64,8 @@ type Order
   products: [Products!]
   total: Total!
   createdAt: AWSDateTime!
+  remarks: String
+  billingAsShipping: Boolean
 }
 
 type BillingDetails {
@@ -76,7 +76,7 @@ type BillingDetails {
   city: String!
   address: String!
   address2: String
-  phone: String  
+  phone: String
   postalCode: String!
 }
 
@@ -106,7 +106,8 @@ type Total {
   amount: Float!
   currency: Currencies!
 }
+
+type Query {
+  getUserByOwnerId(owner: String!): User
+}
  
-  type Query {
-    getUserByOwnerId(owner: String!):User
-  }

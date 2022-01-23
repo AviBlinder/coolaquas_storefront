@@ -32,11 +32,12 @@
           <option>DELIVERED</option>
         </select>
       </div>
-      <div class="mt-16" v-if="Orders.items.length">
+      <div class="mt-16" v-if="ordersLoaded && Orders.items.length">
         <h2 class="sr-only">Recent orders</h2>
         <div class="space-y-20">
           <div v-for="(order, index) in Orders.items"
           :ref="setItemRef"
+          :id="`order` + index"
            :key="order.id">
             <h3 class="sr-only">
               Order placed on
@@ -44,10 +45,6 @@
                 {{ formatDateTime(order.createdAt) }}</time
               >
             </h3>
-          <!-- Update order's status -->
-          <button @click="orderUpdate(order.id,event)"
-          class="bg-secondary-300 rounded-sm p-3 m-2"
-          >Update Status </button>      
 
             <div
               class="bg-gray-50 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8"
@@ -164,8 +161,10 @@
                     {{ product.quantity }}
                   </td>
                   <td class="py-6 font-medium text-right whitespace-nowrap">
-                    <router-link :to="product.slug" class="text-secondary-600"
-                      >View<span class="hidden lg:inline"> Product</span
+                    <!--  :to="{ name: 'product', params: { product: product.slug } }"-->
+                    <router-link 
+                    :to="{name: 'OrderHandle',params: {orderId: order.id}}" class="text-secondary-600"
+                      >Edit<span class="hidden lg:inline"> Order</span
                       ><span class="sr-only">, {{ product.name }}</span>
                     </router-link>
                   </td>
@@ -194,7 +193,7 @@
   export default {
     setup() {
       const status = ref('NEW');
-      const statusUpdate = ref('');
+      let ordersLoaded = ref(false)
 
     let itemRefs = []
     const setItemRef = el => {
@@ -203,10 +202,11 @@
       }
     }
     onBeforeUpdate(() => {
+      // console.log("onBeforeUpdate")
       itemRefs = []
     })
     onUpdated(() => {
-      console.log(itemRefs)
+      // console.log('onUpdated: ' , itemRefs)
     })
 
 
@@ -235,11 +235,20 @@
         return ordersData.data.listOrders;
       };
 
+      ordersLoaded.value = false
       let Orders = ref({});
-      getOrders().then((res) => (Orders.value = res));
+      getOrders().then( 
+        (res) => 
+        {
+          Orders.value = res
+          ordersLoaded.value = true
+        });
 
-      const filterOrders = () => {
-        getOrders().then((res) => (Orders.value = res));
+      const filterOrders = () => {        
+        getOrders().then(  
+          (res) => 
+          {Orders.value = res
+          });
       };
 
       const formatDateTime = function (value) {
@@ -270,8 +279,8 @@
       return {
         Orders,
         status,
-        statusUpdate,
         filterOrders,
+        ordersLoaded,
         getOrders,
         orderUpdate,
         formatDateTime,

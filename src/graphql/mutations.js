@@ -108,6 +108,8 @@ export const createOrder = /* GraphQL */ `
         currency
       }
       createdAt
+      remarks
+      billingAsShipping
       updatedAt
       _version
       _deleted
@@ -165,6 +167,8 @@ export const updateOrder = /* GraphQL */ `
         currency
       }
       createdAt
+      remarks
+      billingAsShipping
       updatedAt
       _version
       _deleted
@@ -222,6 +226,8 @@ export const deleteOrder = /* GraphQL */ `
         currency
       }
       createdAt
+      remarks
+      billingAsShipping
       updatedAt
       _version
       _deleted

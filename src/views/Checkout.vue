@@ -89,9 +89,12 @@
           Payment and shipping details
         </h2>
         <!--  -->
-        <!-- <button @click="CreateOrder(Math.round(Math.random()*10000000) + 'abcd')"
+        <div v-if="environment !== 'production'">
+        <button        
+        @click="CreateOrder(Math.round(Math.random()*10000000) + 'abcd')"
         class="m-2 p-2 bg-secondary-500 rounded-full"
-        >CreateOrder</button> -->
+        >CreateOrder</button>
+        </div>
         <!-- <button @click="CreateUser"
         class="m-2 p-2 bg-secondary-500 rounded-full"
         >CreateUser</button> -->
@@ -213,6 +216,7 @@
       const store = useStore();
       const disablePaymentButton = ref(true);
 
+      const environment = ref(process.env.NODE_ENV)
       const postCheckoutMessage = ref('');
       const postCheckoutMessage2 = ref('');
       const contactEmail = computed(
@@ -362,6 +366,7 @@
         postCheckoutMessage,
         postCheckoutMessage2,
         CreateOrder,
+        environment
       };
     },
   };

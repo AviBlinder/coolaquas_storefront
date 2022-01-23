@@ -79,6 +79,23 @@ const routes = [
     },
   },
   {
+    path: '/handleOrders/:orderId',
+    name: 'OrderHandle',
+    component: () =>
+      import(
+        /* webpackChunkName: "OrderHandle" */ '../views/OrderHandle.vue'
+      ),
+    beforeEnter: (to, from, next) => {
+      // Only staff members can navigate to OrdersHandle view
+        const isStaff = modules.state.general.staffMember;
+        if (isStaff) {
+          next()
+        } else
+        { next({name: 'Home'})
+      }
+    },
+  },
+  {
     path: '/pages/:policy',
     name: 'policy-page',
     component: () =>

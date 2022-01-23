@@ -1,11 +1,11 @@
 -Add a page for handling orders:
-  - Recognize user that belongs to 'staff' group
-  - Option in menu open only to them
-  - view similar to 'history' but with dropdown of statuses + filters
+- Handle remarks (display + update)
+- review 'groups' Auth policy (why on public did work?)
+- Format (grid?) the General Info tab
 
-Bug:
-On refresh, user gets logged out
-
+- view similar to 'history' but with dropdown of statuses + filters
+- Add details view by id + add status mutation
+- how to filter by several parameters? (object.Assign()?)
 
 --> Review CSS Course for cross-site styling
 

@@ -56,14 +56,12 @@
           }
 
           if (user && user.attributes.email_verified) {
-            console.log('auth 1');
             store.dispatch('general/setLoggedInUser', {
               email: user.attributes.email,
               staffMember: staffMember,
             });
             store.dispatch('general/setDynamoDbUserId', user.username);
           } else {
-            console.log('auth 2');
             store.dispatch('general/setLoggedInUser', {
               email: '',
               staffMember: false,
@@ -94,7 +92,6 @@
 
         switch (data.payload.event) {
           case 'signIn':
-            console.log('listen 1');
             store.dispatch('general/setLoggedInUser', {
               email: data.payload.data.attributes.email,
               staffMember: staffMember,
@@ -105,7 +102,6 @@
             );
             break;
           case 'signUp':
-            console.log('listen 2');
             store.dispatch('general/setLoggedInUser', {
               email: '',
               staffMember: false,
@@ -113,7 +109,6 @@
             store.dispatch('general/setDynamoDbUserId', '');
             break;
           case 'signOut':
-            console.log('listen 3');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
             store.dispatch('general/setLoggedInUser', {
@@ -123,7 +118,6 @@
             store.dispatch('general/setDynamoDbUserId', '');
             break;
           case 'signIn_failure':
-            console.log('listen 4');
             localStorage.setItem('loggedIn', JSON.stringify(false));
             localStorage.removeItem('user');
             store.dispatch('general/setLoggedInUser', {
