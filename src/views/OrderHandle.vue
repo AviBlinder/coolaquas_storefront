@@ -45,7 +45,7 @@
                       selected ? 'tabSelected' : 'tabUnSelected ',
                     ]"
                   >
-                    Shipping and Billing
+                    Shipping & Billing
                   </button>
                 </Tab>
                 <Tab as="template" v-slot="{ selected }">

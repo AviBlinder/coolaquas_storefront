@@ -1,7 +1,5 @@
 -Add a page for handling orders:
-- Handle remarks (display + update)
 - review 'groups' Auth policy (why on public did work?)
-- Format (grid?) the General Info tab
 
 - view similar to 'history' but with dropdown of statuses + filters
 - Add details view by id + add status mutation
