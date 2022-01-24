@@ -13,39 +13,76 @@
         </div>
       </div>
 
-      <div>
-        <label
-          for="status"
-          class="flex align-middle justify-start text-sm font-medium text-gray-700"
-          >Status</label
-        >
-        <select
-          id="status"
-          name="status"
-          v-model="status"
-          @click="filterOrders"
-          class="mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm rounded-md"
-        >
-          <option selected>NEW</option>
-          <option>SHIPPED</option>
-          <option>IN_PROGRESS</option>
-          <option>DELIVERED</option>
-        </select>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 md:gap-4 mt-4">
+        <div class="my-2">
+          <label
+            for="status"
+            class="flex align-middle justify-start text-sm font-medium text-gray-700"
+            >Status</label
+          >
+          <select
+            id="status"
+            name="status"
+            v-model="status"
+            @blur="filterOrders('status')"
+            class="mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm rounded-md"
+          >
+            <option selected></option>
+            <option >NEW</option>
+            <option>SHIPPED</option>
+            <option>IN_PROGRESS</option>
+            <option>DELIVERED</option>
+          </select>
+        </div>
+        <div class="my-2">
+          <label
+            for="email"
+            class="flex align-middle justify-start text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <input
+            type="text"
+            class="rounded-md mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm "
+            name="email"
+            id="email"
+            @blur="filterOrders('email')"
+            v-model="email"
+          />
+        </div>
+        <div class="my-2">
+          <label
+            for="creationDate"
+            class="flex align-middle justify-start text-sm font-medium text-gray-700"
+            >Order Date</label
+          >
+          <input
+            type="text"
+            class="rounded-md mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm "
+            name="creationDate"
+            id="creationDate"
+            placeholder="YYYY-MM-DD (or part)"
+            @blur="filterOrders('creationDate')"
+            v-model="creationDate"
+          />
+        </div>
       </div>
       <div class="mt-16" v-if="ordersLoaded && Orders.items.length">
         <h2 class="sr-only">Recent orders</h2>
         <div class="space-y-20">
-          <div v-for="(order, index) in Orders.items"
-          :ref="setItemRef"
-          :id="`order` + index"
-           :key="order.id">
+          <div
+            v-for="(order, index) in Orders.items"
+            :id="`order` + index"
+            :key="order.id"
+          >
             <h3 class="sr-only">
               Order placed on
               <time :datetime="formatDateTime(order.createdAt)">
                 {{ formatDateTime(order.createdAt) }}</time
               >
             </h3>
-
+            <div
+              class="bg-gray-50 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8"
+            ></div>
             <div
               class="bg-gray-50 rounded-lg py-6 px-4 sm:px-6 sm:flex sm:items-center sm:justify-between sm:space-x-6 lg:space-x-8"
             >
@@ -75,7 +112,7 @@
                 <!--  -->
                 <div class="flex justify-between pt-6 sm:block sm:pt-0">
                   <dt class="font-medium text-gray-900 underline">
-                    Order number
+                    Paypal Order #
                   </dt>
                   <dd class="sm:mt-1">
                     {{ order.paypalOrderId }}
@@ -100,6 +137,14 @@
                       >({{ order.shippingCost }}
                       {{ order.total.currency }})</span
                     >
+                  </dd>
+                </div>
+                <div class="flex justify-between pt-6 sm:block sm:pt-0">
+                  <dt class="font-medium text-gray-900 underline">
+                    Order Email
+                  </dt>
+                  <dd class="sm:mt-1">
+                    {{ order.email }}
                   </dd>
                 </div>
               </dl>
@@ -162,8 +207,12 @@
                   </td>
                   <td class="py-6 font-medium text-right whitespace-nowrap">
                     <!--  :to="{ name: 'product', params: { product: product.slug } }"-->
-                    <router-link 
-                    :to="{name: 'OrderHandle',params: {orderId: order.id}}" class="text-secondary-600"
+                    <router-link
+                      :to="{
+                        name: 'OrderHandle',
+                        params: { orderId: order.id },
+                      }"
+                      class="text-secondary-600"
                       >Edit<span class="hidden lg:inline"> Order</span
                       ><span class="sr-only">, {{ product.name }}</span>
                     </router-link>
@@ -186,43 +235,35 @@
   import * as queries from '@/graphql/queries';
   // import { updateOrder } from '@/graphql/mutations';
 
-  import { ref, onBeforeUpdate, onUpdated } from 'vue'
+  import { ref } from 'vue';
 
   import moment from 'moment';
 
   export default {
     setup() {
-      const status = ref('NEW');
-      let ordersLoaded = ref(false)
+      let status = ref('NEW');
+      let email = ref('')
+      let creationDate = ref('')
 
-    let itemRefs = []
-    const setItemRef = el => {
-      if (el) {
-        itemRefs.push(el)
-      }
-    }
-    onBeforeUpdate(() => {
-      // console.log("onBeforeUpdate")
-      itemRefs = []
-    })
-    onUpdated(() => {
-      // console.log('onUpdated: ' , itemRefs)
-    })
-
+      let ordersLoaded = ref(false);
 
       // let filter = {
       //       or: [{ priority: {eq:1} },
       //            { priority: {eq:2} }]
       //   };
       const getOrders = async () => {
-        let filter = '';
+        let filter = {};
         if (status.value) {
-          filter = {
-            status: {
-              eq: status.value,
-            },
-          };
+          filter = Object.assign({}, { status: { eq: status.value } });
         }
+        if(email.value) {
+          filter = Object.assign({}, { email: { eq: email.value } });
+        }
+        if(creationDate.value) {
+          filter = Object.assign({}, { createdAt: { contains: creationDate.value } });
+        }
+
+        console.log("filter = ",filter)
         const ordersData = await API.graphql({
           query: queries.listOrders,
           variables: {
@@ -235,20 +276,33 @@
         return ordersData.data.listOrders;
       };
 
-      ordersLoaded.value = false
+      ordersLoaded.value = false;
       let Orders = ref({});
-      getOrders().then( 
-        (res) => 
-        {
-          Orders.value = res
-          ordersLoaded.value = true
-        });
+      getOrders().then((res) => {
+        Orders.value = res;
+        ordersLoaded.value = true;
+      });
 
-      const filterOrders = () => {        
-        getOrders().then(  
-          (res) => 
-          {Orders.value = res
-          });
+      const filterOrders = (filterField) => {
+        switch (filterField){
+        case 'status':
+            email.value = ''
+            creationDate.value = ''
+            break
+        case 'email':
+          status.value = ''
+          creationDate.value = ''
+        break
+        case 'creationDate':
+          status.value = ''
+          email.value = ''
+        break
+        }
+
+        console.log("filterOrders")
+        getOrders().then((res) => {
+          Orders.value = res;
+        });
       };
 
       const formatDateTime = function (value) {
@@ -258,15 +312,15 @@
         }
       };
 
-      const orderUpdate = async (id,event) => {
-        console.log("id: ",id)
-        console.log("event: ",event)
+      const orderUpdate = async (id, event) => {
+        console.log('id: ', id);
+        console.log('event: ', event);
         const payload = {
-          id:id,
-         status: event.target.value
-        }
+          id: id,
+          status: event.target.value,
+        };
         try {
-          console.log("payload: ",payload)
+          console.log('payload: ', payload);
           // await API.graphql({
           //   query: updateOrder,
           //   variables: { input: payload },
@@ -279,12 +333,13 @@
       return {
         Orders,
         status,
+        email,
+        creationDate,
         filterOrders,
         ordersLoaded,
         getOrders,
         orderUpdate,
         formatDateTime,
-        setItemRef
       };
     },
   };
