@@ -24,7 +24,7 @@
             id="status"
             name="status"
             v-model="status"
-            @blur="filterOrders('status')"
+            @click="filterOrders('status')"
             class="mt-1 block w-auto pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-secondary-500 focus:border-secondary-500 sm:text-sm rounded-md"
           >
             <option selected></option>
