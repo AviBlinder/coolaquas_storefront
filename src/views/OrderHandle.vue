@@ -16,7 +16,7 @@
 
         <!-- Update order's status -->
         <div class="flex justify-start">
-          <button class="bg-blue-300 rounded-xl p-3 m-2">
+          <button class="bg-blue-300 bg-opacity-25 rounded-xl p-3 m-2">
             <router-link :to="{ name: 'OrdersHandle' }">
               Back to Orders List
             </router-link>
@@ -69,7 +69,7 @@
                 >
                   <div class="sm:grid-cols-1 
                   md:grid-cols-3 ">
-                    <div class="bg-gray-200 m-2 p-2 rounded-full">
+                    <div class="bg-gray-100 bg-opacity-75  m-2 p-2 rounded-full">
                       <p>Paypal OrderId: {{ Order.paypalOrderId }}</p>
                       <p>Shipping Type: {{ Order.shippingType }}</p>
                       <p>
@@ -77,15 +77,18 @@
                         {{ Order.total.currency }}
                       </p>
                     </div>
-                    <div class="bg-gray-200 my-4 mx-2 p-2 rounded-full">
+                    <div class="bg-gray-100 bg-opacity-75  my-4 mx-2 p-2 rounded-full">
                       <p>Order Date: {{ dateFormat(Order.createdAt) }}</p>
                       <p> Order Id: {{Order.id}} </p>
                     </div>
-                    <div class="flex items-center justify-evenly bg-gray-200 rounded-full p-4 mx-2 my-4">
+                    <div class="flex items-center justify-evenly bg-gray-100 bg-opacity-75  rounded-full p-4 mx-2 my-4">
                       <p>Order Status: {{ orderStatus }}</p>
                       <button
                         @click="updateStatus"
-                        class="mt-1 mx-2 flex align-middle justify-start text-sm font-medium text-gray-700 bg-green-400 rounded-xl p-2"
+                        class="mt-1 mx-2 flex align-middle 
+                        justify-start text-sm font-medium text-gray-700 bg-green-600 
+                        bg-opacity-25
+                        rounded-xl py-2 px-3"
                       >
                         Update Order Status
                       </button>
@@ -103,7 +106,7 @@
                         <option>DELIVERED</option>
                       </select>
                     </div>
-                    <div class="block sm:ml-0 m-4 p-4 bg-gray-200 rounded-md  mx-2 my-4">
+                    <div class="block sm:ml-0 m-4 p-4 bg-gray-100 bg-opacity-75  rounded-md  mx-2 my-4">
 
                 <p class="m-3 p-3 underline text-xl">Remarks</p>
                 <textarea id="remarks" name="remarks" rows="8" cols="40"
@@ -113,7 +116,8 @@
 
                       <button
                         @click="updateRemarks"
-                        class="mt-4 mx-2  text-sm font-medium text-gray-700 bg-green-400 
+                        class="mt-4 mx-2  text-sm font-medium text-gray-700 
+                        bg-green-600 bg-opacity-25 
                         rounded-xl p-4"
                       >
                         Update Remarks

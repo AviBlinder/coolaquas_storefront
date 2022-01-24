@@ -2,9 +2,6 @@
 - Remarks: push currenct remark into Orders.remarks so there is a history
 - review 'groups' Auth policy (why on public did work?)
 
-
-- view similar to 'history' but with dropdown of statuses + filters
-- Add details view by id + add status mutation
 - how to filter by several parameters? (object.Assign()?)
 
 --> Review CSS Course for cross-site styling
