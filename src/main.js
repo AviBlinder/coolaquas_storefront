@@ -61,7 +61,8 @@ const app = createApp(App, );
     .use(Storyblok)
     .use(VueGtag, {
       property: {
-        id: 'UA-57147400-4',
+        // id: 'UA-57147400-4',
+        id: 'G-4FXJ4DCQX2',
       },
     })
     .mixin(markedMixin)
