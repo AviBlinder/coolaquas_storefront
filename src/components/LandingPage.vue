@@ -38,10 +38,7 @@
                   >
                     <router-link
                       to="/collections/featured-products"
-                      class="flex items-center justify-center px-2 py-2 
-                      border border-transparent text-base font-medium rounded-md 
-                      shadow-sm text-gray-600 bg-secondary-100                      
-                      hover:bg-amber-300 sm:px-8"
+                      class="flex items-center justify-center px-3 py-3 border border-transparent text-base font-medium rounded-md shadow-sm bg-lightblue-800 text-primary-200 hover:bg-lightblue-900 hover:text-primary-300 sm:px-8"
                     >
                       {{ blok.CTA_1 }}
                     </router-link>
