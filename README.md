@@ -36,6 +36,10 @@ npm install
 ```
 npm run serve
 ```
+If needed, add the following variable:
+```sh
+export NODE_OPTIONS=--openssl-legacy-provider
+```
 
 ### Compiles and minifies for production
 ```

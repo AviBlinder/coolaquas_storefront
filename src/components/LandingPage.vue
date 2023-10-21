@@ -2,7 +2,7 @@
 //Free SVG Icons: http://www.entypo.com/ -->
 <template>
   <div v-editable="blok">
-    <div class="bg-white mx-2">
+    <div class="bg-white mx-0">
       <main>
         <div>
           <!-- Hero card -->
@@ -11,7 +11,7 @@
               <div class="h-screen">
                 <div class="absolute inset-0 mx-4">
                   <img
-                    class="h-full w-full object-cover"
+                    class="h-screen w-full object-cover rounded-lg shadow-md"
                     :src="imageEdit"
                     :alt="blok.hero_image[0].alt"
                   />
@@ -23,8 +23,10 @@
                   <h1
                     class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
                   >
-                    <span class="block text-gray-400">{{ blok.title }}</span>
-                    <span class="block text-amber-600 mt-2">{{
+                    <span class="block text-secondary-800 text-opacity-90">
+                      {{ blok.title }}</span
+                    >
+                    <span class="block text-[#2c3e50] mt-2">{{
                       blok.title_part2
                     }}</span>
                   </h1>
@@ -34,11 +36,11 @@
                     <!-- {{blok.subtitle}}  -->
                   </p>
                   <div
-                    class="mt-10 max-w-sm mx-auto sm:max-w-none flex justify-center"
+                    class="max-w-sm mx-auto sm:max-w-none flex justify-center"
                   >
                     <router-link
                       to="/collections/featured-products"
-                      class="flex items-center justify-center px-3 py-3 border border-transparent text-base font-medium rounded-md shadow-sm bg-lightblue-800 text-primary-200 hover:bg-lightblue-900 hover:text-primary-300 sm:px-8"
+                      class="flex items-center justify-center px-4 py-3 shadow-md border border-transparent text-base font-medium rounded-md bg-secondary-800 text-primary-200 hover:bg-secondary-900 hover:text-white sm:px-8"
                     >
                       {{ blok.CTA_1 }}
                     </router-link>
@@ -81,7 +83,7 @@
       imageEdit() {
         const width = 3000;
         const height = 0;
-        const filter = 'filters:quality(70)';
+        const filter = 'filters:quality(0)';
         // filters:fill(transparent)
         const fitIn = `/fit-in/${width}x${height}/${filter}:format(png)`;
         return this.blok.hero_image[0].filename.replace(
