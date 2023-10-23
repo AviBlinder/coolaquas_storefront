@@ -23,9 +23,8 @@
                   <h1
                     class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
                   >
-                    <span class="block text-secondary-800 text-opacity-90">
-                      {{ blok.title }}</span
-                    >
+                    <!-- <span class="block text-secondary-800 text-opacity-90"> -->
+                    <span class="block orange_gradient"> {{ blok.title }}</span>
                     <span class="block text-[#2c3e50] mt-2">{{
                       blok.title_part2
                     }}</span>
