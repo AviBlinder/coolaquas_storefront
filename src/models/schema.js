@@ -256,6 +256,7 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "name": "byOwnerByCreatedAt",
+                        "queryField": "byOwner",
                         "fields": [
                             "owner",
                             "createdAt"
@@ -350,8 +351,8 @@ export const schema = {
         }
     },
     "nonModels": {
-        "ShippingDetails": {
-            "name": "ShippingDetails",
+        "BillingDetails": {
+            "name": "BillingDetails",
             "fields": {
                 "firstName": {
                     "name": "firstName",
@@ -418,8 +419,8 @@ export const schema = {
                 }
             }
         },
-        "BillingDetails": {
-            "name": "BillingDetails",
+        "ShippingDetails": {
+            "name": "ShippingDetails",
             "fields": {
                 "firstName": {
                     "name": "firstName",
@@ -564,5 +565,6 @@ export const schema = {
             }
         }
     },
+    "codegenVersion": "3.4.4",
     "version": "7368600e2f5738cebfeddf8965823633"
 };

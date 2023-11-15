@@ -16,5 +16,26 @@
         "coolaquas8c3ed8a4": {}
       }
     }
+  },
+  "devtwo": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-coolaquas-devtwo-180527-authRole",
+      "UnauthRoleArn": "arn:aws:iam::807594713240:role/amplify-coolaquas-devtwo-180527-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::807594713240:role/amplify-coolaquas-devtwo-180527-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-coolaquas-devtwo-180527-deployment",
+      "UnauthRoleName": "amplify-coolaquas-devtwo-180527-unauthRole",
+      "StackName": "amplify-coolaquas-devtwo-180527",
+      "StackId": "arn:aws:cloudformation:eu-west-1:807594713240:stack/amplify-coolaquas-devtwo-180527/d2196560-83d0-11ee-a2fd-06367d02d579",
+      "AmplifyAppId": "d2y3vkpu71zou2"
+    },
+    "categories": {
+      "auth": {
+        "coolaquas8c3ed8a4": {}
+      },
+      "api": {
+        "coolaquas": {}
+      }
+    }
   }
 }

@@ -41,6 +41,11 @@ If needed, add the following variable:
 export NODE_OPTIONS=--openssl-legacy-provider
 ```
 
+If needed:
+```sh
+git remote show origin
+git remote set-url origin https://github.com/AviBlinder/coolaquas_storefront.git
+```
 ### Compiles and minifies for production
 ```
 npm run build

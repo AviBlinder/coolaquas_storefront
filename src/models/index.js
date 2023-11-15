@@ -24,7 +24,7 @@ const Currencies = {
   "AUD": "AUD"
 };
 
-const { User, Order, ShippingDetails, BillingDetails, Products, Total } = initSchema(schema);
+const { User, Order, BillingDetails, ShippingDetails, Products, Total } = initSchema(schema);
 
 export {
   User,
@@ -32,8 +32,8 @@ export {
   OrderStatus,
   ShippingType,
   Currencies,
-  ShippingDetails,
   BillingDetails,
+  ShippingDetails,
   Products,
   Total
 };
